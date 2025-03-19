@@ -377,67 +377,18 @@
         footer {
             background: var(--primary-dark);
             color: var(--text-light);
-            padding: 50px 0 20px;
+            padding: 30px 0;
+            text-align: center;
         }
         
         .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-column {
-            flex: 1 1 250px;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.3rem;
             margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 3px;
-            background: var(--accent);
-            bottom: 0;
-            left: 0;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-        
-        .footer-links a i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        .footer-links a:hover {
-            color: var(--text-light);
-            padding-left: 5px;
         }
         
         .social-links {
             display: flex;
-            margin-top: 20px;
+            justify-content: center;
+            margin: 20px 0;
         }
         
         .social-links a {
@@ -449,7 +400,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-light);
-            margin-right: 10px;
+            margin: 0 10px;
             transition: var(--transition);
         }
         
@@ -459,9 +410,6 @@
         }
         
         .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
             color: #aaa;
         }
@@ -621,7 +569,6 @@
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#how-we-work">How We Work</a></li>
-                <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="burger">
                 <i class="fas fa-bars"></i>
@@ -766,48 +713,16 @@
     </div>
 
     <!-- Footer -->
-    <footer id="contact">
+    <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3>UniteFix</h3>
-                    <p>Your trusted partner for all repair and maintenance services. We bring expert solutions right to your doorstep.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
-                        <li><a href="#how-we-work"><i class="fas fa-chevron-right"></i> How We Work</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Our Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-snowflake"></i> AC Repair</a></li>
-                        <li><a href="#"><i class="fas fa-video"></i> CC Camera Installation</a></li>
-                        <li><a href="#"><i class="fas fa-laptop"></i> Computer Repair</a></li>
-                        <li><a href="#"><i class="fas fa-print"></i> Printer Services</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> New Delhi, India</a></li>
-                        <li><a href="#"><i class="fas fa-phone"></i> +91 98765 43210</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> info@unitefix.com</a></li>
-                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 8:00 PM</a></li>
-                    </ul>
+                <h3>UniteFix Services</h3>
+                <p>Your trusted partner for all repair and maintenance services</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             
