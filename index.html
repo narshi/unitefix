@@ -1,139 +1,896 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PCS Repair Services</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #e3f2fd;
-        color: #333;
-        overflow-x: hidden;
-    }
-    header {
-        background: linear-gradient(to right, #1976d2, #64b5f6);
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        animation: fadeIn 1.5s;
-    }
-    .container {
-        width: 80%;
-        margin: auto;
-        padding: 20px;
-    }
-    section {
-        background: white;
-        padding: 20px;
-        margin: 20px 0;
-        border-radius: 8px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        animation: slideUp 1.2s ease-in-out;
-    }
-    h2 {
-        color: #1976d2;
-        border-bottom: 3px solid #64b5f6;
-        padding-bottom: 5px;
-    }
-    ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-    ul li {
-        background: #64b5f6;
-        color: white;
-        margin: 5px;
-        padding: 15px;
-        border-radius: 5px;
-        flex: 1 1 calc(30% - 10px);
-        text-align: center;
-        font-weight: bold;
-        transition: transform 0.3s;
-    }
-    ul li:hover {
-        transform: scale(1.05);
-    }
-    .announcement {
-        background: linear-gradient(to right, #004ba0, #1976d2);
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 22px;
-        font-weight: bold;
-        margin: 20px 0;
-        border-radius: 8px;
-        animation: fadeIn 2s;
-    }
-    footer {
-        background: #1976d2;
-        color: white;
-        text-align: center;
-        padding: 10px;
-        margin-top: 20px;
-        font-size: 14px;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    @keyframes slideUp {
-        from { transform: translateY(50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniteFix Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #1976d2;
+            --primary-light: #64b5f6;
+            --primary-dark: #004ba0;
+            --accent: #ff6d00;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-light: #f5f9ff;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--text-light);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 85%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1600/900') center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--text-light);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 109, 0, 0.3);
+        }
+        
+        .btn:hover {
+            background: #ff8c00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(255, 109, 0, 0.4);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-top: 0;
+            padding: 80px 0;
+        }
+        
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .tab-nav-item.active {
+            background: var(--primary);
+            color: var(--text-light);
+        }
+        
+        .tab-content {
+            width: 100%;
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Sections */
+        section {
+            background: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            overflow: hidden;
+            animation: fadeInUp 1s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-light);
+            bottom: 0;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .col-50 {
+            flex: 1 1 calc(50% - 15px);
+            min-width: 300px;
+        }
+        
+        .image-container {
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .service-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-img {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+        
+        .service-content {
+            padding: 20px;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-title i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        /* Announcement */
+        .announcement {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--text-light);
+            padding: 30px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 40px 0;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .announcement::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+        }
+        
+        .announcement::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -75px;
+            right: -75px;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1 1 250px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .footer-links a:hover {
+            color: var(--text-light);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: var(--text-light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #ff8c00;
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .navbar {
+                width: 90%;
+            }
+            
+            .container {
+                width: 90%;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                width: 95%;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                background: var(--primary-dark);
+                height: calc(100vh - 80px);
+                width: 80%;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .burger {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 25px;
+            }
+            
+            .tab-nav-item {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .announcement {
+                font-size: 1.2rem;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-<header>
-  PCS Repair Services
-</header>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-tools"></i>
+                UniteFix
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#how-we-work">How We Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
 
-<div class="container">
-  <section>
-    <h2>About Us</h2>
-    <p>We are dedicated to providing TRUE SERVICE, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
-    <p>For over 5 years, we have been providing services for Computers, Electronic items, and more at your doorstep. Now, we are entering the online market to expand our services across India.</p>
-    <p>Providing the best service at competitive prices is our number one priority. Our highly trained technicians ensure that your valuable items receive the best service.</p>
-  </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Your One-Stop Service Solution</h1>
+            <p>We provide expert repair and maintenance services for all your electronic devices and home appliances. With our experienced technicians, your satisfaction is guaranteed.</p>
+            <a href="#services" class="btn">Explore Services</a>
+        </div>
+    </section>
 
-  <section>
-    <h2>How We Work</h2>
-    <p>Our mission is to provide excellent service for all electronic items and other needs at affordable prices within the shortest time at your doorstep.</p>
-    <p><strong>Contact:</strong> PCS Repair | Service Seeker | Service Provider</p>
-  </section>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Tabs Section -->
+            <div class="tabs">
+                <div class="tabs-nav">
+                    <div class="tab-nav-item active" data-tab="about">About Us</div>
+                    <div class="tab-nav-item" data-tab="services">Our Services</div>
+                    <div class="tab-nav-item" data-tab="how-we-work">How We Work</div>
+                </div>
+                
+                <!-- About Tab -->
+                <div id="about" class="tab-content active">
+                    <h2>About UniteFix</h2>
+                    <div class="flex-container">
+                        <div class="col-50">
+                            <p>We are dedicated to providing TRUE SERVICE, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
+                            <p>For over 5 years, we have been providing services for Computers, Electronic items, and more at your doorstep. Now, we are entering the online market to expand our services across India.</p>
+                            <p>Providing the best service at competitive prices is our number one priority. Our highly trained technicians ensure that your valuable items receive the best service.</p>
+                        </div>
+                        <div class="col-50">
+                            <div class="image-container">
+                                <img src="/api/placeholder/600/400" alt="Repair Services">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Services Tab -->
+                <div id="services" class="tab-content">
+                    <h2>Our Services</h2>
+                    <p>We offer a wide range of repair and maintenance services to ensure your home and office equipment runs smoothly.</p>
+                    
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="/api/placeholder/400/300" alt="AC Repair">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="service-title"><i class="fas fa-snowflake"></i> AC Repair & Service</h3>
+                                <p>Professional installation, repair and maintenance for all types of air conditioners.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="/api/placeholder/400/300" alt="CC Camera">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="service-title"><i class="fas fa-video"></i> CC Camera Installation</h3>
+                                <p>Expert installation and repair of CCTV systems for home and business security.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="/api/placeholder/400/300" alt="Computer Repair">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="service-title"><i class="fas fa-laptop"></i> Computer Repair</h3>
+                                <p>Comprehensive computer repair and maintenance services for all brands.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="/api/placeholder/400/300" alt="Printer Repair">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="service-title"><i class="fas fa-print"></i> Printer & Scanner</h3>
+                                <p>Troubleshooting and repair services for all types of printers and scanners.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="/api/placeholder/400/300" alt="Water Purifier">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="service-title"><i class="fas fa-tint"></i> Water Purifier</h3>
+                                <p>Installation, maintenance and repair of water purifiers and filters.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="/api/placeholder/400/300" alt="Mobile Repair">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="service-title"><i class="fas fa-mobile-alt"></i> Mobile Repair</h3>
+                                <p>Expert repair services for all brands of smartphones and tablets.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- How We Work Tab -->
+                <div id="how-we-work" class="tab-content">
+                    <h2>How We Work</h2>
+                    <div class="flex-container">
+                        <div class="col-50">
+                            <div class="image-container">
+                                <img src="/api/placeholder/600/400" alt="How we work">
+                            </div>
+                        </div>
+                        <div class="col-50">
+                            <p>Our mission is to provide excellent service for all electronic items and other needs at affordable prices within the shortest time at your doorstep.</p>
+                            <p>Our simple three-step process makes getting your repairs done easy:</p>
+                            <ol>
+                                <li><strong>Contact UniteFix</strong>: Reach out to us via phone, email, or our upcoming app</li>
+                                <li><strong>Service Request</strong>: Tell us about your issue and schedule a convenient time</li>
+                                <li><strong>Service Delivery</strong>: Our expert technician arrives at your doorstep to solve your problem</li>
+                            </ol>
+                            <p>We pride ourselves on transparent pricing, quality workmanship, and excellent customer service.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Announcement Section -->
+            <div class="announcement animate-pulse">
+                <i class="fas fa-rocket"></i> UniteFix Android App Coming Soon! <br> 
+                Your One-Stop Solution for <span class="highlight">AC, CC Camera, Computer Repair & Product Delivery</span>! <i class="fas fa-mobile-alt"></i>
+            </div>
+        </div>
+    </div>
 
-  <section>
-    <h2>Our Services</h2>
-    <ul>
-      <li>AC Repair & Service</li>
-      <li>CC Camera Installation & Repair</li>
-      <li>Computer Repair & Maintenance</li>
-      <li>Printer & Scanner Repair</li>
-      <li>Water Purifier Services</li>
-      <li>Mobile & Electronics Repair</li>
-      <li>Home Appliances Maintenance</li>
-      <li>Vehicle Repair Services</li>
-      <li>Interior & Exterior Design</li>
-      <li>Professional Cleaning & Pest Control</li>
-      <li>Courier & Delivery Services</li>
-      <li>IT & Software Solutions</li>
-    </ul>
-  </section>
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>UniteFix</h3>
+                    <p>Your trusted partner for all repair and maintenance services. We bring expert solutions right to your doorstep.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="#how-we-work"><i class="fas fa-chevron-right"></i> How We Work</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-snowflake"></i> AC Repair</a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> CC Camera Installation</a></li>
+                        <li><a href="#"><i class="fas fa-laptop"></i> Computer Repair</a></li>
+                        <li><a href="#"><i class="fas fa-print"></i> Printer Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> New Delhi, India</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 98765 43210</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@unitefix.com</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 8:00 PM</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 UniteFix Services. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
 
-  <div class="announcement">
-    🚀 UniteFix Android App Coming Soon! <br> Your One-Stop Solution for **AC, CC Camera, Computer Repair & Product Delivery**! 📱
-  </div>
-</div>
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
 
-<footer>
-  &copy; 2025 PCS Repair Services. All Rights Reserved.
-</footer>
+    <!-- Scripts -->
+    <script>
+        // Mobile Navigation
+        const burger = document.querySelector('.burger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Tab Functionality
+        const tabNavItems = document.querySelectorAll('.tab-nav-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabNavItems.forEach(tab => tab.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                item.classList.add('active');
+                const tabId = item.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Back to Top Button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('active');
+            } else {
+                backToTopBtn.classList.remove('active');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
