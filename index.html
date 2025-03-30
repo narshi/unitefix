@@ -114,19 +114,23 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1600/900') center/cover no-repeat;
+            background: #ffffff;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-light);
+            color: var(--text-dark);
             text-align: center;
             padding: 0 20px;
+            margin-top: 80px;
         }
         
         .hero-content {
             max-width: 800px;
             animation: fadeInUp 1s ease;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
         .hero h1 {
@@ -134,11 +138,13 @@
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            color: var(--primary);
         }
         
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 30px;
+            color: var(--text-dark);
         }
         
         .btn {
@@ -173,70 +179,28 @@
             overflow: hidden;
         }
         
-        /* Tabs */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 25px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tabs-nav {
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .tab-nav-item {
-            padding: 12px 24px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: var(--transition);
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .tab-nav-item.active {
-            background: var(--primary);
-            color: var(--text-light);
-        }
-        
-        .tab-content {
-            width: 100%;
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Sections */
-        section {
-            background: white;
-            padding: 40px;
-            margin: 30px 0;
+        /* About Section */
+        #about {
+            padding: 80px 0;
+            background-color: white;
             border-radius: 15px;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            overflow: hidden;
-            animation: fadeInUp 1s ease;
+            margin: 30px 0;
         }
         
-        section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 0 40px;
         }
         
-        h2 {
+        .about-text {
+            flex: 1 1 calc(100% - 30px);
+            min-width: 300px;
+        }
+        
+        .about-title {
             color: var(--primary);
             font-size: 2rem;
             margin-bottom: 20px;
@@ -244,7 +208,7 @@
             padding-bottom: 10px;
         }
         
-        h2::after {
+        .about-title::after {
             content: '';
             position: absolute;
             width: 60px;
@@ -255,88 +219,89 @@
             border-radius: 2px;
         }
         
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 30px;
+        /* Services Section */
+        #services {
+            padding: 80px 0;
+            background-color: var(--bg-light);
         }
         
-        .col-50 {
-            flex: 1 1 calc(50% - 15px);
-            min-width: 300px;
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 15px;
         }
         
-        .image-container {
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-light);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
         
-        .image-container img {
-            width: 100%;
-            height: auto;
-            transition: transform 0.5s ease;
-            display: block;
-        }
-        
-        .image-container:hover img {
-            transform: scale(1.05);
-        }
-        
-        /* Services */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
         
         .service-card {
             background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .service-img {
-            height: 180px;
-            overflow: hidden;
+        .service-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            background: var(--bg-light);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            transition: var(--transition);
         }
         
-        .service-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .service-card:hover .service-img img {
-            transform: scale(1.1);
-        }
-        
-        .service-content {
-            padding: 20px;
+        .service-card:hover .service-icon {
+            background: var(--primary-light);
+            color: var(--text-light);
+            transform: rotateY(360deg);
+            transition: transform 0.8s, background 0.3s, color 0.3s;
         }
         
         .service-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 10px;
             color: var(--primary);
+            min-height: 40px;
             display: flex;
             align-items: center;
-        }
-        
-        .service-title i {
-            margin-right: 10px;
-            color: var(--accent);
+            justify-content: center;
         }
         
         /* Announcement */
@@ -453,6 +418,30 @@
             transform: translateY(-5px);
         }
         
+        /* Category Tabs */
+        .service-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .category-tab {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .category-tab.active, .category-tab:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -492,6 +481,10 @@
             
             .hero h1 {
                 font-size: 2.8rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
         
@@ -534,13 +527,20 @@
                 font-size: 1rem;
             }
             
-            section {
+            .hero-content {
                 padding: 25px;
             }
             
-            .tab-nav-item {
-                padding: 10px 15px;
-                font-size: 0.9rem;
+            .about-content {
+                padding: 25px;
+            }
+            
+            .service-card {
+                padding: 15px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
         }
         
@@ -549,17 +549,129 @@
                 font-size: 1.8rem;
             }
             
-            section {
+            .hero-content {
+                padding: 20px;
+            }
+            
+            .about-content {
                 padding: 20px;
             }
             
             .services-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             }
             
             .announcement {
                 font-size: 1.2rem;
                 padding: 20px;
+            }
+            
+            .service-title {
+                font-size: 0.9rem;
+            }
+            
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        .app-banner {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--text-light);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-banner::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -75px;
+            right: -75px;
+        }
+        
+        .app-banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .app-icon {
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            color: var(--accent);
+            animation: pulse 2s infinite;
+        }
+        
+        .app-text {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .app-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .app-text p {
+            opacity: 0.9;
+        }
+        
+        .app-stores {
+            display: flex;
+            gap: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .app-stores span {
+            background: rgba(255, 255, 255, 0.15);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        
+        .app-stores span:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .app-banner-content {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .app-text {
+                text-align: center;
+                margin: 10px 0;
+            }
+            
+            .app-icon {
+                margin: 0 auto;
             }
         }
     </style>
@@ -576,152 +688,273 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#how-we-work">How We Work</a></li>
             </ul>
             <div class="burger">
                 <i class="fas fa-bars"></i>
             </div>
         </nav>
     </header>
+    
+    <script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Navigation smooth scrolling animation
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Get the target section
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                // Add animation class to the target section
+                if(targetSection) {
+                    // Remove animation classes from all sections first
+                    document.querySelectorAll('section').forEach(section => {
+                        section.classList.remove('animate-pulse');
+                    });
+                    
+                    // Add animation to the target section
+                    targetSection.classList.add('animate-pulse');
+                    
+                    // Smooth scroll to the section
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Remove animation class after animation completes
+                    setTimeout(() => {
+                        targetSection.classList.remove('animate-pulse');
+                    }, 2000);
+                }
+            });
+        });
+        
+        // 2. Service category filtering
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const serviceCards = document.querySelectorAll('.service-card');
+        
+        // Define service categories mapping
+        const serviceCategories = {
+            'Technology': ['Computer Repair', 'Printer Repair', 'CCTV Repair', 'Water Purifier Repair', 
+                          'Biometric Devices Repair', 'Mobile Services', 'Camera Repair', 'Electronics Repair', 
+                          'DTH & Set Top Boxes'],
+            'Home': ['Water Purifier Repair', 'Electrician Services', 'Household Repair', 'Pest Control', 
+                    'Movers & Packers', 'Carpenters', 'Home Cleaning', 'Interior Design'],
+            'Professional': ['Advertising & Design', 'Taxation & Audit', 'Doctors', 'Medical Services', 
+                            'Architect', 'Financial Planning', 'Lawyers & Advocates', 'Business Offers'],
+            'Lifestyle': ['Astrology & Numerology', 'Health & Fitness', 'Maids & Housekeeping', 'Vaastu', 
+                         'Catering Services', 'Event Planners', 'Parlours & Salons', 'Restaurants', 'Cooks'],
+            'Travel': ['Travel Agents', 'Travel Tickets', 'Tour Packages', 'Taxi Services', 'Drivers', 
+                      'Driving Schools', 'Courier Services']
+        };
+        
+        // Add click event to category tabs
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                const category = this.textContent;
+                
+                // Show all services if "All" is clicked
+                if(category === 'All') {
+                    serviceCards.forEach(card => {
+                        card.style.display = 'flex';
+                        // Add fade-in animation
+                        card.style.animation = 'fadeIn 0.5s';
+                    });
+                    return;
+                }
+                
+                // Filter services based on category
+                serviceCards.forEach(card => {
+                    const serviceName = card.querySelector('.service-title').textContent;
+                    
+                    if(serviceCategories[category] && serviceCategories[category].includes(serviceName)) {
+                        card.style.display = 'flex';
+                        // Add fade-in animation
+                        card.style.animation = 'fadeIn 0.5s';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // 3. Mobile menu toggle
+        const burger = document.querySelector('.burger');
+        const navMenu = document.querySelector('.nav-links');
+        
+        burger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+        
+        // 4. Back to top button functionality
+        const backToTopButton = document.createElement('a');
+        backToTopButton.classList.add('back-to-top');
+        backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        backToTopButton.href = '#';
+        document.body.appendChild(backToTopButton);
+        
+        window.addEventListener('scroll', function() {
+            if(window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+    </script>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Your One-Stop Service Solution</h1>
-            <p>We provide expert services for all your needs . With our experienced technicians, your satisfaction is guaranteed.</p>
+            <p>We provide expert services for all your needs. With our experienced technicians, your satisfaction is guaranteed.</p>
             <a href="#services" class="btn">Explore Services</a>
         </div>
     </section>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="container">
-            <!-- Tabs Section -->
-            <div class="tabs">
-                <div class="tabs-nav">
-                    <div class="tab-nav-item active" data-tab="about">About Us</div>
-                    <div class="tab-nav-item" data-tab="services">Our Services</div>
-                    <div class="tab-nav-item" data-tab="how-we-work">How We Work</div>
-                </div>
-                
-                <!-- About Tab -->
-                <div id="about" class="tab-content active">
-                    <h2>About UniteFix</h2>
-                    <div class="flex-container">
-                        <div class="col-50">
-                            <p>We are dedicated to providing TRUE SERVICE, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
-                            <p>For over 10+ years, we have been providing services for your multiple needs at your doorstep. Now, we are entering the online market to expand our services.</p>
-                            <p>Providing the best service at competitive prices is our number one priority. Our highly trained technicians ensure that your valuable items receive the best service.</p>
-                        </div>
-                        <div class="col-50">
-                            <div class="image-container">
-                                <img src="/api/placeholder/600/400" alt="Repair Services">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Services Tab -->
-                <div id="services" class="tab-content">
-                    <h2>Our Services</h2>
-                    <p>We offer a wide range of services to ensure your home and office equipment runs smoothly.</p>
-                    
-                    <div class="services-grid">
-                        <div class="service-card">
-                            <div class="service-img">
-                                <img src="/api/placeholder/400/300" alt="AC Repair">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="service-title"><i class="fas fa-snowflake"></i> AC Repair & Service</h3>
-                                <p>Professional installation, repair and maintenance for all types of air conditioners.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-img">
-                                <img src="/api/placeholder/400/300" alt="CC Camera">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="service-title"><i class="fas fa-video"></i> CC Camera Installation</h3>
-                                <p>Expert installation and repair of CCTV systems for home and business security.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-img">
-                                <img src="/api/placeholder/400/300" alt="Computer Repair">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="service-title"><i class="fas fa-laptop"></i> Computer Repair</h3>
-                                <p>Comprehensive computer repair and maintenance services for all brands.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-img">
-                                <img src="/api/placeholder/400/300" alt="Printer Repair">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="service-title"><i class="fas fa-print"></i> Printer & Scanner</h3>
-                                <p>Troubleshooting and repair services for all types of printers and scanners.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-img">
-                                <img src="/api/placeholder/400/300" alt="Water Purifier">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="service-title"><i class="fas fa-tint"></i> Water Purifier</h3>
-                                <p>Installation, maintenance and repair of water purifiers and filters.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-img">
-                                <img src="/api/placeholder/400/300" alt="Mobile Repair">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="service-title"><i class="fas fa-mobile-alt"></i> Mobile Repair</h3>
-                                <p>Expert repair services for all brands of smartphones and tablets.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- How We Work Tab -->
-                <div id="how-we-work" class="tab-content">
-                    <h2>How We Work</h2>
-                    <div class="flex-container">
-                        <div class="col-50">
-                            <div class="image-container">
-                                <img src="/api/placeholder/600/400" alt="How we work">
-                            </div>
-                        </div>
-                        <div class="col-50">
-                            <p>Our mission is to provide excellent service for all electronic items and other needs at affordable prices within the shortest time at your doorstep.</p>
-                            <p>Our simple three-step process makes getting your needs completed easily:</p>
-                            <ol>
-                                <li><strong>Contact UniteFix</strong>: Reach out to us via phone, email, or our upcoming app</li>
-                                <li><strong>Service Request</strong>: Tell us about your issue and schedule a convenient time</li>
-                                <li><strong>Service Delivery</strong>: Our expert technician arrives at your doorstep to solve your problem</li>
-                            </ol>
-                            <p>We pride ourselves on transparent pricing, quality workmanship, and excellent customer service.</p>
-                        </div>
-                    </div>
-                </div>
+    
+    <div class="app-banner">
+        <div class="app-banner-content">
+            <div class="app-icon">
+                <i class="fas fa-mobile-alt"></i>
             </div>
-            
-            <!-- Announcement Section -->
-            <div class="announcement animate-pulse">
-                <i class="fas fa-rocket"></i> UniteFix Android App Coming Soon! <br> 
-                Your One-Stop Solution for <span class="highlight">all your needs</span>! <i class="fas fa-mobile-alt"></i>
+            <div class="app-text">
+                <h3>UniteFix Mobile App</h3>
+                <p>Coming Soon to App Store & Google Play</p>
+            </div>
+            <div class="app-stores">
+                <span><i class="fab fa-apple"></i></span>
+                <span><i class="fab fa-google-play"></i></span>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About UniteFix</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>We are dedicated to providing TRUE SERVICE, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
+                    <p>For over 10+ years, we have been providing services for your multiple needs at your doorstep. Now, we are entering the online market to expand our services.</p>
+                    <p>Providing the best service at competitive prices is our number one priority. Our highly trained technicians ensure that your valuable items receive the best service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p style="text-align: center; margin-bottom: 40px;">We offer a wide range of services to ensure all your home, office, and lifestyle needs are met with expert care.</p>
+            
+            <div class="service-categories">
+                <button class="category-tab active">All</button>
+                <button class="category-tab">Technology</button>
+                <button class="category-tab">Home</button>
+                <button class="category-tab">Professional</button>
+                <button class="category-tab">Lifestyle</button>
+                <button class="category-tab">Travel</button>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="service-title">Computer Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3 class="service-title">Printer Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="service-title">CCTV Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3 class="service-title">Water Purifier Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3 class="service-title">Biometric Devices Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title">Mobile Services</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="service-title">Camera Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="service-title">Electronics Repair</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="service-title">Astrology & Numerology</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="service-title">Health & Fitness</h3>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h3 class="service-title">Maids & Housekeeping</h3>
+                </div>
+                
+               
+       </section> 
+
+	<footer>
         <div class="container">
             <div class="footer-content">
                 <h3>UniteFix Services</h3>
@@ -743,77 +976,9 @@
     <!-- Back to Top Button -->
     <a href="#" class="back-to-top">
         <i class="fas fa-arrow-up"></i>
+    </a>          
+	
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
     </a>
-
-    <!-- Scripts -->
-    <script>
-        // Mobile Navigation
-        const burger = document.querySelector('.burger');
-        const navLinks = document.querySelector('.nav-links');
-        
-        burger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-        
-        // Tab Functionality
-        const tabNavItems = document.querySelectorAll('.tab-nav-item');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        tabNavItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // Remove active class from all tabs
-                tabNavItems.forEach(tab => tab.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                
-                // Add active class to clicked tab
-                item.classList.add('active');
-                const tabId = item.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        
-        // Back to Top Button
-        const backToTopBtn = document.querySelector('.back-to-top');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('active');
-            } else {
-                backToTopBtn.classList.remove('active');
-            }
-        });
-        
-        backToTopBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        // Smooth Scrolling for Navigation Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerOffset = 80;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if (navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                    }
-                }
-            });
-        });
-    </script>
-</body>
-</html>
