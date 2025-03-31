@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="UniteFix - Your One-Stop Service Solution. Get expert for all your home and office needs at your doorstep. Trusted services with experienced professionals.">
-    <meta name="keywords" content="AC repair, CCTV installation, computer repair, mobile repair, home services, UniteFix">
+    <meta name="keywords" content="AC services, CCTV installation, computer services, mobile services, home services, UniteFix">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="UniteFix - Expert Home Services">
     <meta property="og:description" content="Providing top-quality home & office services at your doorstep. Trusted professionals for reliable service.">
@@ -699,37 +699,41 @@
     // Wait for the DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
         // 1. Navigation smooth scrolling animation
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Get the target section
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                // Add animation class to the target section
-                if(targetSection) {
-                    // Remove animation classes from all sections first
-                    document.querySelectorAll('section').forEach(section => {
-                        section.classList.remove('animate-pulse');
-                    });
-                    
-                    // Add animation to the target section
-                    targetSection.classList.add('animate-pulse');
-                    
-                    // Smooth scroll to the section
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Remove animation class after animation completes
-                    setTimeout(() => {
-                        targetSection.classList.remove('animate-pulse');
-                    }, 2000);
-                }
+        // 1. Navigation smooth scrolling animation
+const navLinks = document.querySelectorAll('.nav-links a');
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Get the target section
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        // ADDED THIS LINE: Close the mobile menu when a link is clicked
+        document.querySelector('.nav-links').classList.remove('active');
+        
+        // Add animation class to the target section
+        if(targetSection) {
+            // Remove animation classes from all sections first
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('animate-pulse');
             });
-        });
+            
+            // Add animation to the target section
+            targetSection.classList.add('animate-pulse');
+            
+            // Smooth scroll to the section
+            targetSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                targetSection.classList.remove('animate-pulse');
+            }, 2000);
+        }
+    });
+});
         
         // 2. Service category filtering
         const categoryTabs = document.querySelectorAll('.category-tab');
@@ -737,10 +741,10 @@
         
         // Define service categories mapping
         const serviceCategories = {
-            'Technology': ['Computer Repair', 'Printer Repair', 'CCTV Repair', 'Water Purifier Repair', 
-                          'Biometric Devices Repair', 'Mobile Services', 'Camera Repair', 'Electronics Repair', 
+            'Technology': ['Computer services', 'Printer services', 'CCTV services', 'Water Purifier services', 
+                          'Biometric Devices services', 'Mobile Services', 'Camera services', 'Electronics services', 
                           'DTH & Set Top Boxes'],
-            'Home': ['Water Purifier Repair', 'Electrician Services', 'Household Repair', 'Pest Control', 
+            'Home': ['Water Purifier services', 'Electrician Services', 'Household services', 'Pest Control', 
                     'Movers & Packers', 'Carpenters', 'Home Cleaning', 'Interior Design'],
             'Professional': ['Advertising & Design', 'Taxation & Audit', 'Doctors', 'Medical Services', 
                             'Architect', 'Financial Planning', 'Lawyers & Advocates', 'Business Offers'],
@@ -852,7 +856,7 @@
                 <div class="about-text">
                     <p>We are dedicated to providing TRUE SERVICE, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
                     <p>For over 10+ years, we have been providing services for your multiple needs at your doorstep. Now, we are entering the online market to expand our services.</p>
-                    <p>Providing the best service at competitive prices is our number one priority. Our highly trained technicians ensure that your valuable items receive the best service.</p>
+                    <p>Providing the best service at competitive prices is our number one priority. Our highly trained service providers give the best service that's our promise . </p>
                 </div>
             </div>
         </div>
@@ -878,35 +882,35 @@
                     <div class="service-icon">
                         <i class="fas fa-laptop"></i>
                     </div>
-                    <h3 class="service-title">Computer Repair</h3>
+                    <h3 class="service-title">Computer services</h3>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-print"></i>
                     </div>
-                    <h3 class="service-title">Printer Repair</h3>
+                    <h3 class="service-title">Printer services</h3>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-video"></i>
                     </div>
-                    <h3 class="service-title">CCTV Repair</h3>
+                    <h3 class="service-title">CCTV services</h3>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-tint"></i>
                     </div>
-                    <h3 class="service-title">Water Purifier Repair</h3>
+                    <h3 class="service-title">Water Purifier services</h3>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-fingerprint"></i>
                     </div>
-                    <h3 class="service-title">Biometric Devices Repair</h3>
+                    <h3 class="service-title">Biometric Devices services</h3>
                 </div>
                 
                 <div class="service-card">
@@ -920,14 +924,14 @@
                     <div class="service-icon">
                         <i class="fas fa-camera"></i>
                     </div>
-                    <h3 class="service-title">Camera Repair</h3>
+                    <h3 class="service-title">Camera services</h3>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-plug"></i>
                     </div>
-                    <h3 class="service-title">Electronics Repair</h3>
+                    <h3 class="service-title">Electronics services</h3>
                 </div>
                 
                 <div class="service-card">
@@ -950,6 +954,13 @@
                     </div>
                     <h3 class="service-title">Maids & Housekeeping</h3>
                 </div>
+                
+                <div class="service-card">
+    <div class="service-icon">
+        <i class="fas fa-wifi"></i>
+    </div>
+    <h3 class="service-title">Wifi Services</h3>
+</div>
                 
                
        </section> 
@@ -982,3 +993,5 @@
     <a href="#" class="back-to-top">
         <i class="fas fa-arrow-up"></i>
     </a>
+
+
