@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register with UniteFix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1976d2;
+            --primary-light: #64b5f6;
+            --primary-dark: #004ba0;
+            --accent: #ff6d00;
+            --text-dark: #333333;
+            --bg-light: #f5f9ff;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .container label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #444;
+        }
+        
+        .container input, .container textarea, .container button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .container button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .container button:hover {
+            background: var(--primary-dark);
+        }
+        
+        .container button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        #response {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Register with UniteFix</h2>
+        <form id="registerForm">
+            <input type="hidden" id="serviceRequest" name="serviceRequest" value="General Inquiry">
+            
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="phone">Phone <span style="color:red">*</span></label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="10-digit number">
+    
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" name="email">
+    
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="3"></textarea>
+    
+            <button type="submit">Submit</button>
+        </form>
+        <p id="response"></p>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceName = urlParams.get('service');
+        const serviceRequestInput = document.getElementById("serviceRequest");
+        
+        if (serviceName) {
+            serviceRequestInput.value = decodeURIComponent(serviceName);
+        }
+
+        const scriptURL = "https://script.google.com/macros/s/AKfycbzvgD-RLSSsKnEMzPcRKsUtxktsdwaFzbrr0KUKnFo/dev"; // **REPLACE WITH YOUR NEW URL**
+        const form = document.getElementById("registerForm");
+        const responseEl = document.getElementById("response");
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            responseEl.textContent = "Submitting...";
+            responseEl.style.color = "orange";
+            submitButton.disabled = true;
+
+            try {
+                const res = await fetch(scriptURL, { 
+                    method: "POST", 
+                    body: new FormData(form)
+                });
+
+                let data;
+                try {
+                    data = await res.json();
+                } catch (jsonErr) {
+                    const text = await res.text();
+                    responseEl.textContent = "Server response: " + text;
+                    responseEl.style.color = "red";
+                    return;
+                }
+
+                if (data.success) {
+                    responseEl.textContent = "✅ Success! We've received your request and will contact you shortly.";
+                    responseEl.style.color = "green";
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = "index.html"; 
+                    }, 3000); 
+                } else {
+                    throw new Error(data.message || 'Server did not return success.');
+                }
+            } catch (err) {
+                responseEl.textContent = "❌ Something went wrong. Please try again later.";
+                responseEl.style.color = "red";
+                console.error('Submission Error:', err.message);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    });
+    </script>
+</body>
+</html>
