@@ -1,389 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register as Service Provider - UniteFix</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #1976d2;
-            --primary-light: #64b5f6;
-            --primary-dark: #004ba0;
-            --accent: #ff6d00;
-            --text-dark: #333333;
-            --bg-light: #f5f9ff;
-            --transition: all 0.3s ease;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register as Service Provider - UniteFix</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1976d2;
+      --primary-dark: #004ba0;
+      --text-dark: #333;
+      --bg-light: #f5f9ff;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+    * { box-sizing: border-box; }
 
-        .container {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            width: 90%;
-            max-width: 550px;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 20px 0;
+      padding: 20px;
+    }
 
-        .container h2 {
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-            text-align: center;
-        }
+    .container{
+      background:#fff;
+      width:90%;
+      max-width:720px;
+      border-radius:14px;
+      padding:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
 
-        .container .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
+    h2 { color:var(--primary); text-align:center; margin:0 0 6px; font-size:28px; }
+    .subtitle { text-align:center; color:#666; margin-bottom:18px; }
 
-        .container label {
-            display: block;
-            text-align: left;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #444;
-        }
-        
-        .container input, .container textarea, .container button {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
+    label { display:block; margin:14px 0 6px; font-weight:700; color:#444; }
+    input[type="text"], input[type="tel"], input[type="email"], textarea, button {
+      width:100%;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid #d1d5db;
+      font-size:15px;
+      background: #fff;
+    }
 
-        /* Multi-select dropdown styles */
-        .multi-select-container {
-            position: relative;
-            margin-bottom: 1rem;
-        }
+    textarea { min-height:90px; resize:vertical; }
 
-        .multi-select-header {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            min-height: 46px;
-        }
+    button {
+      background:var(--primary);
+      color:#fff;
+      border:none;
+      padding:12px;
+      border-radius:10px;
+      font-weight:700;
+      font-size:16px;
+      cursor:pointer;
+      margin-top:8px;
+    }
+    button:hover { background:var(--primary-dark); }
 
-        .multi-select-header:hover {
-            border-color: var(--primary);
-        }
+    .required { color: #d33; margin-left:6px; font-weight:700; }
 
-        .selected-services {
-            flex: 1;
-            color: #666;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    /* Multi-select area */
+    .multi-select-container {
+      position: relative;
+      margin-bottom: 8px;
+      /* allow dropdown to overflow parents */
+      overflow: visible;
+      z-index: 2000; /* ensures dropdown sits above page content */
+    }
 
-        .selected-services.has-selection {
-            color: var(--text-dark);
-        }
+    .multi-select-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      cursor:pointer;
+      min-height:48px;
+      user-select:none;
+    }
 
-        .dropdown-arrow {
-            margin-left: 10px;
-            transition: transform 0.3s;
-        }
+    .selected-services { color:#6b7280; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; }
 
-        .dropdown-arrow.open {
-            transform: rotate(180deg);
-        }
+    .dropdown-arrow { transition: transform .25s ease; color:#6b7280; }
+    .dropdown-arrow.open { transform: rotate(180deg); }
 
-        .multi-select-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #ccc;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+    .multi-select-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius:10px;
+      max-height: 320px;
+      overflow-y: auto;
+      display: none;
+      box-shadow: 0 8px 24px rgba(2,6,23,0.08);
+      padding: 8px 6px;
+      z-index: 3000;
+    }
+    .multi-select-dropdown.open { display:block; }
 
-        .multi-select-dropdown.open {
-            display: block;
-        }
+    .service-option {
+      display:flex;
+      align-items:center;      /* vertical center alignment */
+      gap:10px;
+      padding:8px 10px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    .service-option:hover { background:#f8fafc; }
 
-        .service-option {
-            padding: 10px 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: background 0.2s;
-        }
+    .service-option input[type="checkbox"] {
+      margin:0;
+      /* scale a bit but keep baseline stable */
+      transform: scale(1.05);
+      width:18px;
+      height:18px;
+      cursor:pointer;
+      accent-color: var(--primary);
+      /* ensure checkbox is vertically centered even if browsers differ */
+      align-self:center;
+    }
 
-        .service-option:hover {
-            background: var(--bg-light);
-        }
+    .service-option label {
+      margin:0;
+      cursor:pointer;
+      font-weight:500;
+      color:#333;
+      line-height:1.1;
+    }
 
-        .service-option input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-            margin-bottom: 0;
-            cursor: pointer;
-        }
+    /* Terms area */
+    .terms-container { display:flex; align-items:center; gap:10px; margin-top:10px; }
+    .terms-container input[type="checkbox"] {
+      width:18px; height:18px; margin:0; transform:scale(1.02); accent-color:var(--primary);
+    }
+    .terms-container label { margin:0; font-weight:500; color:#333; cursor:pointer; }
 
-        .service-option label {
-            margin: 0;
-            cursor: pointer;
-            font-weight: normal;
-            flex: 1;
-        }
+    #response { margin-top:12px; text-align:center; font-weight:700; }
 
-        .container button {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-weight: 600;
-        }
-        
-        .container button:hover {
-            background: var(--primary-dark);
-        }
-        
-        .container button:disabled {
-            background: #aaa;
-            cursor: not-allowed;
-        }
-
-        #response {
-            margin-top: 1rem;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .required {
-            color: red;
-        }
-
-        /* Terms and Conditions checkbox */
-        .terms-container {
-            text-align: left;
-            margin-bottom: 1rem;
-        }
-
-        .terms-container input[type="checkbox"] {
-            transform: scale(1.2);
-            margin-right: 8px;
-            cursor: pointer;
-        }
-
-        .terms-container label {
-            cursor: pointer;
-            font-weight: normal;
-            color: #555;
-        }
-    </style>
+    .back-link { display:block; text-align:center; margin-top:14px; color:var(--primary); text-decoration:none; font-weight:600; }
+    .back-link:hover { text-decoration:underline; }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Service Provider Registration</h2>
+    <p class="subtitle">Join our network of professional service providers</p>
 
-    <div class="container">
-        <h2>Service Provider Registration</h2>
-        <p class="subtitle">Join our network of professional service providers</p>
-        
-        <form id="registerForm">
-            <label for="name">Full Name <span class="required">*</span></label>
-            <input type="text" id="name" name="name" required>
-    
-            <label for="phone">Phone Number <span class="required">*</span></label>
-            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="10-digit number">
-    
-            <label for="email">Email (optional)</label>
-            <input type="email" id="email" name="email">
-    
-            <label for="address">Address <span class="required">*</span></label>
-            <textarea id="address" name="address" rows="3" required></textarea>
+    <form id="registerForm" novalidate>
+      <label for="name">Full Name <span class="required">*</span></label>
+      <input id="name" name="name" type="text" required>
 
-            <label>Services You Provide <span class="required">*</span></label>
-            <div class="multi-select-container">
-                <div class="multi-select-header" id="multiSelectHeader">
-                    <span class="selected-services" id="selectedServicesDisplay">Select services...</span>
-                    <i class="fas fa-chevron-down dropdown-arrow" id="dropdownArrow"></i>
-                </div>
-                <div class="multi-select-dropdown" id="multiSelectDropdown">
-                    <!-- all your service checkboxes remain unchanged -->
-                    <!-- (keeping your existing service options intact) -->
-                </div>
-            </div>
-            <input type="hidden" id="selectedServicesInput" name="serviceRequest">
+      <label for="phone">Phone Number <span class="required">*</span></label>
+      <input id="phone" name="phone" type="tel" pattern="[0-9]{10}" placeholder="10-digit number" required>
 
-            <!-- ✅ Terms and Conditions Checkbox -->
-            <div class="terms-container">
-                <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">I agree to all the <strong>Terms and Conditions</strong>.</label>
-            </div>
+      <label for="email">Email (optional)</label>
+      <input id="email" name="email" type="email">
 
-            <button type="submit">Submit Registration</button>
-        </form>
+      <label for="address">Address <span class="required">*</span></label>
+      <textarea id="address" name="address" required></textarea>
 
-        <p id="response"></p>
-        <a href="index.html" class="back-link">← Back to Home</a>
-    </div>
+      <label>Services You Provide <span class="required">*</span></label>
+      <div class="multi-select-container">
+        <div class="multi-select-header" id="multiSelectHeader" aria-haspopup="listbox" role="button" tabindex="0">
+          <span class="selected-services" id="selectedServicesDisplay">Select services...</span>
+          <i class="fas fa-chevron-down dropdown-arrow" id="dropdownArrow"></i>
+        </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const multiSelectHeader = document.getElementById('multiSelectHeader');
-        const multiSelectDropdown = document.getElementById('multiSelectDropdown');
-        const dropdownArrow = document.getElementById('dropdownArrow');
-        const selectedServicesDisplay = document.getElementById('selectedServicesDisplay');
-        const selectedServicesInput = document.getElementById('selectedServicesInput');
-        const serviceCheckboxes = document.querySelectorAll('input[name="services"]');
+        <div class="multi-select-dropdown" id="multiSelectDropdown" role="listbox" aria-multiselectable="true">
+          <!-- each checkbox has an id and matching label for proper click behavior -->
+          <div class="service-option"><input id="s1" name="services" type="checkbox" value="Computer & Printer"><label for="s1">Computer & Printer</label></div>
+          <div class="service-option"><input id="s2" name="services" type="checkbox" value="CCTV Camera"><label for="s2">CCTV Camera</label></div>
+          <div class="service-option"><input id="s3" name="services" type="checkbox" value="Biometric Device"><label for="s3">Biometric Device</label></div>
+          <div class="service-option"><input id="s4" name="services" type="checkbox" value="UPS & Batteries"><label for="s4">UPS & Batteries</label></div>
+          <div class="service-option"><input id="s5" name="services" type="checkbox" value="Water Purifiers"><label for="s5">Water Purifiers</label></div>
+          <div class="service-option"><input id="s6" name="services" type="checkbox" value="Internet & Broadband"><label for="s6">Internet & Broadband</label></div>
+          <div class="service-option"><input id="s7" name="services" type="checkbox" value="Solar & Heat Pumps"><label for="s7">Solar & Heat Pumps</label></div>
+          <div class="service-option"><input id="s8" name="services" type="checkbox" value="WTP & STP"><label for="s8">WTP & STP</label></div>
+          <div class="service-option"><input id="s9" name="services" type="checkbox" value="Mobile Repairs"><label for="s9">Mobile Repairs</label></div>
+          <div class="service-option"><input id="s10" name="services" type="checkbox" value="Digital Camera Services"><label for="s10">Digital Camera Services</label></div>
+          <div class="service-option"><input id="s11" name="services" type="checkbox" value="Home Appliances"><label for="s11">Home Appliances</label></div>
+          <div class="service-option"><input id="s12" name="services" type="checkbox" value="Generators, Water Pumps, Water Cutoff Sensors"><label for="s12">Generators, Water Pumps, Water Cutoff Sensors</label></div>
+          <div class="service-option"><input id="s13" name="services" type="checkbox" value="Household Repairs"><label for="s13">Household Repairs</label></div>
+          <div class="service-option"><input id="s14" name="services" type="checkbox" value="Electrical & Plumbing"><label for="s14">Electrical & Plumbing</label></div>
+          <div class="service-option"><input id="s15" name="services" type="checkbox" value="Architecture"><label for="s15">Architecture</label></div>
+          <div class="service-option"><input id="s16" name="services" type="checkbox" value="Vehicle Service"><label for="s16">Vehicle Service</label></div>
+          <div class="service-option"><input id="s17" name="services" type="checkbox" value="Agriculture Product Services"><label for="s17">Agriculture Product Services</label></div>
+          <div class="service-option"><input id="s18" name="services" type="checkbox" value="Earth Movers"><label for="s18">Earth Movers</label></div>
+          <div class="service-option"><input id="s19" name="services" type="checkbox" value="Packers & Movers"><label for="s19">Packers & Movers</label></div>
+          <div class="service-option"><input id="s20" name="services" type="checkbox" value="Pest Controlling System"><label for="s20">Pest Controlling System</label></div>
+          <div class="service-option"><input id="s21" name="services" type="checkbox" value="Tax & Audit"><label for="s21">Tax & Audit</label></div>
+          <div class="service-option"><input id="s22" name="services" type="checkbox" value="DTH Services"><label for="s22">DTH Services</label></div>
+          <div class="service-option"><input id="s23" name="services" type="checkbox" value="Travel & Tourism"><label for="s23">Travel & Tourism</label></div>
+          <div class="service-option"><input id="s24" name="services" type="checkbox" value="Hotels, Homestay, Lodge, Restaurant & Resorts"><label for="s24">Hotels, Homestay, Lodge, Restaurant & Resorts</label></div>
+          <div class="service-option"><input id="s25" name="services" type="checkbox" value="Real Estate"><label for="s25">Real Estate</label></div>
+          <div class="service-option"><input id="s26" name="services" type="checkbox" value="Driving School"><label for="s26">Driving School</label></div>
+          <div class="service-option"><input id="s27" name="services" type="checkbox" value="Loans & All Types of Insurance"><label for="s27">Loans & All Types of Insurance</label></div>
+          <div class="service-option"><input id="s28" name="services" type="checkbox" value="Astrology Services"><label for="s28">Astrology Services</label></div>
+          <div class="service-option"><input id="s29" name="services" type="checkbox" value="Event Management"><label for="s29">Event Management</label></div>
+          <div class="service-option"><input id="s30" name="services" type="checkbox" value="Interior Design"><label for="s30">Interior Design</label></div>
+          <div class="service-option"><input id="s31" name="services" type="checkbox" value="Welding"><label for="s31">Welding</label></div>
+          <div class="service-option"><input id="s32" name="services" type="checkbox" value="Catering Services"><label for="s32">Catering Services</label></div>
+          <div class="service-option"><input id="s33" name="services" type="checkbox" value="Lawyers & Advocates"><label for="s33">Lawyers & Advocates</label></div>
+          <div class="service-option"><input id="s34" name="services" type="checkbox" value="Hardware & Painting"><label for="s34">Hardware & Painting</label></div>
+          <div class="service-option"><input id="s35" name="services" type="checkbox" value="Education"><label for="s35">Education</label></div>
+          <div class="service-option"><input id="s36" name="services" type="checkbox" value="Health"><label for="s36">Health</label></div>
+        </div>
+      </div>
 
-        // Toggle dropdown
-        multiSelectHeader.addEventListener('click', function(e) {
-            e.stopPropagation();
-            multiSelectDropdown.classList.toggle('open');
-            dropdownArrow.classList.toggle('open');
-        });
+      <input type="hidden" id="selectedServicesInput" name="serviceRequest">
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!multiSelectHeader.contains(e.target) && !multiSelectDropdown.contains(e.target)) {
-                multiSelectDropdown.classList.remove('open');
-                dropdownArrow.classList.remove('open');
-            }
-        });
+      <div class="terms-container">
+        <input id="terms" name="terms" type="checkbox" required>
+        <label for="terms">I agree to all the <strong>Terms and Conditions</strong>.</label>
+      </div>
 
-        // Update selected services display
-        function updateSelectedServices() {
-            const selected = Array.from(serviceCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
+      <button type="submit">Submit Registration</button>
+      <p id="response" aria-live="polite"></p>
+    </form>
 
-            if (selected.length === 0) {
-                selectedServicesDisplay.textContent = 'Select services...';
-                selectedServicesDisplay.classList.remove('has-selection');
-                selectedServicesInput.value = '';
-            } else if (selected.length === 1) {
-                selectedServicesDisplay.textContent = selected[0];
-                selectedServicesDisplay.classList.add('has-selection');
-                selectedServicesInput.value = selected.join(', ');
-            } else {
-                selectedServicesDisplay.textContent = `${selected.length} services selected`;
-                selectedServicesDisplay.classList.add('has-selection');
-                selectedServicesInput.value = selected.join(', ');
-            }
+    <a class="back-link" href="index.html">← Back to Home</a>
+  </div>
+
+  <script>
+    (function(){
+      const header = document.getElementById('multiSelectHeader');
+      const dropdown = document.getElementById('multiSelectDropdown');
+      const arrow = document.getElementById('dropdownArrow');
+      const display = document.getElementById('selectedServicesDisplay');
+      const hiddenInput = document.getElementById('selectedServicesInput');
+      const serviceCheckboxes = Array.from(document.querySelectorAll('input[name="services"]'));
+
+      // Toggle dropdown on click or Enter/Space
+      header.addEventListener('click', toggleDropdown);
+      header.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDropdown(); }
+      });
+
+      function toggleDropdown(){
+        dropdown.classList.toggle('open');
+        arrow.classList.toggle('open');
+      }
+
+      // Close when clicking outside
+      document.addEventListener('click', function(e){
+        if (!header.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+          arrow.classList.remove('open');
+        }
+      });
+
+      // update display text and hidden input
+      function updateSelectedServices(){
+        const selected = serviceCheckboxes.filter(cb => cb.checked).map(cb => cb.value);
+        if (!selected.length){
+          display.textContent = 'Select services...';
+          hiddenInput.value = '';
+        } else if (selected.length === 1){
+          display.textContent = selected[0];
+          hiddenInput.value = selected.join(', ');
+        } else {
+          display.textContent = `${selected.length} services selected`;
+          hiddenInput.value = selected.join(', ');
+        }
+      }
+
+      serviceCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateSelectedServices);
+      });
+
+      // initialize
+      updateSelectedServices();
+
+      // Form submit handling
+      const form = document.getElementById('registerForm');
+      const responseEl = document.getElementById('response');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const scriptURL = "https://script.google.com/macros/s/AKfycbw8vdgRz0vztwgrrsOQiQ_QdmdnoQxFl0pmunDOciwHTjOcnrCVtg8ME8t4derFdy1P/exec";
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+
+        // native validation first
+        if (!form.checkValidity()){
+          // show native browser UI for first invalid control
+          form.reportValidity();
+          return;
         }
 
-        // Handle checkbox changes
-        serviceCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateSelectedServices);
-        });
+        // ensure at least one service selected
+        const selected = serviceCheckboxes.filter(cb => cb.checked);
+        if (selected.length === 0){
+          responseEl.textContent = "⚠️ Please select at least one service.";
+          responseEl.style.color = "orange";
+          return;
+        }
 
-        // Prevent dropdown close when clicking on options
-        multiSelectDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+        responseEl.textContent = "Submitting...";
+        responseEl.style.color = "gray";
+        submitBtn.disabled = true;
 
-        // Form submission
-        const scriptURL = "https://script.google.com/macros/s/AKfycbw8vdgRz0vztwgrrsOQiQ_QdmdnoQxFl0pmunDOciwHTjOcnrCVtg8ME8t4derFdy1P/exec";
-        const form = document.getElementById("registerForm");
-        const responseEl = document.getElementById("response");
-        const submitButton = form.querySelector('button[type="submit"]');
-
-        form.addEventListener("submit", async e => {
-            e.preventDefault();
-
-            // Check if at least one service is selected
-            const selected = Array.from(serviceCheckboxes).filter(cb => cb.checked);
-            if (selected.length === 0) {
-                responseEl.textContent = "⚠️ Please select at least one service.";
-                responseEl.style.color = "orange";
-                return;
-            }
-
-            // Terms must be checked (browser handles required, but we ensure)
-            const termsChecked = document.getElementById('terms').checked;
-            if (!termsChecked) {
-                document.getElementById('terms').reportValidity();
-                return;
-            }
-
-            responseEl.textContent = "Submitting...";
-            responseEl.style.color = "orange";
-            submitButton.disabled = true;
-
-            try {
-                const formData = new FormData(form);
-                const res = await fetch(scriptURL, { 
-                    method: "POST", 
-                    body: formData
-                });
-
-                let data;
-                try {
-                    data = await res.json();
-                } catch (jsonErr) {
-                    const text = await res.text();
-                    responseEl.textContent = "Server response: " + text;
-                    responseEl.style.color = "red";
-                    return;
-                }
-
-                if (data.success) {
-                    responseEl.textContent = "✅ Success! Thank you for registering. We will contact you shortly.";
-                    responseEl.style.color = "green";
-                    form.reset();
-                    updateSelectedServices();
-                    setTimeout(() => {
-                        window.location.href = "index.html"; 
-                    }, 3000); 
-                } else {
-                    throw new Error(data.message || 'Server did not return success.');
-                }
-            } catch (err) {
-                responseEl.textContent = "❌ Something went wrong. Please try again later.";
-                responseEl.style.color = "red";
-                console.error('Submission Error:', err.message);
-            } finally {
-                submitButton.disabled = false;
-            }
-        });
-    });
-    </script>
+        try {
+          const res = await fetch(scriptURL, { method: 'POST', body: new FormData(form) });
+          // try to parse JSON safely
+          let data;
+          try { data = await res.json(); } catch {
+            const txt = await res.text();
+            responseEl.textContent = "Server response: " + txt;
+            responseEl.style.color = "red";
+            submitBtn.disabled = false;
+            return;
+          }
+          if (data && data.success){
+            responseEl.textContent = "✅ Success! Thank you for registering. We will contact you shortly.";
+            responseEl.style.color = "green";
+            form.reset();
+            updateSelectedServices();
+            setTimeout(()=> location.href = 'index.html', 2500);
+          } else {
+            throw new Error(data && data.message ? data.message : 'Server error');
+          }
+        } catch (err) {
+          console.error(err);
+          responseEl.textContent = "❌ Something went wrong. Please try again later.";
+          responseEl.style.color = "red";
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
