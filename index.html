@@ -64,20 +64,27 @@
         .logo {
             display: flex;
             align-items: center;
+            text-decoration: none;
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--text-light);
-            text-decoration: none;
         }
         
         .logo-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
+            border-radius: 50%;
             margin-right: 10px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
             border: 2px solid var(--accent);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+            vertical-align: middle;
+        }
+        
+        .logo-text {
+            color: var(--text-light);
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         
         .nav-links {
@@ -508,9 +515,9 @@
 <body>
     <header>
         <nav class="navbar">
-            <img src="assets/home.jpg" alt="Unitefix Logo" class="logo-img">
-                <i class="fas fa-tools"></i>
-                Unitefix
+            <a href="#" class="logo">
+                <img src="assets/home.jpg" alt="Unitefix Logo" class="logo-img">
+                <span class="logo-text">Unitefix</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
