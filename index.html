@@ -65,20 +65,25 @@
             display: flex;
             align-items: center;
             text-decoration: none;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-light);
         }
         
         .logo-img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
             margin-right: 10px;
             border: 2px solid var(--accent);
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-            vertical-align: middle;
+            background-color: #fff;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .logo i {
+            color: var(--text-light);
+            font-size: 1.4rem;
+            margin-right: 8px;
         }
         
         .logo-text {
@@ -517,6 +522,7 @@
         <nav class="navbar">
             <a href="#" class="logo">
                 <img src="assets/home.jpg" alt="Unitefix Logo" class="logo-img">
+                <i class="fas fa-tools"></i>
                 <span class="logo-text">Unitefix</span>
             </a>
             <ul class="nav-links">
