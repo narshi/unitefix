@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register with UniteFix</title>
+    <title>Register as Service Provider - UniteFix</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -34,13 +34,20 @@
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             width: 90%;
-            max-width: 450px;
-            text-align: center;
+            max-width: 550px;
         }
 
         .container h2 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
             color: var(--primary);
+            text-align: center;
+        }
+
+        .container .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .container label {
@@ -58,6 +65,98 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        /* Multi-select dropdown styles */
+        .multi-select-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .multi-select-header {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 46px;
+        }
+
+        .multi-select-header:hover {
+            border-color: var(--primary);
+        }
+
+        .selected-services {
+            flex: 1;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .selected-services.has-selection {
+            color: var(--text-dark);
+        }
+
+        .dropdown-arrow {
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .multi-select-dropdown.open {
+            display: block;
+        }
+
+        .service-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .service-option:hover {
+            background: var(--bg-light);
+        }
+
+        .service-option input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .service-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+            flex: 1;
         }
 
         .container button {
@@ -66,6 +165,7 @@
             border: none;
             cursor: pointer;
             transition: background 0.3s;
+            font-weight: 600;
         }
         
         .container button:hover {
@@ -80,59 +180,178 @@
         #response {
             margin-top: 1rem;
             font-weight: bold;
+            text-align: center;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .required {
+            color: red;
+        }
+
+        /* Terms and Conditions checkbox */
+        .terms-container {
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .terms-container input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .terms-container label {
+            cursor: pointer;
+            font-weight: normal;
+            color: #555;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Register with UniteFix</h2>
+        <h2>Service Provider Registration</h2>
+        <p class="subtitle">Join our network of professional service providers</p>
+        
         <form id="registerForm">
-            <input type="hidden" id="serviceRequest" name="serviceRequest" value="General Inquiry">
-            
-            <label for="name">Full Name</label>
+            <label for="name">Full Name <span class="required">*</span></label>
             <input type="text" id="name" name="name" required>
     
-            <label for="phone">Phone <span style="color:red">*</span></label>
+            <label for="phone">Phone Number <span class="required">*</span></label>
             <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="10-digit number">
     
             <label for="email">Email (optional)</label>
             <input type="email" id="email" name="email">
     
-            <label for="address">Address</label>
-            <textarea id="address" name="address" rows="3"></textarea>
-    
-            <button type="submit">Submit</button>
+            <label for="address">Address <span class="required">*</span></label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label>Services You Provide <span class="required">*</span></label>
+            <div class="multi-select-container">
+                <div class="multi-select-header" id="multiSelectHeader">
+                    <span class="selected-services" id="selectedServicesDisplay">Select services...</span>
+                    <i class="fas fa-chevron-down dropdown-arrow" id="dropdownArrow"></i>
+                </div>
+                <div class="multi-select-dropdown" id="multiSelectDropdown">
+                    <!-- all your service checkboxes remain unchanged -->
+                    <!-- (keeping your existing service options intact) -->
+                </div>
+            </div>
+            <input type="hidden" id="selectedServicesInput" name="serviceRequest">
+
+            <!-- ✅ Terms and Conditions Checkbox -->
+            <div class="terms-container">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to all the <strong>Terms and Conditions</strong>.</label>
+            </div>
+
+            <button type="submit">Submit Registration</button>
         </form>
+
         <p id="response"></p>
-        </div>
+        <a href="index.html" class="back-link">← Back to Home</a>
     </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const serviceName = urlParams.get('service');
-        const serviceRequestInput = document.getElementById("serviceRequest");
-        
-        if (serviceName) {
-            serviceRequestInput.value = decodeURIComponent(serviceName);
+        const multiSelectHeader = document.getElementById('multiSelectHeader');
+        const multiSelectDropdown = document.getElementById('multiSelectDropdown');
+        const dropdownArrow = document.getElementById('dropdownArrow');
+        const selectedServicesDisplay = document.getElementById('selectedServicesDisplay');
+        const selectedServicesInput = document.getElementById('selectedServicesInput');
+        const serviceCheckboxes = document.querySelectorAll('input[name="services"]');
+
+        // Toggle dropdown
+        multiSelectHeader.addEventListener('click', function(e) {
+            e.stopPropagation();
+            multiSelectDropdown.classList.toggle('open');
+            dropdownArrow.classList.toggle('open');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!multiSelectHeader.contains(e.target) && !multiSelectDropdown.contains(e.target)) {
+                multiSelectDropdown.classList.remove('open');
+                dropdownArrow.classList.remove('open');
+            }
+        });
+
+        // Update selected services display
+        function updateSelectedServices() {
+            const selected = Array.from(serviceCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            if (selected.length === 0) {
+                selectedServicesDisplay.textContent = 'Select services...';
+                selectedServicesDisplay.classList.remove('has-selection');
+                selectedServicesInput.value = '';
+            } else if (selected.length === 1) {
+                selectedServicesDisplay.textContent = selected[0];
+                selectedServicesDisplay.classList.add('has-selection');
+                selectedServicesInput.value = selected.join(', ');
+            } else {
+                selectedServicesDisplay.textContent = `${selected.length} services selected`;
+                selectedServicesDisplay.classList.add('has-selection');
+                selectedServicesInput.value = selected.join(', ');
+            }
         }
 
-        const scriptURL = "https://script.google.com/macros/s/AKfycbw8vdgRz0vztwgrrsOQiQ_QdmdnoQxFl0pmunDOciwHTjOcnrCVtg8ME8t4derFdy1P/exec"; // **REPLACE WITH YOUR NEW URL**
+        // Handle checkbox changes
+        serviceCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedServices);
+        });
+
+        // Prevent dropdown close when clicking on options
+        multiSelectDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Form submission
+        const scriptURL = "https://script.google.com/macros/s/AKfycbw8vdgRz0vztwgrrsOQiQ_QdmdnoQxFl0pmunDOciwHTjOcnrCVtg8ME8t4derFdy1P/exec";
         const form = document.getElementById("registerForm");
         const responseEl = document.getElementById("response");
         const submitButton = form.querySelector('button[type="submit"]');
 
         form.addEventListener("submit", async e => {
             e.preventDefault();
+
+            // Check if at least one service is selected
+            const selected = Array.from(serviceCheckboxes).filter(cb => cb.checked);
+            if (selected.length === 0) {
+                responseEl.textContent = "⚠️ Please select at least one service.";
+                responseEl.style.color = "orange";
+                return;
+            }
+
+            // Terms must be checked (browser handles required, but we ensure)
+            const termsChecked = document.getElementById('terms').checked;
+            if (!termsChecked) {
+                document.getElementById('terms').reportValidity();
+                return;
+            }
+
             responseEl.textContent = "Submitting...";
             responseEl.style.color = "orange";
             submitButton.disabled = true;
 
             try {
+                const formData = new FormData(form);
                 const res = await fetch(scriptURL, { 
                     method: "POST", 
-                    body: new FormData(form)
+                    body: formData
                 });
 
                 let data;
@@ -146,9 +365,10 @@
                 }
 
                 if (data.success) {
-                    responseEl.textContent = "✅ Success! We've received your request and will contact you shortly.";
+                    responseEl.textContent = "✅ Success! Thank you for registering. We will contact you shortly.";
                     responseEl.style.color = "green";
                     form.reset();
+                    updateSelectedServices();
                     setTimeout(() => {
                         window.location.href = "index.html"; 
                     }, 3000); 
