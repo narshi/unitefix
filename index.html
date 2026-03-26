@@ -362,89 +362,158 @@
         }
         
         .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
+            background: white;
+            overflow: hidden;
         }
-        
-        .service-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 32px 24px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: var(--transition);
-            text-align: center;
-            height: 100%;
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hub-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            gap: 60px;
         }
-        
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(37, 99, 235, 0.1);
-        }
-        
-        .service-icon {
-            font-size: 2.25rem;
-            color: var(--accent);
-            margin-bottom: 24px;
-            background: rgba(37, 99, 235, 0.05);
-            width: 80px;
-            height: 80px;
+
+        .category-wheel {
+            position: relative;
+            width: 500px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .category-wheel {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        .hub-center {
+            width: 180px;
+            height: 180px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: var(--shadow-lg), 0 0 40px var(--accent-glow);
+            border: 2px solid var(--accent);
+            text-align: center;
+            padding: 20px;
             transition: var(--transition);
         }
-        
-        .service-card:hover .service-icon {
-            background: var(--accent);
-            color: white;
-            transform: scale(1.1) rotate(5deg);
+
+        @media (max-width: 768px) {
+            .hub-center {
+                width: 120px;
+                height: 120px;
+                padding: 10px;
+            }
         }
-        
-        .service-title {
-            font-size: 1.25rem;
+
+        .hub-center i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .hub-center span {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .category-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+            z-index: 5;
+        }
+
+        @media (max-width: 768px) {
+            .category-node {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        .category-node i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .category-node:hover, .category-node.active {
+            transform: scale(1.15);
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            z-index: 15;
+        }
+
+        .category-node:hover i, .category-node.active i {
+            color: white;
+        }
+
+        .category-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.75rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .category-node:hover .category-label, .category-node.active .category-label {
+            opacity: 1;
+            bottom: -30px;
             color: var(--primary);
         }
-        
-        .service-categories {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 48px;
-        }
-        
-        .category-tab {
-            padding: 10px 20px;
-            border-radius: 50px;
-            background: white;
-            color: var(--text-muted);
-            border: 1px solid rgba(0,0,0,0.05);
-            cursor: pointer;
+
+        /* Services Display Area */
+        .services-display {
+            width: 100%;
+            min-height: 400px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            opacity: 0;
+            transform: translateY(20px);
             transition: var(--transition);
-            font-weight: 500;
-            font-size: 0.9rem;
         }
-        
-        .category-tab.active, .category-tab:hover {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
+
+        .services-display.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* App Banner */
         #app-banner {
             padding: 80px 0;
-            background-color: var(--bg-body);
         }
         
         .app-promo-banner {
@@ -770,268 +839,85 @@
     </section>
 
     <section id="services">
-        <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <div class="service-categories">
-                <button class="category-tab active" data-category="all">All</button>
-                <button class="category-tab" data-category="technology">Technology</button>
-                <button class="category-tab" data-category="home">Home</button>
-                <button class="category-tab" data-category="professional">Professional</button>
-                <button class="category-tab" data-category="lifestyle">Lifestyle</button>
-                <button class="category-tab" data-category="travel">Travel</button>
-                <button class="category-tab" data-category="repairs">Repairs</button>
-                <button class="category-tab" data-category="business">Business</button>
-                <button class="category-tab" data-category="health">Health</button>
+        <div class="services-container">
+            <div class="section-header" style="text-align: center; margin-bottom: 60px;">
+                <h2 class="reveal">Explore Our Services</h2>
+                <p class="reveal">Interactive service hub designed for your convenience</p>
             </div>
-            
-            <div class="services-grid">
-                <div class="service-card" data-category="technology">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-laptop"></i></div>
-                        <h3 class="service-title">Computer & Printer</h3>
+
+            <div class="hub-wrapper">
+                <div class="category-wheel reveal">
+                    <div class="hub-center">
+                        <i class="fas fa-handshake"></i>
+                        <span>Select Category</span>
                     </div>
                     
-                </div>
-                <div class="service-card" data-category="technology">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-video"></i></div>
-                        <h3 class="service-title">CCTV Camera</h3>
+                    <!-- Category Nodes will be handled by JS for positioning but defined here -->
+                    <div class="category-node" data-category="technology" style="--angle: 0deg;">
+                        <i class="fas fa-laptop-code"></i>
+                        <span class="category-label">Technology</span>
                     </div>
-                    
-                </div>
-                <div class="service-card" data-category="technology">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-fingerprint"></i></div>
-                        <h3 class="service-title">Biometric Device</h3>
+                    <div class="category-node" data-category="home" style="--angle: 45deg;">
+                        <i class="fas fa-home"></i>
+                        <span class="category-label">Home</span>
                     </div>
-                    
+                    <div class="category-node" data-category="professional" style="--angle: 90deg;">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="category-label">Professional</span>
+                    </div>
+                    <div class="category-node" data-category="lifestyle" style="--angle: 135deg;">
+                        <i class="fas fa-heart"></i>
+                        <span class="category-label">Lifestyle</span>
+                    </div>
+                    <div class="category-node" data-category="travel" style="--angle: 180deg;">
+                        <i class="fas fa-plane"></i>
+                        <span class="category-label">Travel</span>
+                    </div>
+                    <div class="category-node" data-category="repairs" style="--angle: 225deg;">
+                        <i class="fas fa-tools"></i>
+                        <span class="category-label">Repairs</span>
+                    </div>
+                    <div class="category-node" data-category="business" style="--angle: 270deg;">
+                        <i class="fas fa-briefcase"></i>
+                        <span class="category-label">Business</span>
+                    </div>
+                    <div class="category-node" data-category="health" style="--angle: 315deg;">
+                        <i class="fas fa-first-aid"></i>
+                        <span class="category-label">Health</span>
+                    </div>
                 </div>
 
+                <div class="services-display" id="servicesDisplay">
+                    <!-- Cards will be dynamically shown here based on hover -->
+                </div>
+            </div>
+
+            <!-- Hidden template of all cards to be used by JS -->
+            <div id="all-service-cards" style="display: none;">
+                <!-- Technology -->
                 <div class="service-card" data-category="technology">
-                  <div>
+                    <div class="service-icon"><i class="fas fa-print"></i></div>
+                    <h3 class="service-title">Computer & Printer</h3>
+                    <p>Expert repair and maintenance for all desktop, laptop, and printing hardware.</p>
+                </div>
+                <div class="service-card" data-category="technology">
+                    <div class="service-icon"><i class="fas fa-video"></i></div>
+                    <h3 class="service-title">CCTV Camera</h3>
+                    <p>Professional installation and maintenance of security surveillance systems.</p>
+                </div>
+                <div class="service-card" data-category="technology">
+                    <div class="service-icon"><i class="fas fa-fingerprint"></i></div>
+                    <h3 class="service-title">Biometric Device</h3>
+                    <p>Setup and troubleshooting for attendance and security biometric systems.</p>
+                </div>
+                <div class="service-card" data-category="technology">
                     <div class="service-icon"><i class="fas fa-code"></i></div>
                     <h3 class="service-title">Software Development</h3>
-                  </div>
-                </div>
-                
-                <div class="service-card" data-category="repairs">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-plug"></i></div>
-                        <h3 class="service-title">UPS & Batteries</h3>
-                    </div>
-                   
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-filter"></i></div>
-                        <h3 class="service-title">Water Purifiers</h3>
-                    </div>
-                   
+                    <p>Custom software solutions tailored to your business needs and automation.</p>
                 </div>
                 <div class="service-card" data-category="technology">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-wifi"></i></div>
-                        <h3 class="service-title">Internet & Broadband</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-sun"></i></div>
-                        <h3 class="service-title">Solar & Heat Pumps</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-recycle"></i></div>
-                        <h3 class="service-title">WTP & STP</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="repairs">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                        <h3 class="service-title">Mobile Repairs</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="repairs">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-camera"></i></div>
-                        <h3 class="service-title">Digital Camera Services</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-blender"></i></div>
-                        <h3 class="service-title">Home Appliances</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="repairs">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-water"></i></div>
-                        <h3 class="service-title">Generators, Water Pumps, Water Cutoff Sensors</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-tools"></i></div>
-                        <h3 class="service-title">Household Repairs</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-bolt"></i></div>
-                        <h3 class="service-title">Electrical & Plumbing</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="professional">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-pencil-ruler"></i></div>
-                        <h3 class="service-title">Architecture</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="repairs">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-car-side"></i></div>
-                        <h3 class="service-title">Vehicle Service</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="professional">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-seedling"></i></div>
-                        <h3 class="service-title">Agriculture Product Services</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="professional">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-truck-monster"></i></div>
-                        <h3 class="service-title">Earth Movers</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-box-open"></i></div>
-                        <h3 class="service-title">Packers & Movers</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-bug"></i></div>
-                        <h3 class="service-title">Pest Controlling System</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="business">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                        <h3 class="service-title">Tax & Audit</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="business">
-                  <div>
-                    <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="service-icon"><i class="fas fa-ad"></i></div>
                     <h3 class="service-title">Digital Services</h3>
-                  </div>
-                </div>
-                <div class="service-card" data-category="technology">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-satellite-dish"></i></div>
-                        <h3 class="service-title">DTH Services</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="travel">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-plane"></i></div>
-                        <h3 class="service-title">Travel & Tourism</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="travel">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-hotel"></i></div>
-                        <h3 class="service-title">Hotels, Homestay, Lodge, Restaurant & Resorts</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="business">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-city"></i></div>
-                        <h3 class="service-title">Real Estate</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="lifestyle">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-car-alt"></i></div>
-                        <h3 class="service-title">Driving School</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="business">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-handshake"></i></div>
-                        <h3 class="service-title">Loans & All Types of Insurance</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="lifestyle">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-star-of-david"></i></div>
-                        <h3 class="service-title">Astrology Services</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="professional">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-calendar-alt"></i></div>
-                        <h3 class="service-title">Event Management</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-paint-roller"></i></div>
-                        <h3 class="service-title">Interior Design</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-cogs"></i></div>
-                        <h3 class="service-title">Welding</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="lifestyle">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-utensils"></i></div>
-                        <h3 class="service-title">Catering Services</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="professional">
-                    <div>
-                        <div class="service-icon"><i class="fas fa-gavel"></i></div>
-                        <h3 class="service-title">Lawyers & Advocates</h3>
-                    </div>
-                    
-                </div>
-                <div class="service-card" data-category="home">
-                    <div>
                         <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
                         <h3 class="service-title">Hardware & Painting</h3>
                     </div>
@@ -1122,7 +1008,6 @@
         const burgerIcon = burger.querySelector('i');
         const navLinks = document.querySelectorAll('.nav-links a');
 
-        // Scroll listener for sticky header
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
@@ -1131,7 +1016,6 @@
             }
         });
 
-        // Mobile menu toggle
         burger.addEventListener('click', () => {
             navLinksContainer.classList.toggle('active');
             if (navLinksContainer.classList.contains('active')) {
@@ -1141,7 +1025,6 @@
             }
         });
 
-        // Smooth scroll and close menu on link click
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -1157,8 +1040,70 @@
             });
         });
 
-        // --- 2. Animations ---
-        const revealElements = document.querySelectorAll('section, .service-card, .app-promo-banner, #about');
+        // --- 2. Circular Services Hub ---
+        const categoryNodes = document.querySelectorAll('.category-node');
+        const hubCenter = document.querySelector('.hub-center');
+        const servicesDisplay = document.getElementById('servicesDisplay');
+        const allCardsTemplate = document.getElementById('all-service-cards');
+        const circleWidth = document.querySelector('.category-wheel').offsetWidth;
+        const radius = circleWidth / 2 - 40; // Adjust for node size
+
+        // Position nodes in a circle
+        categoryNodes.forEach((node, index) => {
+            const angle = (index * (360 / categoryNodes.length)) * (Math.PI / 180);
+            const x = radius * Math.cos(angle);
+            const y = radius * Math.sin(angle);
+            
+            node.style.left = `calc(50% + ${x}px - ${node.offsetWidth / 2}px)`;
+            node.style.top = `calc(50% + ${y}px - ${node.offsetHeight / 2}px)`;
+        });
+
+        function showCategoryServices(category, nodeElement) {
+            // Update Active State
+            categoryNodes.forEach(n => n.classList.remove('active'));
+            nodeElement.classList.add('active');
+
+            // Update Hub Center
+            const iconClass = nodeElement.querySelector('i').className;
+            const label = nodeElement.querySelector('.category-label').textContent;
+            hubCenter.innerHTML = `<i class="${iconClass}"></i><span>${label}</span>`;
+            hubCenter.style.borderColor = 'var(--accent)';
+            hubCenter.style.boxShadow = 'var(--shadow-lg), 0 0 40px var(--accent-glow)';
+
+            // Update Services Grid
+            servicesDisplay.classList.remove('active');
+            
+            setTimeout(() => {
+                servicesDisplay.innerHTML = '';
+                const cards = allCardsTemplate.querySelectorAll(`.service-card[data-category="${category}"]`);
+                cards.forEach(card => {
+                    const clone = card.cloneNode(true);
+                    clone.style.display = 'flex';
+                    servicesDisplay.appendChild(clone);
+                });
+                servicesDisplay.classList.add('active');
+            }, 300);
+        }
+
+        categoryNodes.forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                const cat = node.dataset.category;
+                showCategoryServices(cat, node);
+            });
+
+            // For touch devices
+            node.addEventListener('click', () => {
+                const cat = node.dataset.category;
+                showCategoryServices(cat, node);
+            });
+        });
+
+        // Initialize with Technology
+        const techNode = document.querySelector('.category-node[data-category="technology"]');
+        if (techNode) showCategoryServices('technology', techNode);
+
+        // --- 3. Animations ---
+        const revealElements = document.querySelectorAll('section, .app-promo-banner, #about');
         revealElements.forEach(el => el.classList.add('reveal'));
 
         const observer = new IntersectionObserver((entries) => {
@@ -1171,58 +1116,43 @@
 
         revealElements.forEach(el => observer.observe(el));
 
-        // --- 3. Service Filtering ---
-        const categoryTabs = document.querySelectorAll('.category-tab');
-        const serviceCards = document.querySelectorAll('.service-card');
-
-        categoryTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                categoryTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                const category = this.dataset.category;
-                serviceCards.forEach(card => {
-                    const cardCategory = card.dataset.category;
-                    if (category === 'all' || cardCategory === category) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
         // --- 4. Contact Modal ---
         const contactLink = document.getElementById("contactLink");
         const contactModal = document.getElementById("contactModal");
         const closeModal = document.getElementById("closeModal");
         
-        contactLink.addEventListener("click", (e) => {
-          e.preventDefault();
-          contactModal.style.display = "block";
-        });
+        if (contactLink) {
+            contactLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                contactModal.style.display = "block";
+            });
+        }
         
-        closeModal.addEventListener("click", () => {
-          contactModal.style.display = "none";
-        });
+        if (closeModal) {
+            closeModal.addEventListener("click", () => {
+                contactModal.style.display = "none";
+            });
+        }
         
         window.addEventListener("click", (e) => {
-          if (e.target === contactModal) contactModal.style.display = "none";
+            if (e.target === contactModal) contactModal.style.display = "none";
         });
 
         // --- 5. Back to Top ---
         const backToTopButton = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('active');
-            } else {
-                backToTopButton.classList.remove('active');
-            }
-        });
-        backToTopButton.addEventListener('click', e => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        if (backToTopButton) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('active');
+                } else {
+                    backToTopButton.classList.remove('active');
+                }
+            });
+            backToTopButton.addEventListener('click', e => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     });
     </script>
 </body>
