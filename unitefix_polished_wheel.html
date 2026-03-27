@@ -1,0 +1,649 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.uf-root{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  padding:20px 12px 28px;
+  gap:0;
+}
+.wheel-wrap{
+  position:relative;
+  width:min(620px,92vw);
+  aspect-ratio:1;
+  flex-shrink:0;
+  overflow:visible;
+}
+.wc,.ws{position:absolute;inset:0;width:100%;height:100%}
+.wc{touch-action:none}
+.ws{pointer-events:none;z-index:10;overflow:visible}
+.hub{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:clamp(100px,19vw,116px);
+  height:clamp(100px,19vw,116px);
+  border-radius:50%;
+  background:linear-gradient(180deg,var(--color-background-primary,#ffffff),var(--color-background-secondary,#f8fafc));
+  border:1px solid var(--color-border-secondary,rgba(15,23,42,.12));
+  box-shadow:
+    0 0 0 10px var(--color-background-secondary,#f8fafc),
+    0 0 0 11px var(--color-border-tertiary,rgba(15,23,42,.08)),
+    0 18px 34px rgba(15,23,42,.08);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  z-index:30;
+  cursor:default;
+  text-align:center;
+}
+.hub-icon{font-size:28px;line-height:1}
+.hub-name{font-size:13px;font-weight:600;color:var(--color-text-primary,#111827);letter-spacing:.04em}
+.hub-tag{font-size:9px;color:var(--color-text-tertiary,#6b7280);letter-spacing:.08em;text-transform:uppercase}
+.ibox{
+  margin-top:22px;
+  width:min(620px,92vw);
+  border:1px solid var(--color-border-tertiary,rgba(15,23,42,.08));
+  border-radius:16px;
+  background:var(--color-background-secondary,#f8fafc);
+  box-shadow:0 12px 28px rgba(15,23,42,.05);
+  padding:15px 18px;
+  min-height:72px;
+}
+.ibox h3{
+  font-size:14px;
+  font-weight:600;
+  color:var(--color-text-primary,#111827);
+  margin-bottom:4px;
+}
+.ibox p{
+  font-size:12.5px;
+  color:var(--color-text-secondary,#4b5563);
+  line-height:1.6;
+}
+.hint-txt{
+  font-size:11px;
+  color:var(--color-text-tertiary,#6b7280);
+  text-align:center;
+  margin-top:10px;
+  max-width:420px;
+}
+</style>
+
+<div class="uf-root">
+  <div class="wheel-wrap" id="ww">
+    <canvas id="wc" width="620" height="620" class="wc"></canvas>
+    <svg id="ws" class="ws" viewBox="0 0 620 620" aria-hidden="true"></svg>
+    <div class="hub">
+      <span class="hub-icon">&#128295;</span>
+      <span class="hub-name">Unitefix</span>
+      <span class="hub-tag">services</span>
+    </div>
+  </div>
+  <div class="ibox" id="ib">
+    <h3>Welcome to Unitefix</h3>
+    <p>Hover a category arc to reveal its services clearly in the outer ring.</p>
+  </div>
+  <p class="hint-txt">Hover a category to reveal its services around the outer ring.</p>
+</div>
+
+<script>
+(() => {
+const cv = document.getElementById('wc');
+const cx = cv && cv.getContext ? cv.getContext('2d') : null;
+const sv = document.getElementById('ws');
+const ib = document.getElementById('ib');
+if(!cv || !cx || !sv || !ib) return;
+
+const W = 620;
+const H = 620;
+const OX = W / 2;
+const OY = H / 2;
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const COLOR_SCHEME = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+let dark = !!(COLOR_SCHEME && COLOR_SCHEME.matches);
+
+const CAT_IR = 126;
+const CAT_OR = 212;
+const TRACK_IR = 228;
+const TRACK_OR = 300;
+const CAT_MID_R = (CAT_IR + CAT_OR) / 2;
+const TRACK_MID_R = (TRACK_IR + TRACK_OR) / 2;
+const GAP_DEG = 6;
+const DEFAULT_INFO_TITLE = 'Welcome to Unitefix';
+const DEFAULT_INFO_BODY = 'Hover a category arc to reveal its services clearly in the outer ring.';
+
+const CATS = [
+  {
+    label:'Technology',
+    emoji:'\u{1F4BB}',
+    hex:'#2563eb',
+    desc:'Digital and technology solutions for home and office.',
+    subs:['Computer and Printer','CCTV Camera','Biometric Device','Software Development','Digital Marketing','Broadband']
+  },
+  {
+    label:'Home',
+    emoji:'\u{1F3E0}',
+    hex:'#16a34a',
+    desc:'Essential services that keep your home running smoothly.',
+    subs:['Water Purifiers','UPS and Batteries','Solar and Heat Pumps','DTH Services','Packers and Movers','Pest Control']
+  },
+  {
+    label:'Professional',
+    emoji:'\u{1F454}',
+    hex:'#7c3aed',
+    desc:'Expert professionals for business, legal, and planning needs.',
+    subs:['Tax and Audit','Lawyers and Advocates','Architecture','Agriculture']
+  },
+  {
+    label:'Lifestyle',
+    emoji:'\u2764\uFE0F',
+    hex:'#db2777',
+    desc:'Services that support memorable events and everyday lifestyle needs.',
+    subs:['Interior Design','Event Management','Catering Services','Driving School']
+  },
+  {
+    label:'Repairs',
+    emoji:'\u{1F527}',
+    hex:'#d97706',
+    desc:'Fast, reliable repair services delivered right to your doorstep.',
+    subs:['Mobile Repairs','Home Appliances','Electrical and Plumbing','Earth Movers']
+  },
+  {
+    label:'Travel',
+    emoji:'\u2708\uFE0F',
+    hex:'#0891b2',
+    desc:'Travel planning and stay services for work, holidays, and quick trips.',
+    subs:['Travel and Tourism','Hotels and Resorts']
+  },
+  {
+    label:'Business',
+    emoji:'\u{1F4BC}',
+    hex:'#059669',
+    desc:'Financial and real estate support for growth and long term planning.',
+    subs:['Real Estate','Loans and Insurance']
+  },
+  {
+    label:'Health',
+    emoji:'\u{1F3E5}',
+    hex:'#e11d48',
+    desc:'Healthcare and wellness services for personal and family needs.',
+    subs:['Health Services','Medical Consultation']
+  }
+];
+
+const N = CATS.length;
+const SLICE = 360 / N;
+const alpha = new Array(N).fill(0);
+let hovCat = -1;
+let hovSub = -1;
+let rafId = null;
+let activeServiceTargets = [];
+let activeOrbitZone = null;
+
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+const rad = deg => (deg - 90) * Math.PI / 180;
+const hexRgb = hex => [
+  parseInt(hex.slice(1, 3), 16),
+  parseInt(hex.slice(3, 5), 16),
+  parseInt(hex.slice(5, 7), 16)
+].join(',');
+const rgba = (hex, opacity) => `rgba(${hexRgb(hex)},${opacity})`;
+
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  })[char]);
+}
+
+function catAngles(index){
+  const start = SLICE * index + GAP_DEG / 2;
+  return { s:start, e:start + SLICE - GAP_DEG };
+}
+
+function polarXY(radius, deg){
+  const angle = rad(deg);
+  return {
+    x: OX + radius * Math.cos(angle),
+    y: OY + radius * Math.sin(angle)
+  };
+}
+
+function inArc(px, py, innerRadius, outerRadius, startDeg, endDeg){
+  const dx = px - OX;
+  const dy = py - OY;
+  const radius = Math.sqrt(dx * dx + dy * dy);
+  if(radius < innerRadius || radius > outerRadius) return false;
+
+  let angle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+  if(angle < 0) angle += 360;
+
+  const start = ((startDeg % 360) + 360) % 360;
+  const end = ((endDeg % 360) + 360) % 360;
+  return start <= end ? (angle >= start && angle <= end) : (angle >= start || angle <= end);
+}
+
+function wrapLabel(label, maxChars){
+  if(label.length <= maxChars) return [label];
+  const words = label.split(' ');
+  const lines = [];
+  let current = '';
+  for(const word of words){
+    if((`${current} ${word}`.trim()).length > maxChars && current){
+      lines.push(current.trim());
+      current = word;
+    }else{
+      current = `${current} ${word}`.trim();
+    }
+  }
+  if(current) lines.push(current.trim());
+  return lines;
+}
+
+function laneRadiusFor(count, index){
+  if(count >= 5){
+    const lanes = [244, 290, 268];
+    return lanes[index % lanes.length];
+  }
+  if(count >= 3){
+    const lanes = [248, 282];
+    return lanes[index % lanes.length];
+  }
+  return 268;
+}
+
+function serviceSpread(count){
+  if(count <= 1) return 0;
+  return clamp(46 + count * 19, 64, 164);
+}
+
+function measurePillWidth(label){
+  cx.save();
+  cx.font = '600 12px "Segoe UI", system-ui, sans-serif';
+  const width = Math.ceil(cx.measureText(label).width) + 28;
+  cx.restore();
+  return clamp(width, 92, 176);
+}
+
+function setInfo(catIndex, subIndex){
+  if(catIndex < 0){
+    ib.innerHTML = `<h3>${DEFAULT_INFO_TITLE}</h3><p>${DEFAULT_INFO_BODY}</p>`;
+    return;
+  }
+
+  const cat = CATS[catIndex];
+  if(subIndex >= 0){
+    const label = escapeHtml(cat.subs[subIndex]);
+    ib.innerHTML = `<h3>${cat.emoji} ${label}</h3><p>Part of <strong>${escapeHtml(cat.label)}</strong>. ${escapeHtml(cat.desc)}</p>`;
+    return;
+  }
+
+  ib.innerHTML = `<h3>${cat.emoji} ${escapeHtml(cat.label)}</h3><p>${escapeHtml(cat.desc)} ${cat.subs.length} services are visible in the outer ring.</p>`;
+}
+
+function drawArc(innerRadius, outerRadius, startDeg, endDeg, fill, stroke, lineWidth){
+  cx.save();
+  cx.beginPath();
+  cx.arc(OX, OY, outerRadius, rad(startDeg), rad(endDeg));
+  cx.arc(OX, OY, innerRadius, rad(endDeg), rad(startDeg), true);
+  cx.closePath();
+
+  if(fill){
+    cx.fillStyle = fill;
+    cx.fill();
+  }
+
+  if(stroke && lineWidth > 0){
+    cx.strokeStyle = stroke;
+    cx.lineWidth = lineWidth;
+    cx.stroke();
+  }
+  cx.restore();
+}
+
+function drawFullRing(radius, lineWidth, stroke){
+  cx.save();
+  cx.beginPath();
+  cx.arc(OX, OY, radius, 0, Math.PI * 2);
+  cx.strokeStyle = stroke;
+  cx.lineWidth = lineWidth;
+  cx.stroke();
+  cx.restore();
+}
+
+function drawStrokeArc(radius, startDeg, endDeg, stroke, lineWidth){
+  cx.save();
+  cx.beginPath();
+  cx.arc(OX, OY, radius, rad(startDeg), rad(endDeg));
+  cx.lineCap = 'round';
+  cx.strokeStyle = stroke;
+  cx.lineWidth = lineWidth;
+  cx.stroke();
+  cx.restore();
+}
+
+function addArcText(midDeg, radius, lines, color, fontSize, fontWeight, opacity){
+  const group = document.createElementNS(SVG_NS, 'g');
+  group.setAttribute('opacity', opacity);
+
+  const norm = ((midDeg % 360) + 360) % 360;
+  const flip = norm > 90 && norm < 270;
+  const rotate = flip ? midDeg + 180 : midDeg;
+  group.setAttribute('transform', `translate(${OX},${OY}) rotate(${rotate}) translate(0,${-radius})`);
+
+  const lineHeight = fontSize + 2.5;
+  const totalHeight = lines.length * lineHeight;
+  const startY = -totalHeight / 2 + lineHeight / 2;
+
+  lines.forEach((line, index) => {
+    const text = document.createElementNS(SVG_NS, 'text');
+    text.setAttribute('x', '0');
+    text.setAttribute('y', startY + index * lineHeight);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'middle');
+    text.setAttribute('font-size', fontSize);
+    text.setAttribute('font-weight', fontWeight);
+    text.setAttribute('fill', color);
+    text.setAttribute('font-family', 'inherit');
+    text.textContent = line;
+    group.appendChild(text);
+  });
+
+  sv.appendChild(group);
+}
+
+function addServicePill(item, cat, opacity, active){
+  const group = document.createElementNS(SVG_NS, 'g');
+  group.setAttribute('opacity', opacity.toFixed(3));
+
+  const dx = item.x - item.anchorX;
+  const dy = item.y - item.anchorY;
+  const dist = Math.hypot(dx, dy) || 1;
+  const lineEndX = item.x - (dx / dist) * Math.max(18, item.w * 0.25);
+  const lineEndY = item.y - (dy / dist) * Math.max(10, item.h * 0.34);
+
+  const connector = document.createElementNS(SVG_NS, 'line');
+  connector.setAttribute('x1', item.anchorX);
+  connector.setAttribute('y1', item.anchorY);
+  connector.setAttribute('x2', lineEndX);
+  connector.setAttribute('y2', lineEndY);
+  connector.setAttribute('stroke', rgba(cat.hex, active ? 0.82 : (dark ? 0.42 : 0.34)));
+  connector.setAttribute('stroke-width', active ? '1.9' : '1.2');
+  connector.setAttribute('stroke-linecap', 'round');
+  group.appendChild(connector);
+
+  const dot = document.createElementNS(SVG_NS, 'circle');
+  dot.setAttribute('cx', item.anchorX);
+  dot.setAttribute('cy', item.anchorY);
+  dot.setAttribute('r', active ? '4.8' : '3.5');
+  dot.setAttribute('fill', active ? cat.hex : rgba(cat.hex, dark ? 0.65 : 0.5));
+  group.appendChild(dot);
+
+  const pill = document.createElementNS(SVG_NS, 'rect');
+  pill.setAttribute('x', item.x - item.w / 2);
+  pill.setAttribute('y', item.y - item.h / 2);
+  pill.setAttribute('width', item.w);
+  pill.setAttribute('height', item.h);
+  pill.setAttribute('rx', item.h / 2);
+  pill.setAttribute('fill', active ? rgba(cat.hex, dark ? 0.26 : 0.14) : (dark ? 'rgba(15,23,42,0.76)' : 'rgba(255,255,255,0.93)'));
+  pill.setAttribute('stroke', active ? rgba(cat.hex, 0.95) : rgba(cat.hex, dark ? 0.36 : 0.24));
+  pill.setAttribute('stroke-width', active ? '1.5' : '1');
+  group.appendChild(pill);
+
+  const label = document.createElementNS(SVG_NS, 'text');
+  label.setAttribute('x', item.x);
+  label.setAttribute('y', item.y + 0.5);
+  label.setAttribute('text-anchor', 'middle');
+  label.setAttribute('dominant-baseline', 'middle');
+  label.setAttribute('font-size', '12');
+  label.setAttribute('font-weight', active ? '600' : '500');
+  label.setAttribute('fill', dark ? '#f8fafc' : '#172033');
+  label.textContent = item.label;
+  group.appendChild(label);
+
+  sv.appendChild(group);
+}
+
+function buildOrbitLayout(catIndex){
+  const cat = CATS[catIndex];
+  const { s, e } = catAngles(catIndex);
+  const mid = (s + e) / 2;
+  const spread = serviceSpread(cat.subs.length);
+  const start = cat.subs.length === 1 ? mid : mid - spread / 2;
+  const step = cat.subs.length <= 1 ? 0 : spread / (cat.subs.length - 1);
+  const items = cat.subs.map((label, index) => {
+    const angle = cat.subs.length === 1 ? mid : start + step * index;
+    const radius = laneRadiusFor(cat.subs.length, index);
+    const width = measurePillWidth(label);
+    const height = 28;
+    const raw = polarXY(radius, angle);
+    const x = clamp(raw.x, width / 2 + 10, W - width / 2 - 10);
+    const y = clamp(raw.y, height / 2 + 10, H - height / 2 - 10);
+    const anchorRadius = Math.min(radius + 16, TRACK_OR - 6);
+    const anchor = polarXY(anchorRadius, angle);
+    return {
+      index,
+      label,
+      angle,
+      x,
+      y,
+      w: width,
+      h: height,
+      anchorX: anchor.x,
+      anchorY: anchor.y
+    };
+  });
+
+  return {
+    cat,
+    mid,
+    start: start - 8,
+    end: (cat.subs.length === 1 ? mid : mid + spread / 2) + 8,
+    items
+  };
+}
+
+function hitCat(px, py){
+  for(let index = 0; index < N; index += 1){
+    const { s, e } = catAngles(index);
+    if(inArc(px, py, CAT_IR, CAT_OR, s, e)) return index;
+  }
+  return -1;
+}
+
+function hitService(px, py){
+  for(let index = activeServiceTargets.length - 1; index >= 0; index -= 1){
+    const target = activeServiceTargets[index];
+    if(
+      px >= target.x - target.w / 2 &&
+      px <= target.x + target.w / 2 &&
+      py >= target.y - target.h / 2 &&
+      py <= target.y + target.h / 2
+    ){
+      return target.index;
+    }
+  }
+  return -1;
+}
+
+function inActiveOrbit(px, py){
+  if(hovCat < 0 || !activeOrbitZone) return false;
+  return inArc(px, py, activeOrbitZone.ir, activeOrbitZone.or, activeOrbitZone.s, activeOrbitZone.e);
+}
+
+function render(){
+  cx.clearRect(0, 0, W, H);
+  sv.innerHTML = '';
+  activeServiceTargets = [];
+  activeOrbitZone = null;
+
+  drawFullRing(TRACK_MID_R, TRACK_OR - TRACK_IR, dark ? 'rgba(255,255,255,0.032)' : 'rgba(15,23,42,0.045)');
+
+  CATS.forEach((cat, index) => {
+    const { s, e } = catAngles(index);
+    const mid = (s + e) / 2;
+    const isHovered = hovCat === index;
+    const a = alpha[index];
+
+    const catFill = isHovered
+      ? rgba(cat.hex, dark ? 0.28 : 0.13)
+      : (dark ? '#252525' : '#f2f2f0');
+    const catStroke = isHovered
+      ? rgba(cat.hex, 0.9)
+      : (dark ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.09)');
+    drawArc(CAT_IR, CAT_OR, s, e, catFill, catStroke, isHovered ? 2 : 1);
+
+    const emojiPoint = polarXY(CAT_MID_R - 9, mid);
+    const emoji = document.createElementNS(SVG_NS, 'text');
+    emoji.setAttribute('x', emojiPoint.x);
+    emoji.setAttribute('y', emojiPoint.y);
+    emoji.setAttribute('text-anchor', 'middle');
+    emoji.setAttribute('dominant-baseline', 'middle');
+    emoji.setAttribute('font-size', '17');
+    emoji.setAttribute('opacity', isHovered ? '1' : '.72');
+    emoji.textContent = cat.emoji;
+    sv.appendChild(emoji);
+
+    const catLines = wrapLabel(cat.label, 10);
+    const catColor = isHovered ? cat.hex : (dark ? '#cbd5e1' : '#475569');
+    addArcText(mid, CAT_MID_R + 12, catLines, catColor, 9, isHovered ? '600' : '500', 1);
+
+    if(isHovered && a > 0.02){
+      const layout = buildOrbitLayout(index);
+      activeOrbitZone = { s:layout.start, e:layout.end, ir:TRACK_IR - 10, or:TRACK_OR + 10 };
+
+      cx.save();
+      cx.shadowColor = rgba(cat.hex, 0.22 * a);
+      cx.shadowBlur = 20;
+      drawArc(TRACK_IR, TRACK_OR, layout.start, layout.end, rgba(cat.hex, dark ? 0.12 * a : 0.08 * a), null, 0);
+      cx.restore();
+      drawStrokeArc(TRACK_MID_R, layout.start, layout.end, rgba(cat.hex, 0.55 * a), 1.8);
+
+      layout.items.forEach(item => {
+        const active = hovSub === item.index;
+        addServicePill(item, cat, a, active);
+        activeServiceTargets.push(item);
+      });
+    }
+  });
+}
+
+function tick(){
+  let dirty = false;
+  alpha.forEach((value, index) => {
+    const target = hovCat === index ? 1 : 0;
+    const diff = target - value;
+    if(Math.abs(diff) > 0.004){
+      alpha[index] += diff * 0.16;
+      dirty = true;
+    }else{
+      alpha[index] = target;
+    }
+  });
+  render();
+  rafId = dirty ? requestAnimationFrame(tick) : null;
+}
+
+function kick(){
+  if(!rafId) rafId = requestAnimationFrame(tick);
+}
+
+function updateHover(nextCat, nextSub){
+  if(nextCat === hovCat && nextSub === hovSub) return;
+  hovCat = nextCat;
+  hovSub = nextSub;
+  cv.style.cursor = (hovCat >= 0 || hovSub >= 0) ? 'pointer' : 'default';
+  setInfo(hovCat, hovSub);
+  kick();
+}
+
+function getXY(event){
+  const rect = cv.getBoundingClientRect();
+  const scaleX = W / rect.width;
+  const scaleY = H / rect.height;
+  const point = event.touches ? event.touches[0] : event;
+  return {
+    x:(point.clientX - rect.left) * scaleX,
+    y:(point.clientY - rect.top) * scaleY
+  };
+}
+
+function resolveHover(px, py){
+  const subIndex = hitService(px, py);
+  if(subIndex >= 0 && hovCat >= 0){
+    return { cat:hovCat, sub:subIndex };
+  }
+
+  const catIndex = hitCat(px, py);
+  if(catIndex >= 0){
+    return { cat:catIndex, sub:-1 };
+  }
+
+  if(inActiveOrbit(px, py)){
+    return { cat:hovCat, sub:-1 };
+  }
+
+  return { cat:-1, sub:-1 };
+}
+
+function selectHoveredService(){
+  if(hovCat < 0 || hovSub < 0) return;
+  setInfo(hovCat, hovSub);
+}
+
+cv.addEventListener('mousemove', event => {
+  const { x, y } = getXY(event);
+  const next = resolveHover(x, y);
+  updateHover(next.cat, next.sub);
+});
+
+cv.addEventListener('mouseleave', () => {
+  updateHover(-1, -1);
+});
+
+cv.addEventListener('click', () => {
+  selectHoveredService();
+});
+
+cv.addEventListener('touchstart', event => {
+  const { x, y } = getXY(event);
+  const next = resolveHover(x, y);
+  updateHover(next.cat, next.sub);
+}, { passive:true });
+
+cv.addEventListener('touchmove', event => {
+  event.preventDefault();
+  const { x, y } = getXY(event);
+  const next = resolveHover(x, y);
+  updateHover(next.cat, next.sub);
+}, { passive:false });
+
+cv.addEventListener('touchend', () => {
+  selectHoveredService();
+});
+
+if(COLOR_SCHEME){
+  if(typeof COLOR_SCHEME.addEventListener === 'function'){
+    COLOR_SCHEME.addEventListener('change', event => {
+      dark = event.matches;
+      render();
+    });
+  }else if(typeof COLOR_SCHEME.addListener === 'function'){
+    COLOR_SCHEME.addListener(event => {
+      dark = event.matches;
+      render();
+    });
+  }
+}
+
+render();
+})();
+</script>
