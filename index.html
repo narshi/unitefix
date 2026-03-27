@@ -1070,22 +1070,23 @@
         }
 
         function addArcText(mid, r, lines, col, sz, w, op) {
+            // Calculate absolute position to keep text horizontal
+            const x = OX + r * Math.cos(rad(mid));
+            const y = OY + r * Math.sin(rad(mid));
+            
             const g = document.createElementNS(SVG_NS, 'g');
             g.setAttribute('opacity', op);
-            const n = ((mid % 360) + 360) % 360;
-            const flip = n > 90 && n < 270;
-            // Upright logic for all angles: Position at radius r, and adjust rotation
-            g.setAttribute('transform', `translate(${OX},${OY}) rotate(${mid}) translate(0, ${flip ? r : -r}) rotate(${flip ? 180 : 0})`);
+            g.setAttribute('transform', `translate(${x},${y})`);
             
             lines.forEach((l, i) => {
                 const t = document.createElementNS(SVG_NS, 'text');
-                t.setAttribute('y', (i - (lines.length-1)/2) * (sz+3));
+                // Adjust y to center the multiple lines vertically if needed
+                t.setAttribute('y', (i - (lines.length-1)/2) * (sz+2));
                 t.setAttribute('text-anchor', 'middle');
                 t.setAttribute('dominant-baseline', 'middle');
                 t.setAttribute('font-size', sz);
                 t.setAttribute('font-weight', w);
                 t.setAttribute('fill', col);
-                t.setAttribute('style', 'font-family: inherit;');
                 t.textContent = l;
                 g.appendChild(t);
             });
@@ -1099,8 +1100,8 @@
             const l = document.createElementNS(SVG_NS, 'line');
             l.setAttribute('x1', it.anchorX); l.setAttribute('y1', it.anchorY);
             l.setAttribute('x2', it.x); l.setAttribute('y2', it.y);
-            l.setAttribute('stroke', rgba(cat.hex, 0.3));
-            l.setAttribute('stroke-width', '1.2');
+            l.setAttribute('stroke', rgba(cat.hex, 0.35));
+            l.setAttribute('stroke-width', '1');
             g.appendChild(l);
             
             const r = document.createElementNS(SVG_NS, 'rect');
@@ -1108,9 +1109,9 @@
             r.setAttribute('y', it.y - it.h / 2);
             r.setAttribute('width', it.w);
             r.setAttribute('height', it.h);
-            r.setAttribute('rx', 14);
-            r.setAttribute('fill', act ? rgba(cat.hex, 0.18) : '#ffffff');
-            r.setAttribute('stroke', rgba(cat.hex, 0.5));
+            r.setAttribute('rx', 15);
+            r.setAttribute('fill', act ? rgba(cat.hex, 0.2) : '#ffffff');
+            r.setAttribute('stroke', rgba(cat.hex, 0.6));
             r.setAttribute('stroke-width', '1.5');
             g.appendChild(r);
             
@@ -1129,23 +1130,36 @@
 
         function render() {
             cx.clearRect(0,0,W,H); sv.innerHTML = '';
-            drawArc(TRACK_IR, TRACK_OR, 0, 360, 'rgba(15,23,42,0.03)', 'rgba(15,23,42,0.06)', 1);
+            // Service track with more spacing
+            const OUTER_TRACK_IR = 250, OUTER_TRACK_OR = 308;
+            drawArc(OUTER_TRACK_IR, OUTER_TRACK_OR, 0, 360, 'rgba(15,23,42,0.02)', 'rgba(15,23,42,0.04)', 1);
+            
             CATS.forEach((cat, i) => {
                 const s = SLICE*i+GAP_DEG/2, e = s+SLICE-GAP_DEG, mid = (s+e)/2, a = alpha[i], h = hovCat===i;
-                drawArc(CAT_IR, CAT_OR, s, e, h ? rgba(cat.hex,0.12) : '#f8fafc', h ? cat.hex : 'rgba(15,23,42,0.1)', h?2:1);
-                const ep = { x: OX+(CAT_MID_R-9)*Math.cos(rad(mid)), y: OY+(CAT_MID_R-9)*Math.sin(rad(mid)) };
-                const et = document.createElementNS(SVG_NS,'text');
-                et.setAttribute('x',ep.x); et.setAttribute('y',ep.y); et.setAttribute('text-anchor','middle'); et.setAttribute('dominant-baseline','middle');
-                et.setAttribute('font-size','18'); et.textContent=cat.emoji; sv.appendChild(et);
-                addArcText(mid, CAT_MID_R+14, [cat.label], h ? cat.hex : '#334155', 11, h?800:700, 1);
+                drawArc(CAT_IR, CAT_OR, s, e, h ? rgba(cat.hex,0.1) : '#fbfcfe', h ? cat.hex : 'rgba(15,23,42,0.08)', h?2:1);
+                
+                // Emoji position
+                const emojiR = (CAT_IR + CAT_OR) / 2 - 12;
+                const ex = OX + emojiR * Math.cos(rad(mid));
+                const ey = OY + emojiR * Math.sin(rad(mid));
+                const et = document.createElementNS(SVG_NS, 'text');
+                et.setAttribute('x', ex); et.setAttribute('y', ey);
+                et.setAttribute('text-anchor', 'middle'); et.setAttribute('dominant-baseline', 'middle');
+                et.setAttribute('font-size', '18'); et.textContent = cat.emoji; sv.appendChild(et);
+                
+                // Label position (further out but inside)
+                addArcText(mid, (CAT_IR + CAT_OR) / 2 + 15, [cat.label], h ? cat.hex : '#334155', 11, h?800:700, 1);
+                
                 if(h && a>0) {
-                    const sp = Math.min(170, Math.max(90, (cat.subs.length)*24)); const st = mid - sp/2;
+                    const sp = Math.min(200, Math.max(100, (cat.subs.length)*28));
+                    const st = mid - sp/2;
                     cat.subs.forEach((sub, j) => {
                         const ang = cat.subs.length <= 1 ? mid : st + (sp/(cat.subs.length-1))*j;
-                        const R = 265; const p = { x: OX+R*Math.cos(rad(ang)), y: OY+R*Math.sin(rad(ang)) };
-                        const ap = { x: OX+TRACK_IR*Math.cos(rad(ang)), y: OY+TRACK_IR*Math.sin(rad(ang)) };
+                        const R = 278; 
+                        const p = { x: OX+R*Math.cos(rad(ang)), y: OY+R*Math.sin(rad(ang)) };
+                        const ap = { x: OX+OUTER_TRACK_IR*Math.cos(rad(ang)), y: OY+OUTER_TRACK_IR*Math.sin(rad(ang)) };
                         cx.font = 'bold 12px Inter, sans-serif'; 
-                        const tw = Math.max(100, cx.measureText(sub).width + 36);
+                        const tw = Math.max(105, cx.measureText(sub).width + 38);
                         addPill({ x:p.x, y:p.y, w:tw, h:30, anchorX:ap.x, anchorY:ap.y, label:sub }, cat, a, hovSub===j);
                     });
                 }
