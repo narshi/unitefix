@@ -167,6 +167,7 @@
             border-radius: 50px;
             font-weight: 600;
             box-shadow: 0 4px 14px 0 var(--accent-glow);
+            text-decoration: none;
         }
 
         .register-btn:hover {
@@ -385,13 +386,157 @@
             margin-bottom: 20px;
         }
         
-        /* --- 7. Senior-Grade Radial Hub (Refactored) --- */
+        .desktop-only { display: block; }
+        .mobile-only { display: none; }
+
+        @media (max-width: 768px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: block; }
+        }
+
+        /* --- 7. Senior-Grade Radial Hub --- */
         #services {
             padding: 60px 0 80px;
             background: #ffffff;
             overflow: hidden;
+        }
+
+        .services-mobile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .mobile-card {
+            background: #f8fafc;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            padding: 24px 16px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px;
+            transition: transform 0.2s ease, background 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+            text-decoration: none;
+        }
+
+        .mobile-card:active {
+            transform: scale(0.96);
+            background: #f1f5f9;
+        }
+
+        .mobile-card .m-icon {
+            font-size: 32px;
+        }
+
+        .mobile-card .m-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .mobile-card .m-chevron {
+            margin-left: auto;
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-card.expanded .m-chevron {
+            transform: rotate(180deg);
+        }
+
+        .mobile-card .sub-list {
+            grid-column: span 2;
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(15, 23, 42, 0.03);
+            border-radius: 12px;
+            margin-top: 0;
+        }
+
+        .mobile-card.expanded .sub-list {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 12px;
+            padding: 12px;
+        }
+
+        .sub-item {
+            padding: 10px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--secondary);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-item::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .sub-item:last-child { border-bottom: none; }
+
+        /* Join Team Section */
+        .join-team {
+            background: var(--bg-body);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .join-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 40px;
+            background: white;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        }
+
+        .join-box h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .join-box p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .join-btn {
+            display: inline-block;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 25px var(--accent-glow);
+            transition: var(--transition);
+        }
+
+        .join-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--accent-glow);
         }
 
         .uf-root {
@@ -913,7 +1058,7 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#" id="contactLink">Contact</a></li>
-                <li><a href="register.html" class="register-btn">Get Started</a></li>
+                <li><a href="register.html" class="register-btn">Register Now</a></li>
             </ul>
             <div class="burger">
                 <i class="fas fa-bars-staggered"></i>
@@ -971,24 +1116,40 @@
             </div>
 
             <div class="uf-root">
-                <div class="wheel-wrap" id="ww">
-                    <canvas id="wc" width="640" height="640" class="wc"></canvas>
-                    <!-- DOM Layers for Categories -->
-                    <div id="cat-layers"></div>
-                    <!-- SVG Overlay for Lines and Pillars -->
-                    <svg id="ws" class="ws" viewBox="0 0 640 640" aria-hidden="true"></svg>
-                    
-                    <div class="hub">
-                        <i class="fas fa-handshake" style="font-size: 34px; color: var(--primary); margin-bottom: 6px;"></i>
-                        <span class="hub-name">Unitefix</span>
-                        <span class="hub-tag">services</span>
+                <!-- Desktop Radial Wheel -->
+                <div class="desktop-only">
+                    <div class="wheel-wrap" id="ww">
+                        <canvas id="wc" width="640" height="640" class="wc"></canvas>
+                        <div id="cat-layers"></div>
+                        <svg id="ws" class="ws" viewBox="0 0 640 640" aria-hidden="true"></svg>
+                        <div class="hub">
+                            <i class="fas fa-handshake" style="font-size: 34px; color: var(--primary); margin-bottom: 6px;"></i>
+                            <span class="hub-name">Unitefix</span>
+                            <span class="hub-tag">services</span>
+                        </div>
                     </div>
                 </div>
-                <div class="ibox" id="ib">
+
+                <!-- Mobile Grid Layout -->
+                <div class="mobile-only" style="width: 100%;">
+                    <div class="services-mobile-grid" id="m-grid"></div>
+                </div>
+
+                <div class="ibox desktop-only" id="ib">
                     <h3>Welcome to Unitefix</h3>
                     <p>Hover a category arc to reveal its services clearly in the outer ring.</p>
                 </div>
-                <p class="hint-txt">Hover over a category below to explore sub-services.</p>
+                <p class="hint-txt desktop-only">Hover over a category below to explore sub-services.</p>
+            </div>
+        </div>
+    </section>
+ 
+    <section class="join-team reveal">
+        <div class="container">
+            <div class="join-box">
+                <h2>Are you a Service Expert?</h2>
+                <p>Join Unitefix as a trusted professional. Secure your future, earn consistently, and be part of an elite team dedicated to quality service.</p>
+                <a href="register.html" class="join-btn">Register Now</a>
             </div>
         </div>
     </section>
@@ -1025,7 +1186,7 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="#about">About Us</a></li>
-                        <li><a href="register.html">Become a Partner</a></li>
+                        <li><a href="register.html">Register Now</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
@@ -1139,6 +1300,10 @@
         }
 
         function render() {
+            if(window.innerWidth <= 768) {
+                renderMobileGrid();
+                return;
+            }
             cx.clearRect(0,0,W,H); sv.innerHTML = '';
             drawArc(OUTER_IR, OUTER_OR, 0, 360, 'rgba(15,23,42,0.02)', 'rgba(15,23,42,0.04)', 1);
             
@@ -1149,12 +1314,10 @@
                 const s = SLICE*i+GAP_DEG/2, e = s+SLICE-GAP_DEG, mid = (s+e)/2, a = alpha[i], h = hovCat===i;
                 drawArc(CAT_IR, CAT_OR, s, e, h ? rgba(cat.hex, 0.12) : '#f8fafc', h ? cat.hex : 'rgba(15,23,42,0.08)', h?2.5:1);
                 
-                // Perfect Polar Positioning: rotate(a) translate(r) rotate(-a)
                 const seg = segs[i];
                 if(seg){
-                    const rScale = window.innerWidth < 768 ? (radius-10) : radius;
+                    const rScale = radius;
                     const scaleFactor = h ? 1.08 : 1;
-                    // Apply scale INSIDE the inline transform to preserve polar positioning
                     seg.style.transform = `rotate(${mid}deg) translate(0, -${rScale}px) rotate(-${mid}deg) scale(${scaleFactor})`;
                     seg.classList.toggle('active', h);
                 }
@@ -1175,7 +1338,39 @@
             });
         }
 
+        function renderMobileGrid() {
+            const grid = document.getElementById('m-grid');
+            if(!grid || grid.children.length > 0) return;
+            
+            CATS.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'mobile-card';
+                card.innerHTML = `
+                    <div style="display: flex; align-items: center; width: 100%; gap: 12px;">
+                        <div class="m-icon">${cat.emoji}</div>
+                        <div class="m-label">${cat.label}</div>
+                        <i class="fas fa-chevron-down m-chevron"></i>
+                    </div>
+                    <div class="sub-list">
+                        ${cat.subs.map(s => `<div class="sub-item">${s}</div>`).join('')}
+                    </div>
+                `;
+                card.onclick = () => {
+                    const isExp = card.classList.contains('expanded');
+                    document.querySelectorAll('.mobile-card').forEach(c => c.classList.remove('expanded'));
+                    if(!isExp) card.classList.add('expanded');
+                };
+                grid.appendChild(card);
+            });
+            document.querySelectorAll('.mobile-card').forEach(s => obs.observe(s));
+        }
+
         function tick() {
+            if(window.innerWidth <= 768) {
+                if(rafId) { cancelAnimationFrame(rafId); rafId = null; }
+                renderMobileGrid();
+                return;
+            }
             let d = false; alpha.forEach((v, i) => {
                 const df = (hovCat===i ? 1 : 0) - v;
                 if(Math.abs(df)>0.01){ alpha[i]+=df*0.15; d=true; } else alpha[i] = hovCat===i ? 1 : 0;
@@ -1183,9 +1378,27 @@
             render(); rafId = d ? requestAnimationFrame(tick) : null;
         }
 
-        // --- 3. Intersection Observer & Global Utils ---
+        // --- 3. Mobile Navigation Toggle ---
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        if(burger && nav) {
+            burger.onclick = () => {
+                nav.classList.toggle('active');
+                burger.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars-staggered"></i>';
+            };
+            navItems.forEach(item => {
+                item.onclick = () => {
+                    nav.classList.remove('active');
+                    burger.innerHTML = '<i class="fas fa-bars-staggered"></i>';
+                };
+            });
+        }
+
+        // --- 4. Intersection Observer & Global Utils ---
         const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }), { threshold: 0.1 });
-        document.querySelectorAll('section, .reveal, #about, #footer').forEach(s => obs.observe(s));
+        document.querySelectorAll('section, .reveal, #about, #footer, .join-team').forEach(s => obs.observe(s));
 
         window.addEventListener('resize', render);
         render();
