@@ -385,9 +385,9 @@
             margin-bottom: 20px;
         }
         
-        /* --- 7. Polished Services Wheel (Canvas Implementation) --- */
+        /* --- 7. Senior-Grade Radial Hub (Refactored) --- */
         #services {
-            padding: 40px 0 60px;
+            padding: 60px 0 80px;
             background: #ffffff;
             overflow: hidden;
             display: flex;
@@ -399,111 +399,133 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            padding: 0;
-            gap: 0;
+            position: relative;
         }
 
         .wheel-wrap {
             position: relative;
-            width: min(620px, 94vw);
+            width: min(640px, 95vw);
             aspect-ratio: 1;
             flex-shrink: 0;
-            overflow: visible;
+            user-select: none;
         }
 
-        .wc, .ws {
+        /* Canvas for Arcs */
+        .wc {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
+            z-index: 1;
+            touch-action: none;
         }
 
-        .wc { touch-action: none; }
-        .ws { pointer-events: none; z-index: 10; overflow: visible; }
+        /* SVG for Connector Lines & Pillars */
+        .ws {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: visible;
+        }
+
+        /* DOM Category Layers (Stripe/Apple Quality) */
+        #cat-layers {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .cat-seg {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            margin-left: -50px;
+            margin-top: -50px;
+            text-align: center;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* Transform applied via JS: rotate(a) translate(r) rotate(-a) */
+        }
+
+        .cat-seg .icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+            transition: transform 0.3s ease;
+        }
+
+        .cat-seg .label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .cat-seg:hover {
+            transform: scale(1.1) !important;
+            z-index: 100;
+        }
+
+        .cat-seg:hover .icon { transform: translateY(-4px); }
+        .cat-seg:hover .label { color: var(--primary); }
+        .cat-seg.active .label { color: var(--primary); }
 
         .hub {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: clamp(100px, 19vw, 120px);
-            height: clamp(100px, 19vw, 120px);
+            width: clamp(110px, 20vw, 130px);
+            height: clamp(110px, 20vw, 130px);
             border-radius: 50%;
             background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(15, 23, 42, 0.1);
             box-shadow: 
                 0 0 0 10px #f8fafc,
-                0 0 0 11px rgba(15, 23, 42, 0.08),
-                0 18px 40px rgba(15, 23, 42, 0.12);
+                0 0 0 11px rgba(15, 23, 42, 0.05),
+                0 20px 50px rgba(15, 23, 42, 0.12);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
             z-index: 30;
-            cursor: default;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hub-logo-img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            border-radius: 12px;
-            margin-bottom: 2px;
-        }
-
-        .hub-name {
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .hub-tag {
-            font-size: 10px;
-            color: var(--secondary);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            font-weight: 700;
         }
 
         .ibox {
-            margin-top: 32px;
-            width: min(620px, 92vw);
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            border-radius: 20px;
+            margin-top: 40px;
+            width: min(600px, 92vw);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            border-radius: 24px;
             background: #f8fafc;
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
-            padding: 24px 28px;
-            min-height: 100px;
+            padding: 28px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+            transition: opacity 0.3s ease;
         }
 
-        .ibox h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
+        .ibox h3 { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+        .ibox p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; max-width: 500px; margin: 0 auto; }
 
-        .ibox p {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .hint-txt {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 15px;
-            max-width: 420px;
-            font-weight: 600;
+        @media (max-width: 768px) {
+            .cat-seg { width: 80px; height: 80px; margin-left: -40px; margin-top: -40px; }
+            .cat-seg .icon { font-size: 20px; }
+            .cat-seg .label { font-size: 9px; }
+            .ibox { padding: 20px; }
+            .ibox h3 { font-size: 1.2rem; }
+            .ibox p { font-size: 0.95rem; }
         }
 
         .section-header {
@@ -951,10 +973,14 @@
 
             <div class="uf-root">
                 <div class="wheel-wrap" id="ww">
-                    <canvas id="wc" width="620" height="620" class="wc"></canvas>
-                    <svg id="ws" class="ws" viewBox="0 0 620 620" aria-hidden="true"></svg>
+                    <canvas id="wc" width="640" height="640" class="wc"></canvas>
+                    <!-- DOM Layers for Categories -->
+                    <div id="cat-layers"></div>
+                    <!-- SVG Overlay for Lines and Pillars -->
+                    <svg id="ws" class="ws" viewBox="0 0 640 640" aria-hidden="true"></svg>
+                    
                     <div class="hub">
-                        <i class="fas fa-handshake" style="font-size: 32px; color: var(--primary); margin-bottom: 4px;"></i>
+                        <i class="fas fa-handshake" style="font-size: 34px; color: var(--primary); margin-bottom: 6px;"></i>
                         <span class="hub-name">Unitefix</span>
                         <span class="hub-tag">services</span>
                     </div>
@@ -1035,20 +1061,17 @@
             else if (header) header.classList.remove("scrolled");
         });
 
-        // --- 2. Polished Wheel Implementation ---
+        // --- 2. Advanced Radial Component (Refactored) ---
         const cv = document.getElementById('wc');
-        const cx = cv && cv.getContext ? cv.getContext('2d') : null;
+        const cx = cv?.getContext('2d');
         const sv = document.getElementById('ws');
+        const layers = document.getElementById('cat-layers');
         const ib = document.getElementById('ib');
-        if(!cv || !cx || !sv || !ib) return;
+        if(!cv || !cx || !sv || !layers || !ib) return;
 
-        const W = 620, H = 620, OX = 310, OY = 310;
-        const SVG_NS = 'http://www.w3.org/2000/svg';
-        const CAT_IR = 126, CAT_OR = 212, TRACK_IR = 228, TRACK_OR = 300;
-        const CAT_MID_R = (CAT_IR + CAT_OR) / 2, TRACK_MID_R = (TRACK_IR + TRACK_OR) / 2;
-        const GAP_DEG = 6;
-        const DEFAULT_TITLE = 'Welcome to Unitefix';
-        const DEFAULT_BODY = 'Hover a category arc to reveal its services clearly in the outer ring.';
+        const W = 640, H = 640, OX = 320, OY = 320;
+        const CAT_IR = 130, CAT_OR = 215, OUTER_IR = 255, OUTER_OR = 315;
+        const GAP_DEG = 5;
 
         const CATS = [
             { id:'tech', label:'Technology', emoji:'\u{1F4BB}', hex:'#2563eb', desc:'Expert digital and hardware solutions for home and office environments.', subs:['Computer & Printer','CCTV Camera','Biometric Device','Software Development','Internet & Broadband','DTH Services'] },
@@ -1065,109 +1088,86 @@
         let alpha = new Array(N).fill(0), hovCat = -1, hovSub = -1, rafId = null;
 
         const rad = d => (d - 90) * Math.PI / 180;
-        const rgba = (h, o) => `rgba(${parseInt(h.slice(1,3), 16)},${parseInt(h.slice(3,5), 16)},${parseInt(h.slice(5,7), 16)},${o})`;
+        const rgba = (h, o) => {
+            const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+            return `rgba(${r},${g},${b},${o})`;
+        };
+
+        // Initialize DOM Elements for Categories
+        CATS.forEach((cat, i) => {
+            const div = document.createElement('div');
+            div.className = 'cat-seg';
+            div.innerHTML = `<div class="icon">${cat.emoji}</div><div class="label">${cat.label}</div>`;
+            div.addEventListener('mouseenter', () => activate(i));
+            div.addEventListener('mouseleave', () => activate(-1));
+            layers.appendChild(div);
+        });
+
+        function activate(i) {
+            if(i === hovCat) return;
+            hovCat = i;
+            if(i>=0){
+                ib.innerHTML = `<h3>${CATS[i].label}</h3><p>${CATS[i].desc}</p>`;
+                document.querySelectorAll('.cat-seg').forEach((s, idx) => s.classList.toggle('active', idx === i));
+            } else {
+                ib.innerHTML = `<h3>Welcome to Unitefix</h3><p>Hover a category arc to reveal its services clearly in the outer ring.</p>`;
+                document.querySelectorAll('.cat-seg').forEach(s => s.classList.remove('active'));
+            }
+            if(!rafId) tick();
+        }
 
         function drawArc(ir, or, s, e, f, st, lw) {
             cx.save(); cx.beginPath();
             cx.arc(OX, OY, or, rad(s), rad(e)); cx.arc(OX, OY, ir, rad(e), rad(s), true);
-            cx.closePath(); if(f){ cx.fillStyle=f; cx.fill(); }
-            if(st){ cx.strokeStyle=st; cx.lineWidth=lw; cx.stroke(); } cx.restore();
-        }
-
-        function addArcText(mid, r, lines, col, sz, w, op) {
-            // Calculate absolute position to keep text horizontal
-            const x = OX + r * Math.cos(rad(mid));
-            const y = OY + r * Math.sin(rad(mid));
-            
-            const g = document.createElementNS(SVG_NS, 'g');
-            g.setAttribute('opacity', op);
-            g.setAttribute('transform', `translate(${x},${y})`);
-            
-            lines.forEach((l, i) => {
-                const t = document.createElementNS(SVG_NS, 'text');
-                // Adjust y to center the multiple lines vertically if needed
-                t.setAttribute('y', (i - (lines.length-1)/2) * (sz+2));
-                t.setAttribute('text-anchor', 'middle');
-                t.setAttribute('dominant-baseline', 'middle');
-                t.setAttribute('font-size', sz);
-                t.setAttribute('font-weight', w);
-                t.setAttribute('fill', col);
-                t.textContent = l;
-                g.appendChild(t);
-            });
-            sv.appendChild(g);
+            cx.closePath(); 
+            if(f){ cx.fillStyle=f; cx.fill(); }
+            if(st){ cx.strokeStyle=st; cx.lineWidth=lw; cx.stroke(); } 
+            cx.restore();
         }
 
         function addPill(it, cat, op, act) {
-            const g = document.createElementNS(SVG_NS, 'g');
-            g.setAttribute('opacity', op);
-            
-            const l = document.createElementNS(SVG_NS, 'line');
-            l.setAttribute('x1', it.anchorX); l.setAttribute('y1', it.anchorY);
-            l.setAttribute('x2', it.x); l.setAttribute('y2', it.y);
-            l.setAttribute('stroke', rgba(cat.hex, 0.35));
-            l.setAttribute('stroke-width', '1');
-            g.appendChild(l);
-            
-            const r = document.createElementNS(SVG_NS, 'rect');
-            r.setAttribute('x', it.x - it.w / 2);
-            r.setAttribute('y', it.y - it.h / 2);
-            r.setAttribute('width', it.w);
-            r.setAttribute('height', it.h);
-            r.setAttribute('rx', 15);
-            r.setAttribute('fill', act ? rgba(cat.hex, 0.2) : '#ffffff');
-            r.setAttribute('stroke', rgba(cat.hex, 0.6));
-            r.setAttribute('stroke-width', '1.5');
-            g.appendChild(r);
-            
-            const t = document.createElementNS(SVG_NS, 'text');
-            t.setAttribute('x', it.x);
-            t.setAttribute('y', it.y + 1);
-            t.setAttribute('text-anchor', 'middle');
-            t.setAttribute('dominant-baseline', 'middle');
-            t.setAttribute('font-size', '12px');
-            t.setAttribute('font-weight', '700');
-            t.setAttribute('fill', '#0f172a');
-            t.textContent = it.label;
-            g.appendChild(t);
-            sv.appendChild(g);
+            const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.setAttribute('opacity', op);
+            const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+            l.setAttribute('x1',it.anchorX); l.setAttribute('y1',it.anchorY); l.setAttribute('x2',it.x); l.setAttribute('y2',it.y);
+            l.setAttribute('stroke',rgba(cat.hex, 0.25)); l.setAttribute('stroke-width','1.2'); g.appendChild(l);
+            const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+            r.setAttribute('x',it.x-it.w/2); r.setAttribute('y',it.y-it.h/2); r.setAttribute('width',it.w); r.setAttribute('height',it.h); r.setAttribute('rx',16);
+            r.setAttribute('fill', act ? rgba(cat.hex, 0.18) : '#ffffff'); r.setAttribute('stroke', rgba(cat.hex, 0.5)); r.setAttribute('stroke-width', '1.5'); g.appendChild(r);
+            const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+            t.setAttribute('x',it.x); t.setAttribute('y',it.y+1.5); t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
+            t.setAttribute('font-size','12px'); t.setAttribute('font-weight', '700'); t.setAttribute('fill','#0f172a'); t.textContent = it.label;
+            g.appendChild(t); sv.appendChild(g);
         }
 
         function render() {
             cx.clearRect(0,0,W,H); sv.innerHTML = '';
-            // Service track with more spacing
-            const OUTER_TRACK_IR = 250, OUTER_TRACK_OR = 310;
-            drawArc(OUTER_TRACK_IR, OUTER_TRACK_OR, 0, 360, 'rgba(15,23,42,0.02)', 'rgba(15,23,42,0.04)', 1);
+            drawArc(OUTER_IR, OUTER_OR, 0, 360, 'rgba(15,23,42,0.02)', 'rgba(15,23,42,0.04)', 1);
             
+            const segs = document.querySelectorAll('.cat-seg');
+            const radius = (CAT_IR + CAT_OR) / 2;
+
             CATS.forEach((cat, i) => {
                 const s = SLICE*i+GAP_DEG/2, e = s+SLICE-GAP_DEG, mid = (s+e)/2, a = alpha[i], h = hovCat===i;
-                drawArc(CAT_IR, CAT_OR, s, e, h ? rgba(cat.hex,0.1) : '#fbfcfe', h ? cat.hex : 'rgba(15,23,42,0.08)', h?2:1);
+                drawArc(CAT_IR, CAT_OR, s, e, h ? rgba(cat.hex, 0.12) : '#f8fafc', h ? cat.hex : 'rgba(15,23,42,0.08)', h?2.5:1);
                 
-                // Perfect Stacked Layout: Icon at center-10, Text at center+14
-                const centerRadius = (CAT_IR + CAT_OR) / 2;
-                
-                // Emoji position (Top of the arc cell)
-                const ex = OX + (centerRadius - 16) * Math.cos(rad(mid));
-                const ey = OY + (centerRadius - 16) * Math.sin(rad(mid));
-                const et = document.createElementNS(SVG_NS, 'text');
-                et.setAttribute('x', ex); et.setAttribute('y', ey);
-                et.setAttribute('text-anchor', 'middle'); et.setAttribute('dominant-baseline', 'middle');
-                et.setAttribute('font-size', '20'); et.textContent = cat.emoji; sv.appendChild(et);
-                
-                // Label position (Bottom of the arc cell)
-                addArcText(mid, centerRadius + 15, [cat.label], h ? cat.hex : '#334155', 11, h?800:700, 1);
-                
+                // Perfect Polar Positioning: rotate(a) translate(r) rotate(-a)
+                const seg = segs[i];
+                if(seg){
+                    const rScale = window.innerWidth < 768 ? (radius-10) : radius;
+                    seg.style.transform = `rotate(${mid}deg) translate(0, -${rScale}px) rotate(-${mid}deg)`;
+                }
+
                 if(h && a>0) {
-                    const sp = Math.min(210, Math.max(100, (cat.subs.length)*30));
+                    const sp = Math.min(220, Math.max(100, (cat.subs.length)*32));
                     const st = mid - sp/2;
                     cat.subs.forEach((sub, j) => {
                         const ang = cat.subs.length <= 1 ? mid : st + (sp/(cat.subs.length-1))*j;
-                        const R = 280; 
-                        const p = { x: OX+R*Math.cos(rad(ang)), y: OY+R*Math.sin(rad(ang)) };
-                        const ap = { x: OX+OUTER_TRACK_IR*Math.cos(rad(ang)), y: OY+OUTER_TRACK_IR*Math.sin(rad(ang)) };
+                        const R_OUT = OUTER_IR + 25; 
+                        const p = { x: OX+R_OUT*Math.cos(rad(ang)), y: OY+R_OUT*Math.sin(rad(ang)) };
+                        const ap = { x: OX+OUTER_IR*Math.cos(rad(ang)), y: OY+OUTER_IR*Math.sin(rad(ang)) };
                         cx.font = 'bold 12.5px Inter, sans-serif'; 
-                        const tw = Math.max(105, cx.measureText(sub).width + 42);
-                        addPill({ x:p.x, y:p.y, w:tw, h:30, anchorX:ap.x, anchorY:ap.y, label:sub }, cat, a, hovSub===j);
+                        const tw = Math.max(105, cx.measureText(sub).width + 38);
+                        addPill({ x:p.x, y:p.y, w:tw, h:32, anchorX:ap.x, anchorY:ap.y, label:sub }, cat, a, hovSub===j);
                     });
                 }
             });
@@ -1175,43 +1175,17 @@
 
         function tick() {
             let d = false; alpha.forEach((v, i) => {
-                const t = hovCat===i ? 1 : 0; const df = t-v;
-                if(Math.abs(df)>0.01){ alpha[i]+=df*0.18; d=true; } else alpha[i]=t;
+                const df = (hovCat===i ? 1 : 0) - v;
+                if(Math.abs(df)>0.01){ alpha[i]+=df*0.15; d=true; } else alpha[i] = hovCat===i ? 1 : 0;
             });
             render(); rafId = d ? requestAnimationFrame(tick) : null;
         }
 
-        const getXY = e => {
-            const r = cv.getBoundingClientRect(); const p = e.touches ? e.touches[0] : e;
-            return { x:(p.clientX-r.left)*(W/r.width), y:(p.clientY-r.top)*(H/r.height) };
-        };
-
-        const hitTest = (x, y) => {
-            const dx=x-OX, dy=y-OY, r=Math.hypot(dx,dy);
-            let a = Math.atan2(dy,dx)*180/Math.PI+90; if(a<0)a+=360;
-            if(r>=CAT_IR && r<=CAT_OR){
-                for(let i=0; i<N; i++){
-                    const s = SLICE*i+GAP_DEG/2, e = s+SLICE-GAP_DEG;
-                    if(a>=s && a<=e) return { c:i, s:-1 };
-                }
-            }
-            return { c:-1, s:-1 };
-        };
-
-        cv.addEventListener('mousemove', e => {
-            const p = getXY(e); const h = hitTest(p.x, p.y);
-            if(h.c !== hovCat){ hovCat=h.c; ib.innerHTML = h.c>=0 ? `<h3>${CATS[h.c].label}</h3><p>${CATS[h.c].desc}</p>` : `<h3>${DEFAULT_TITLE}</h3><p>${DEFAULT_BODY}</p>`; if(!rafId) tick(); }
-        });
-        cv.addEventListener('mouseleave', () => { hovCat=-1; if(!rafId) tick(); });
-
-        // --- 3. Reveal Observer ---
+        // --- 3. Intersection Observer & Global Utils ---
         const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }), { threshold: 0.1 });
         document.querySelectorAll('section, .reveal, #about, #footer').forEach(s => obs.observe(s));
 
-        const btt = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => { if(window.scrollY > 300) btt.classList.add('active'); else btt.classList.remove('active'); });
-        btt.addEventListener('click', e => { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); });
-
+        window.addEventListener('resize', render);
         render();
     })();
     </script>
