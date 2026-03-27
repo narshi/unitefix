@@ -1,0 +1,425 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .hub-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 32px;
+    user-select: none;
+    min-height: 560px;
+    position: relative;
+  }
+
+  .wheel-wrap {
+    position: relative;
+    width: 420px;
+    height: 420px;
+    flex-shrink: 0;
+  }
+
+  /* Center logo */
+  .hub-center {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: var(--color-background-primary);
+    border: 1.5px solid var(--color-border-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    z-index: 20;
+    box-shadow: 0 0 0 6px var(--color-background-secondary);
+    transition: transform 0.3s ease;
+  }
+
+  .hub-logo {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    letter-spacing: 0.03em;
+  }
+
+  .hub-tagline {
+    font-size: 10px;
+    color: var(--color-text-tertiary);
+  }
+
+  /* SVG ring canvas */
+  .ring-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* Category pill buttons */
+  .cat-btn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 10;
+    font-size: 0;
+  }
+
+  .cat-btn svg { width: 22px; height: 22px; stroke: var(--color-text-secondary); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+  .cat-btn span { font-size: 9px; color: var(--color-text-tertiary); font-weight: 500; transition: color 0.2s; display: block; }
+
+  .cat-btn:hover, .cat-btn.active {
+    border-color: var(--color-border-primary);
+    background: var(--color-background-secondary);
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+
+  .cat-btn:hover svg, .cat-btn.active svg { stroke: var(--color-text-primary); }
+  .cat-btn:hover span, .cat-btn.active span { color: var(--color-text-primary); }
+
+  /* Sub-service ring: semi-circular arrangement */
+  .sub-btn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 82px;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px 8px;
+    gap: 5px;
+    z-index: 15;
+    transition: all 0.2s ease;
+    text-align: center;
+    pointer-events: auto;
+  }
+
+  .sub-btn svg { width: 20px; height: 20px; stroke: var(--color-text-secondary); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .sub-btn span { font-size: 10px; color: var(--color-text-secondary); line-height: 1.3; font-weight: 500; display: block; }
+
+  .sub-btn:hover {
+    border-color: var(--color-border-secondary);
+    background: var(--color-background-secondary);
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  .sub-btn:hover svg { stroke: var(--color-text-primary); }
+  .sub-btn:hover span { color: var(--color-text-primary); }
+
+  /* Sub ring connector lines via SVG overlay */
+  .sub-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: visible;
+  }
+
+  .sub-line {
+    stroke: var(--color-border-secondary);
+    stroke-width: 0.75;
+    fill: none;
+    stroke-dasharray: 3 3;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .sub-line.visible { opacity: 1; }
+
+  /* Fade in subs */
+  .sub-btn {
+    opacity: 0;
+    animation: none;
+  }
+
+  .sub-btn.show {
+    animation: popIn 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  /* Info card at bottom */
+  .info-card {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 520px;
+    padding: 18px 22px;
+    border-radius: var(--border-radius-lg);
+    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-secondary);
+    min-height: 76px;
+    transition: all 0.2s ease;
+  }
+
+  .info-card h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .info-card p  { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  .hint {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    margin-top: 8px;
+  }
+</style>
+
+<div class="hub-root" id="hubRoot">
+  <div class="wheel-wrap" id="wheelWrap">
+
+    <!-- SVG for connecting spoke lines -->
+    <svg class="ring-svg" id="spokeSvg" viewBox="0 0 420 420"></svg>
+    <!-- SVG for sub-item connector lines -->
+    <svg class="sub-lines" id="subLinesSvg" viewBox="0 0 420 420"></svg>
+
+    <!-- Center -->
+    <div class="hub-center">
+      <span style="font-size:22px">🔧</span>
+      <span class="hub-logo">Unitefix</span>
+      <span class="hub-tagline">services</span>
+    </div>
+  </div>
+
+  <div class="info-card" id="infoCard">
+    <h3>Explore our services</h3>
+    <p>Hover over a category to see available services fanning out around it.</p>
+  </div>
+  <p class="hint">Hover or tap a category · sub-services appear in a semi-circle</p>
+</div>
+
+<script>
+const CX = 210, CY = 210;
+const CAT_R = 148;   // radius of category buttons from center
+const SUB_R = 78;    // radius of sub-service buttons from their parent category
+
+const CATEGORIES = [
+  {
+    id: 'tech', label: 'Technology', angle: -90,
+    icon: `<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+    desc: 'Digital & tech solutions for home and office.',
+    subs: [
+      { label: 'Computer & Printer', icon: `<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>` },
+      { label: 'CCTV Camera', icon: `<svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.89L15 14M3 8h12v8H3z"/></svg>` },
+      { label: 'Biometric', icon: `<svg viewBox="0 0 24 24"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/></svg>` },
+      { label: 'Software Dev', icon: `<svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>` },
+      { label: 'Digital Marketing', icon: `<svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z" opacity=".1"/><path d="M21 3H3v7l9 1 9-1V3zM21 14l-9 1-9-1v7h18v-7z"/><path d="M3 10v4M21 10v4"/></svg>` },
+      { label: 'Internet & Broadband', icon: `<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>` },
+    ]
+  },
+  {
+    id: 'home', label: 'Home', angle: -45,
+    icon: `<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    desc: 'Essential services keeping your home running.',
+    subs: [
+      { label: 'Water Purifiers', icon: `<svg viewBox="0 0 24 24"><path d="M12 2v6l3 3-3 3v6"/><path d="M5 12a7 7 0 0014 0"/></svg>` },
+      { label: 'UPS & Batteries', icon: `<svg viewBox="0 0 24 24"><rect x="6" y="7" width="12" height="14" rx="1"/><path d="M10 7V5a2 2 0 014 0v2M10 12l2 2 4-4"/></svg>` },
+      { label: 'Solar & Heat Pumps', icon: `<svg viewBox="0 0 24 24"><path d="M12 3v1M12 20v1M4.22 4.22l.77.77M18.36 18.36l.77.77M3 12H4M20 12h1M4.22 19.78l.77-.77M18.36 5.64l.77-.77M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>` },
+      { label: 'DTH Services', icon: `<svg viewBox="0 0 24 24"><path d="M5.07 12.9A7.001 7.001 0 0019 12M1 8.11a11 11 0 0122 0M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>` },
+      { label: 'Packers & Movers', icon: `<svg viewBox="0 0 24 24"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>` },
+      { label: 'Pest Control', icon: `<svg viewBox="0 0 24 24"><path d="M12 22C6.5 22 2 17.5 2 12c0-2.5 1-4.8 2.6-6.5M12 2c5.5 0 10 4.5 10 10 0 2.5-1 4.8-2.6 6.5"/><path d="M9 12h6M12 9v6"/></svg>` },
+    ]
+  },
+  {
+    id: 'professional', label: 'Professional', angle: 0,
+    icon: `<svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>`,
+    desc: 'Expert professionals for business & legal needs.',
+    subs: [
+      { label: 'Tax & Audit', icon: `<svg viewBox="0 0 24 24"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3"/><path d="M14 2H8l-4 4h10a4 4 0 014 4v1"/><path d="M17 17l4-4-4-4M21 13H9"/></svg>` },
+      { label: 'Lawyers', icon: `<svg viewBox="0 0 24 24"><path d="M3 6l9-4 9 4M3 18l9 4 9-4M12 2v20M7 9l5 2 5-2M7 15l5 2 5-2"/></svg>` },
+      { label: 'Architecture', icon: `<svg viewBox="0 0 24 24"><path d="M3 21h18M4 21V7l8-4 8 4v14"/><path d="M9 21V11h6v10"/></svg>` },
+      { label: 'Agriculture', icon: `<svg viewBox="0 0 24 24"><path d="M7 20s4-1 8-6c2.83-3.4 2.5-8 2.5-8S13 7.5 10 11c-4 4.5-3 9-3 9z"/><path d="M10.5 10.5L4 21"/></svg>` },
+    ]
+  },
+  {
+    id: 'lifestyle', label: 'Lifestyle', angle: 45,
+    icon: `<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`,
+    desc: 'Services that enhance your everyday life.',
+    subs: [
+      { label: 'Interior Design', icon: `<svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>` },
+      { label: 'Event Management', icon: `<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>` },
+      { label: 'Catering', icon: `<svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>` },
+      { label: 'Driving School', icon: `<svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>` },
+    ]
+  },
+  {
+    id: 'repairs', label: 'Repairs', angle: 90,
+    icon: `<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
+    desc: 'Fast, reliable repair services at your doorstep.',
+    subs: [
+      { label: 'Mobile Repairs', icon: `<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>` },
+      { label: 'Home Appliances', icon: `<svg viewBox="0 0 24 24"><path d="M7 3H4a1 1 0 00-1 1v16a1 1 0 001 1h16a1 1 0 001-1V9l-6-6H7z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>` },
+      { label: 'Electrical & Plumbing', icon: `<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>` },
+      { label: 'Earth Movers', icon: `<svg viewBox="0 0 24 24"><path d="M2 17l10-10 4 4-6 6H2zM8 11L5 14M14 3l4 4-3 3-4-4M17 7l3-3"/></svg>` },
+    ]
+  },
+  {
+    id: 'travel', label: 'Travel', angle: 135,
+    icon: `<svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>`,
+    desc: 'Travel planning and accommodation services.',
+    subs: [
+      { label: 'Travel & Tourism', icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>` },
+      { label: 'Hotels & Resorts', icon: `<svg viewBox="0 0 24 24"><path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M9 21V11h6v10"/></svg>` },
+    ]
+  },
+  {
+    id: 'business', label: 'Business', angle: 180,
+    icon: `<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    desc: 'Financial and real estate business services.',
+    subs: [
+      { label: 'Real Estate', icon: `<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>` },
+      { label: 'Loans & Insurance', icon: `<svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 100 10 5 5 0 000-10zM4 22v-2a8 8 0 0116 0v2"/><path d="M8 14l2 2 4-4"/></svg>` },
+    ]
+  },
+  {
+    id: 'health', label: 'Health', angle: -135,
+    icon: `<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    desc: 'Healthcare and wellness services.',
+    subs: [
+      { label: 'Health Services', icon: `<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>` },
+    ]
+  },
+];
+
+// Override health icon
+CATEGORIES[7].icon = `<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`;
+CATEGORIES[7].subs = [
+  { label: 'Health Services', icon: `<svg viewBox="0 0 24 24"><path d="M4.5 12H2m20 0h-2.5M12 4.5V2m0 20v-2.5M7.05 7.05L5.636 5.636m12.728 12.728L16.95 16.95M16.95 7.05l1.414-1.414M5.636 18.364L7.05 16.95M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>` },
+];
+
+// Override business icon
+CATEGORIES[6].icon = `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v4M10 14h4"/></svg>`;
+
+const wrap = document.getElementById('wheelWrap');
+const spokeSvg = document.getElementById('spokeSvg');
+const subLinesSvg = document.getElementById('subLinesSvg');
+const infoCard = document.getElementById('infoCard');
+
+let activeId = null;
+let subElems = [];
+let lineElems = [];
+let catBtns = {};
+
+function deg2rad(d) { return d * Math.PI / 180; }
+
+function catPos(angle) {
+  const r = deg2rad(angle);
+  return { x: CX + CAT_R * Math.cos(r), y: CY + CAT_R * Math.sin(r) };
+}
+
+// Draw spoke lines
+function drawSpokes() {
+  spokeSvg.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const p = catPos(cat.angle);
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', CX); line.setAttribute('y1', CY);
+    line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
+    line.setAttribute('stroke', 'var(--color-border-tertiary)');
+    line.setAttribute('stroke-width', '1');
+    line.setAttribute('stroke-dasharray', '4 4');
+    spokeSvg.appendChild(line);
+  });
+}
+
+function clearSubs() {
+  subElems.forEach(el => el.remove());
+  lineElems.forEach(el => el.remove());
+  subElems = []; lineElems = [];
+  subLinesSvg.innerHTML = '';
+}
+
+function showSubs(cat) {
+  clearSubs();
+  const cp = catPos(cat.angle);
+  const n = cat.subs.length;
+
+  // Fan angle: spread sub-items in a 140-degree arc centered away from hub
+  const spreadDeg = Math.min(140, (n - 1) * 34);
+  const startAngle = cat.angle - spreadDeg / 2;
+  const stepAngle = n > 1 ? spreadDeg / (n - 1) : 0;
+
+  cat.subs.forEach((sub, i) => {
+    const ang = n === 1 ? cat.angle : startAngle + i * stepAngle;
+    const sr = deg2rad(ang);
+    const sx = cp.x + SUB_R * Math.cos(sr);
+    const sy = cp.y + SUB_R * Math.sin(sr);
+
+    // Connector line
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', cp.x); line.setAttribute('y1', cp.y);
+    line.setAttribute('x2', sx); line.setAttribute('y2', sy);
+    line.setAttribute('class', 'sub-line');
+    line.setAttribute('stroke', 'var(--color-border-secondary)');
+    line.setAttribute('stroke-width', '0.75');
+    line.setAttribute('stroke-dasharray', '3 3');
+    subLinesSvg.appendChild(line);
+    lineElems.push(line);
+    setTimeout(() => line.classList.add('visible'), 10);
+
+    // Sub button
+    const btn = document.createElement('div');
+    btn.className = 'sub-btn';
+    btn.style.left = sx + 'px';
+    btn.style.top = sy + 'px';
+    btn.innerHTML = sub.icon + `<span>${sub.label}</span>`;
+    wrap.appendChild(btn);
+    subElems.push(btn);
+    setTimeout(() => btn.classList.add('show'), 20 + i * 40);
+  });
+}
+
+function activate(cat) {
+  if (activeId === cat.id) {
+    // deactivate
+    activeId = null;
+    clearSubs();
+    Object.values(catBtns).forEach(b => b.classList.remove('active'));
+    infoCard.querySelector('h3').textContent = 'Explore our services';
+    infoCard.querySelector('p').textContent = 'Hover over a category to see available services fanning out around it.';
+    return;
+  }
+  activeId = cat.id;
+  Object.values(catBtns).forEach(b => b.classList.remove('active'));
+  catBtns[cat.id].classList.add('active');
+  infoCard.querySelector('h3').textContent = cat.label;
+  infoCard.querySelector('p').textContent = cat.desc;
+  showSubs(cat);
+}
+
+// Build category buttons
+CATEGORIES.forEach(cat => {
+  const p = catPos(cat.angle);
+  const btn = document.createElement('div');
+  btn.className = 'cat-btn';
+  btn.style.left = p.x + 'px';
+  btn.style.top = p.y + 'px';
+  btn.innerHTML = cat.icon + `<span>${cat.label}</span>`;
+  btn.addEventListener('mouseenter', () => activate(cat));
+  btn.addEventListener('click', () => activate(cat));
+  wrap.appendChild(btn);
+  catBtns[cat.id] = btn;
+});
+
+drawSpokes();
+</script>
