@@ -1135,11 +1135,6 @@
                     <div class="services-mobile-grid" id="m-grid"></div>
                 </div>
 
-                <div class="ibox desktop-only" id="ib">
-                    <h3>Welcome to Unitefix</h3>
-                    <p>Hover a category arc to reveal its services clearly in the outer ring.</p>
-                </div>
-                <p class="hint-txt desktop-only">Hover over a category below to explore sub-services.</p>
             </div>
         </div>
     </section>
@@ -1227,7 +1222,7 @@
         const sv = document.getElementById('ws');
         const layers = document.getElementById('cat-layers');
         const ib = document.getElementById('ib');
-        if(!cv || !cx || !sv || !layers || !ib) return;
+        if(!cv || !cx || !sv || !layers) return;
 
         const W = 640, H = 640, OX = 320, OY = 320;
         const CAT_IR = 130, CAT_OR = 215, OUTER_IR = 255, OUTER_OR = 315;
@@ -1264,13 +1259,13 @@
         });
 
         function activate(i) {
-            if(i === hovCat) return;
+            if(hovCat === i) return;
             hovCat = i;
             if(i>=0){
-                ib.innerHTML = `<h3>${CATS[i].label}</h3><p>${CATS[i].desc}</p>`;
+                if(ib) ib.innerHTML = `<h3>${CATS[i].label}</h3><p>${CATS[i].desc}</p>`;
                 document.querySelectorAll('.cat-seg').forEach((s, idx) => s.classList.toggle('active', idx === i));
             } else {
-                ib.innerHTML = `<h3>Welcome to Unitefix</h3><p>Hover a category arc to reveal its services clearly in the outer ring.</p>`;
+                if(ib) ib.innerHTML = `<h3>Welcome to Unitefix</h3><p>Hover a category arc to reveal its services clearly in the outer ring.</p>`;
                 document.querySelectorAll('.cat-seg').forEach(s => s.classList.remove('active'));
             }
             if(!rafId) tick();
