@@ -1074,30 +1074,57 @@
             g.setAttribute('opacity', op);
             const n = ((mid % 360) + 360) % 360;
             const flip = n > 90 && n < 270;
-            g.setAttribute('transform', `translate(${OX},${OY}) rotate(${flip ? mid+180 : mid}) translate(0,${-r})`);
+            // Upright logic for all angles: Position at radius r, and adjust rotation
+            g.setAttribute('transform', `translate(${OX},${OY}) rotate(${mid}) translate(0, ${flip ? r : -r}) rotate(${flip ? 180 : 0})`);
+            
             lines.forEach((l, i) => {
                 const t = document.createElementNS(SVG_NS, 'text');
-                t.setAttribute('y', (i - (lines.length-1)/2) * (sz+2.5));
-                t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
-                t.setAttribute('font-size', sz); t.setAttribute('font-weight', w); t.setAttribute('fill', col); t.textContent = l;
+                t.setAttribute('y', (i - (lines.length-1)/2) * (sz+3));
+                t.setAttribute('text-anchor', 'middle');
+                t.setAttribute('dominant-baseline', 'middle');
+                t.setAttribute('font-size', sz);
+                t.setAttribute('font-weight', w);
+                t.setAttribute('fill', col);
+                t.setAttribute('style', 'font-family: inherit;');
+                t.textContent = l;
                 g.appendChild(t);
             });
             sv.appendChild(g);
         }
 
         function addPill(it, cat, op, act) {
-            const g = document.createElementNS(SVG_NS,'g'); g.setAttribute('opacity', op);
-            const l = document.createElementNS(SVG_NS,'line');
-            l.setAttribute('x1',it.anchorX); l.setAttribute('y1',it.anchorY);
-            l.setAttribute('x2',it.x); l.setAttribute('y2',it.y);
-            l.setAttribute('stroke',rgba(cat.hex, 0.22)); l.setAttribute('stroke-width','1.2'); g.appendChild(l);
-            const r = document.createElementNS(SVG_NS,'rect');
-            r.setAttribute('x',it.x-it.w/2); r.setAttribute('y',it.y-it.h/2); r.setAttribute('width',it.w); r.setAttribute('height',it.h); r.setAttribute('rx',14);
-            r.setAttribute('fill', act ? rgba(cat.hex, 0.16) : '#ffffff'); r.setAttribute('stroke', rgba(cat.hex, 0.45)); g.appendChild(r);
-            const t = document.createElementNS(SVG_NS,'text');
-            t.setAttribute('x',it.x); t.setAttribute('y',it.y+1.5); t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
-            t.setAttribute('font-size','11.5'); t.setAttribute('font-weight', act ? '700' : '600'); t.setAttribute('fill','#0f172a'); t.textContent = it.label;
-            g.appendChild(t); sv.appendChild(g);
+            const g = document.createElementNS(SVG_NS, 'g');
+            g.setAttribute('opacity', op);
+            
+            const l = document.createElementNS(SVG_NS, 'line');
+            l.setAttribute('x1', it.anchorX); l.setAttribute('y1', it.anchorY);
+            l.setAttribute('x2', it.x); l.setAttribute('y2', it.y);
+            l.setAttribute('stroke', rgba(cat.hex, 0.3));
+            l.setAttribute('stroke-width', '1.2');
+            g.appendChild(l);
+            
+            const r = document.createElementNS(SVG_NS, 'rect');
+            r.setAttribute('x', it.x - it.w / 2);
+            r.setAttribute('y', it.y - it.h / 2);
+            r.setAttribute('width', it.w);
+            r.setAttribute('height', it.h);
+            r.setAttribute('rx', 14);
+            r.setAttribute('fill', act ? rgba(cat.hex, 0.18) : '#ffffff');
+            r.setAttribute('stroke', rgba(cat.hex, 0.5));
+            r.setAttribute('stroke-width', '1.5');
+            g.appendChild(r);
+            
+            const t = document.createElementNS(SVG_NS, 'text');
+            t.setAttribute('x', it.x);
+            t.setAttribute('y', it.y + 1);
+            t.setAttribute('text-anchor', 'middle');
+            t.setAttribute('dominant-baseline', 'middle');
+            t.setAttribute('font-size', '12px');
+            t.setAttribute('font-weight', '700');
+            t.setAttribute('fill', '#0f172a');
+            t.textContent = it.label;
+            g.appendChild(t);
+            sv.appendChild(g);
         }
 
         function render() {
@@ -1110,15 +1137,16 @@
                 const et = document.createElementNS(SVG_NS,'text');
                 et.setAttribute('x',ep.x); et.setAttribute('y',ep.y); et.setAttribute('text-anchor','middle'); et.setAttribute('dominant-baseline','middle');
                 et.setAttribute('font-size','18'); et.textContent=cat.emoji; sv.appendChild(et);
-                addArcText(mid, CAT_MID_R+12, [cat.label], h ? cat.hex : '#475569', 10, h?700:600, 1);
+                addArcText(mid, CAT_MID_R+14, [cat.label], h ? cat.hex : '#334155', 11, h?800:700, 1);
                 if(h && a>0) {
-                    const sp = Math.min(160, Math.max(80, (cat.subs.length)*22)); const st = mid - sp/2;
+                    const sp = Math.min(170, Math.max(90, (cat.subs.length)*24)); const st = mid - sp/2;
                     cat.subs.forEach((sub, j) => {
                         const ang = cat.subs.length <= 1 ? mid : st + (sp/(cat.subs.length-1))*j;
                         const R = 265; const p = { x: OX+R*Math.cos(rad(ang)), y: OY+R*Math.sin(rad(ang)) };
                         const ap = { x: OX+TRACK_IR*Math.cos(rad(ang)), y: OY+TRACK_IR*Math.sin(rad(ang)) };
-                        cx.font = 'bold 11.5px Inter, sans-serif'; const tw = Math.max(90, cx.measureText(sub).width + 32);
-                        addPill({ x:p.x, y:p.y, w:tw, h:28, anchorX:ap.x, anchorY:ap.y, label:sub }, cat, a, hovSub===j);
+                        cx.font = 'bold 12px Inter, sans-serif'; 
+                        const tw = Math.max(100, cx.measureText(sub).width + 36);
+                        addPill({ x:p.x, y:p.y, w:tw, h:30, anchorX:ap.x, anchorY:ap.y, label:sub }, cat, a, hovSub===j);
                     });
                 }
             });
