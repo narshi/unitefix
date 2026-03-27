@@ -475,7 +475,6 @@
         }
 
         .cat-seg:hover {
-            transform: scale(1.1) !important;
             z-index: 100;
         }
 
@@ -1154,7 +1153,10 @@
                 const seg = segs[i];
                 if(seg){
                     const rScale = window.innerWidth < 768 ? (radius-10) : radius;
-                    seg.style.transform = `rotate(${mid}deg) translate(0, -${rScale}px) rotate(-${mid}deg)`;
+                    const scaleFactor = h ? 1.08 : 1;
+                    // Apply scale INSIDE the inline transform to preserve polar positioning
+                    seg.style.transform = `rotate(${mid}deg) translate(0, -${rScale}px) rotate(-${mid}deg) scale(${scaleFactor})`;
+                    seg.classList.toggle('active', h);
                 }
 
                 if(h && a>0) {
