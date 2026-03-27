@@ -941,7 +941,7 @@
         <div class="container" style="display: flex; flex-direction: column; align-items: center;">
             <div class="section-header">
                 <h2>Explore Our Services</h2>
-                <p>An interactive, premium wheel designed to showcase our comprehensive solutions.</p>
+                <p>An interactive, premium hub designed to showcase our comprehensive solutions.</p>
             </div>
 
             <div class="uf-root">
@@ -949,7 +949,7 @@
                     <canvas id="wc" width="620" height="620" class="wc"></canvas>
                     <svg id="ws" class="ws" viewBox="0 0 620 620" aria-hidden="true"></svg>
                     <div class="hub">
-                        <img src="assets/home.jpg" alt="Unitefix Logo" class="hub-logo-img">
+                        <i class="fas fa-handshake" style="font-size: 32px; color: var(--primary); margin-bottom: 4px;"></i>
                         <span class="hub-name">Unitefix</span>
                         <span class="hub-tag">services</span>
                     </div>
@@ -958,7 +958,7 @@
                     <h3>Welcome to Unitefix</h3>
                     <p>Hover a category arc to reveal its services clearly in the outer ring.</p>
                 </div>
-                <p class="hint-txt">Hover a category to reveal its services around the outer ring.</p>
+                <p class="hint-txt">Hover over a category below to explore sub-services.</p>
             </div>
         </div>
     </section>
@@ -1131,35 +1131,37 @@
         function render() {
             cx.clearRect(0,0,W,H); sv.innerHTML = '';
             // Service track with more spacing
-            const OUTER_TRACK_IR = 250, OUTER_TRACK_OR = 308;
+            const OUTER_TRACK_IR = 250, OUTER_TRACK_OR = 310;
             drawArc(OUTER_TRACK_IR, OUTER_TRACK_OR, 0, 360, 'rgba(15,23,42,0.02)', 'rgba(15,23,42,0.04)', 1);
             
             CATS.forEach((cat, i) => {
                 const s = SLICE*i+GAP_DEG/2, e = s+SLICE-GAP_DEG, mid = (s+e)/2, a = alpha[i], h = hovCat===i;
                 drawArc(CAT_IR, CAT_OR, s, e, h ? rgba(cat.hex,0.1) : '#fbfcfe', h ? cat.hex : 'rgba(15,23,42,0.08)', h?2:1);
                 
-                // Emoji position
-                const emojiR = (CAT_IR + CAT_OR) / 2 - 12;
-                const ex = OX + emojiR * Math.cos(rad(mid));
-                const ey = OY + emojiR * Math.sin(rad(mid));
+                // Perfect Stacked Layout: Icon at center-10, Text at center+14
+                const centerRadius = (CAT_IR + CAT_OR) / 2;
+                
+                // Emoji position (Top of the arc cell)
+                const ex = OX + (centerRadius - 16) * Math.cos(rad(mid));
+                const ey = OY + (centerRadius - 16) * Math.sin(rad(mid));
                 const et = document.createElementNS(SVG_NS, 'text');
                 et.setAttribute('x', ex); et.setAttribute('y', ey);
                 et.setAttribute('text-anchor', 'middle'); et.setAttribute('dominant-baseline', 'middle');
-                et.setAttribute('font-size', '18'); et.textContent = cat.emoji; sv.appendChild(et);
+                et.setAttribute('font-size', '20'); et.textContent = cat.emoji; sv.appendChild(et);
                 
-                // Label position (further out but inside)
-                addArcText(mid, (CAT_IR + CAT_OR) / 2 + 15, [cat.label], h ? cat.hex : '#334155', 11, h?800:700, 1);
+                // Label position (Bottom of the arc cell)
+                addArcText(mid, centerRadius + 15, [cat.label], h ? cat.hex : '#334155', 11, h?800:700, 1);
                 
                 if(h && a>0) {
-                    const sp = Math.min(200, Math.max(100, (cat.subs.length)*28));
+                    const sp = Math.min(210, Math.max(100, (cat.subs.length)*30));
                     const st = mid - sp/2;
                     cat.subs.forEach((sub, j) => {
                         const ang = cat.subs.length <= 1 ? mid : st + (sp/(cat.subs.length-1))*j;
-                        const R = 278; 
+                        const R = 280; 
                         const p = { x: OX+R*Math.cos(rad(ang)), y: OY+R*Math.sin(rad(ang)) };
                         const ap = { x: OX+OUTER_TRACK_IR*Math.cos(rad(ang)), y: OY+OUTER_TRACK_IR*Math.sin(rad(ang)) };
-                        cx.font = 'bold 12px Inter, sans-serif'; 
-                        const tw = Math.max(105, cx.measureText(sub).width + 38);
+                        cx.font = 'bold 12.5px Inter, sans-serif'; 
+                        const tw = Math.max(105, cx.measureText(sub).width + 42);
                         addPill({ x:p.x, y:p.y, w:tw, h:30, anchorX:ap.x, anchorY:ap.y, label:sub }, cat, a, hovSub===j);
                     });
                 }
