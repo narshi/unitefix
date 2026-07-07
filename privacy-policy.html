@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UniteFix Privacy Policy - Learn how we collect, use, and protect your personal information.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Privacy Policy | UniteFix">
+    <meta property="og:description" content="UniteFix Privacy Policy — how we handle your data.">
+    <meta property="og:url" content="https://unitefix.com/privacy-policy">
+    <meta property="og:type" content="website">
+
+    <title>Privacy Policy | UniteFix Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-premium: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06), 0 20px 25px -5px rgba(0,0,0,0.05);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .header-logo img {
+            height: 40px;
+            border-radius: 8px;
+        }
+        .header-back {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-back:hover { color: #fff; }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            background: var(--accent-gradient);
+            padding: 80px 0 60px;
+            text-align: center;
+            color: #fff;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 18px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            margin-top: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Content */
+        .content {
+            max-width: 860px;
+            margin: -40px auto 60px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-premium);
+            padding: 48px 56px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .content h2:first-of-type { margin-top: 0; }
+
+        .content h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 28px 0 10px;
+        }
+
+        .content p, .content li {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.8;
+        }
+        .content p { margin-bottom: 14px; }
+
+        .content ul, .content ol {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        .content li { margin-bottom: 6px; }
+
+        .content strong { color: var(--text-dark); }
+
+        .content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: var(--transition);
+        }
+        .content a:hover { border-bottom-color: var(--accent); }
+
+        /* Info cards */
+        .info-card {
+            background: #f1f5f9;
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-left: 4px solid var(--accent);
+        }
+        .info-card p { margin-bottom: 4px; }
+
+        /* Tables */
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 0.92rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .content th {
+            background: var(--primary);
+            color: #fff;
+            text-align: left;
+            padding: 14px 18px;
+            font-weight: 600;
+        }
+        .content td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #e2e8f0;
+            color: var(--text-muted);
+        }
+        .content tr:last-child td { border-bottom: none; }
+        .content tr:nth-child(even) { background: #f8fafc; }
+
+        /* Blockquote */
+        .content blockquote {
+            background: linear-gradient(135deg, #eff6ff, #f0f4ff);
+            border-left: 4px solid var(--accent);
+            padding: 16px 24px;
+            margin: 20px 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-style: italic;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            padding: 40px 0 24px;
+            text-align: center;
+        }
+        footer a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        footer a:hover { color: #fff; }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content { padding: 32px 24px; margin: -30px 16px 40px; }
+            .hero { padding: 60px 0 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <a href="index.html" class="header-logo">
+                <img src="assets/home.jpg" alt="UniteFix Logo">
+                <span>UniteFix</span>
+            </a>
+            <a href="index.html" class="header-back">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+            <p>How we collect, use, and protect your information</p>
+            <span class="badge"><i class="fas fa-shield-halved"></i>&nbsp; Last Updated: July 7, 2025</span>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="content">
+
+        <h2>1. Introduction</h2>
+        <p>UniteFix ("we," "us," "our") operates a home services platform available at <strong><a href="https://www.unitefix.com">www.unitefix.com</a></strong> and through the UniteFix mobile application (Android package: <code>com.unitefix.app</code>). Our platform connects customers with verified service professionals ("Partners") for appliance repair, maintenance, and related home services across India.</p>
+        <p>This Privacy Policy describes how we collect, use, store, share, and protect your personal information when you use our App or website. By using UniteFix, you agree to this policy. If you do not agree, please discontinue use immediately.</p>
+        <div class="info-card">
+            <p><strong>Questions?</strong> Contact us at: <a href="mailto:support@unitefix.com">support@unitefix.com</a></p>
+        </div>
+
+        <h2>2. Who We Are</h2>
+        <table>
+            <tr><th style="width:40%">Detail</th><th>Information</th></tr>
+            <tr><td><strong>Platform Name</strong></td><td>UniteFix</td></tr>
+            <tr><td><strong>Website</strong></td><td><a href="https://www.unitefix.com">https://www.unitefix.com</a></td></tr>
+            <tr><td><strong>App Package</strong></td><td>com.unitefix.app</td></tr>
+            <tr><td><strong>Contact Email</strong></td><td><a href="mailto:support@unitefix.com">support@unitefix.com</a></td></tr>
+            <tr><td><strong>Privacy Policy URL</strong></td><td><a href="https://www.unitefix.com/privacy-policy">https://www.unitefix.com/privacy-policy</a></td></tr>
+        </table>
+
+        <h2>3. Information We Collect</h2>
+
+        <h3>3.1 — Account Information (All Users)</h3>
+        <p>When you register or log in, we collect:</p>
+        <ul>
+            <li><strong>Full name</strong> — to identify your account</li>
+            <li><strong>Mobile phone number</strong> — for login, OTP verification, and service coordination</li>
+            <li><strong>Email address</strong> — for account verification, receipts, and notifications</li>
+            <li><strong>Profile picture</strong> — optional, to personalise your profile</li>
+        </ul>
+
+        <h3>3.2 — Service & Address Information</h3>
+        <ul>
+            <li><strong>Home address and service address</strong> — required to schedule and fulfil service requests</li>
+            <li><strong>Saved addresses</strong> — addresses you choose to save for quick booking</li>
+            <li><strong>Service request details</strong> — appliance type, brand, model, issue description, and photos you submit</li>
+        </ul>
+
+        <h3>3.3 — Location Data</h3>
+        <p>With your <strong>explicit permission</strong>, we collect:</p>
+        <ul>
+            <li><strong>Precise GPS location (ACCESS_FINE_LOCATION)</strong> — to match you with nearby Partners, display available services, and allow Partners to navigate to your address</li>
+            <li><strong>Approximate location (ACCESS_COARSE_LOCATION)</strong> — used as a fallback when precise location is unavailable</li>
+        </ul>
+        <blockquote>Location is only collected while the App is active or while a Partner is assigned to your booking. We do not track your location in the background for any other purpose.</blockquote>
+
+        <h3>3.4 — Partner-Specific Information (Service Professionals Only)</h3>
+        <p>If you register as a service Partner, we additionally collect:</p>
+        <table>
+            <tr><th>Data</th><th>Purpose</th></tr>
+            <tr><td>Aadhaar number & document scan</td><td>Government-mandated identity verification (KYC)</td></tr>
+            <tr><td>PAN card number & document scan</td><td>Tax compliance and identity verification</td></tr>
+            <tr><td>Bank account number & IFSC code</td><td>Service payout processing</td></tr>
+            <tr><td>UPI ID</td><td>Digital payout settlements via Razorpay X</td></tr>
+            <tr><td>Years of experience & qualifications</td><td>Partner profile and customer matching</td></tr>
+            <tr><td>Skills and service categories</td><td>Matching Partners with relevant job types</td></tr>
+        </table>
+
+        <h3>3.5 — Payment Information</h3>
+        <p>We do <strong>not</strong> store full card numbers or CVV details. Payment data is handled by <strong>Razorpay</strong> (PCI-DSS compliant). We receive and store: transaction ID and order ID, payment status, and booking fee/service charge amounts.</p>
+
+        <h3>3.6 — Device & Usage Information</h3>
+        <p>Collected automatically when you use the App:</p>
+        <ul>
+            <li>Device model and operating system version</li>
+            <li>Push notification token (Firebase Cloud Messaging)</li>
+            <li>App usage patterns, screens visited, and session duration</li>
+            <li>Crash reports and error logs (for debugging)</li>
+        </ul>
+
+        <h3>3.7 — Information from Third-Party Login</h3>
+        <p>If you use <strong>Truecaller</strong> to register or log in, we receive your verified phone number and full name from Truecaller. We do not receive your Truecaller contacts or any other data.</p>
+
+        <h2>4. How We Use Your Information</h2>
+        <table>
+            <tr><th>Purpose</th><th>Data Used</th><th>Legal Basis</th></tr>
+            <tr><td>Create and manage your account</td><td>Name, phone, email</td><td>Contract</td></tr>
+            <tr><td>Match customers with nearby Partners</td><td>Location, service type, pincode</td><td>Contract</td></tr>
+            <tr><td>Process bookings and payments</td><td>Address, payment info</td><td>Contract</td></tr>
+            <tr><td>Send OTPs, confirmations, status updates</td><td>Phone, email, push token</td><td>Contract</td></tr>
+            <tr><td>Verify Partner identity (KYC)</td><td>Aadhaar, PAN, documents</td><td>Legal obligation</td></tr>
+            <tr><td>Process payouts to Partners</td><td>Bank/UPI details</td><td>Contract</td></tr>
+            <tr><td>Resolve disputes and complaints</td><td>Service history, communications</td><td>Legitimate interest</td></tr>
+            <tr><td>Improve App features</td><td>Usage data, crash logs</td><td>Legitimate interest</td></tr>
+            <tr><td>Send promotional offers (opt-in)</td><td>Email, push token</td><td>Consent</td></tr>
+            <tr><td>Fraud detection and abuse prevention</td><td>Device info, usage patterns</td><td>Legitimate interest</td></tr>
+        </table>
+
+        <h2>5. How We Share Your Information</h2>
+        <blockquote>We do not sell your personal data to anyone.</blockquote>
+
+        <h3>5.1 — Between Customers and Partners</h3>
+        <p>When a booking is confirmed, the assigned Partner receives the customer's <strong>name, address, and service description</strong>. The customer receives the Partner's <strong>name and phone number</strong> for coordination.</p>
+
+        <h3>5.2 — Trusted Third-Party Processors</h3>
+        <table>
+            <tr><th>Provider</th><th>Purpose</th><th>Data Shared</th></tr>
+            <tr><td>Razorpay (India)</td><td>Payment processing & Partner payouts</td><td>Name, phone, UPI/bank details, transaction metadata</td></tr>
+            <tr><td>Cloudinary (USA)</td><td>Secure image storage</td><td>Profile photos, KYC images, service photos</td></tr>
+            <tr><td>Firebase / Google (USA)</td><td>Push notification delivery</td><td>Device push token</td></tr>
+            <tr><td>Truecaller (Sweden)</td><td>Phone number verification</td><td>Phone number</td></tr>
+            <tr><td>Google Maps</td><td>Map display and navigation</td><td>Location (not stored on our behalf)</td></tr>
+        </table>
+        <p>All processors are contractually obligated to protect your data and prohibited from using it for their own purposes.</p>
+
+        <h3>5.3 — Legal Requirements</h3>
+        <p>We may disclose personal data if required by a court order, valid legal process, government or regulatory authority, or to protect the safety, rights, or property of UniteFix, our users, or the public.</p>
+
+        <h3>5.4 — Business Transfers</h3>
+        <p>In the event of a merger, acquisition, or sale of business assets, your data may be transferred. We will notify you via email or in-app notice before such a transfer.</p>
+
+        <h2>6. Sensitive Personal Information</h2>
+
+        <h3>KYC Documents (Partners Only)</h3>
+        <p>Aadhaar numbers, PAN numbers, and uploaded document images constitute <strong>Sensitive Personal Data or Information (SPDI)</strong> under Indian law. We:</p>
+        <ul>
+            <li>Collect these <strong>only</strong> from verified service Partners</li>
+            <li>Store all SPDI with <strong>AES-256 encryption at rest</strong></li>
+            <li>Restrict access to authorised administrators only</li>
+            <li>Display only masked versions (e.g., XXXX-XXXX-1234) in the UI</li>
+            <li>Never share these with customers or any third party except as required by law</li>
+        </ul>
+
+        <h3>Financial Data</h3>
+        <p>Bank account numbers and UPI IDs are shared only with <strong>Razorpay</strong> for payout processing. These are never visible to customers and are masked in all UI displays.</p>
+
+        <h2>7. Data Retention</h2>
+        <table>
+            <tr><th>Data Category</th><th>Retention Period</th></tr>
+            <tr><td>Account information</td><td>Active account + 3 years after deletion</td></tr>
+            <tr><td>Booking and service history</td><td>5 years (dispute resolution)</td></tr>
+            <tr><td>KYC documents (Partners)</td><td>Minimum 5 years as required by law</td></tr>
+            <tr><td>Payment records</td><td>7 years (financial/tax compliance)</td></tr>
+            <tr><td>Location data</td><td>Not persistently stored; last-known kept 30 days</td></tr>
+            <tr><td>Push notification tokens</td><td>Until uninstall or permission revocation</td></tr>
+            <tr><td>Deleted accounts</td><td>30-day recovery window, then permanently deleted</td></tr>
+        </table>
+        <div class="info-card">
+            <p><strong>Delete your account:</strong> Settings → Delete Account in the app, or email <a href="mailto:support@unitefix.com">support@unitefix.com</a></p>
+        </div>
+
+        <h2>8. Your Rights</h2>
+        <table>
+            <tr><th>Right</th><th>How to Exercise</th></tr>
+            <tr><td><strong>Access</strong> — see what data we hold</td><td>Email <a href="mailto:support@unitefix.com">support@unitefix.com</a></td></tr>
+            <tr><td><strong>Correction</strong> — fix inaccurate data</td><td>Update via App profile settings</td></tr>
+            <tr><td><strong>Deletion</strong> — remove your account and data</td><td>In-App "Delete Account" or email us</td></tr>
+            <tr><td><strong>Data Portability</strong> — receive data in machine-readable format</td><td>Email <a href="mailto:support@unitefix.com">support@unitefix.com</a></td></tr>
+            <tr><td><strong>Withdraw Consent</strong> — opt out of promotions</td><td>App Settings → Notifications</td></tr>
+            <tr><td><strong>Revoke Location</strong> — stop location collection</td><td>Device Settings → Apps → UniteFix → Permissions</td></tr>
+        </table>
+        <p>We will respond to all requests within <strong>30 days</strong>.</p>
+
+        <h2>9. App Permissions</h2>
+        <table>
+            <tr><th>Permission</th><th>Why It's Needed</th><th>Required?</th></tr>
+            <tr><td>ACCESS_FINE_LOCATION</td><td>Match with nearby Partners; navigation</td><td>Optional</td></tr>
+            <tr><td>ACCESS_COARSE_LOCATION</td><td>Approximate location fallback</td><td>Optional</td></tr>
+            <tr><td>CAMERA</td><td>Upload photos of appliances</td><td>Optional</td></tr>
+            <tr><td>READ_MEDIA_IMAGES</td><td>Select photos from gallery</td><td>Optional</td></tr>
+            <tr><td>RECEIVE_BOOT_COMPLETED</td><td>Restart notification listener after reboot</td><td>Required</td></tr>
+            <tr><td>VIBRATE / WAKE_LOCK</td><td>Push notification alerts</td><td>Required</td></tr>
+            <tr><td>INTERNET</td><td>Core app functionality</td><td>Required</td></tr>
+        </table>
+        <p>All optional permissions are requested at runtime with a clear explanation. You can deny any; some features will be limited.</p>
+
+        <h2>10. Push Notifications</h2>
+        <ul>
+            <li>✅ Booking confirmations and status updates (mandatory)</li>
+            <li>✅ OTPs and account security alerts (mandatory)</li>
+            <li>✅ Payment receipts</li>
+            <li>📣 Promotional offers and new services (optional — opt in/out via App Settings)</li>
+        </ul>
+        <p>Manage preferences in <strong>App Settings → Notifications</strong> or your device notification settings.</p>
+
+        <h2>11. Children's Privacy</h2>
+        <p>UniteFix is intended exclusively for users aged <strong>18 years and above</strong>. We do not knowingly collect personal information from minors. If you believe a person under 18 has registered, contact us at <a href="mailto:support@unitefix.com">support@unitefix.com</a> and we will delete the account.</p>
+
+        <h2>12. Security</h2>
+        <ul>
+            <li><strong>TLS/HTTPS encryption</strong> for all data in transit</li>
+            <li><strong>AES-256 encryption</strong> for sensitive data at rest</li>
+            <li><strong>JWT-based authentication</strong> with expiring access tokens and secure refresh</li>
+            <li><strong>Role-based access control</strong> — customers, partners, and admins access only role-relevant data</li>
+            <li><strong>No plaintext passwords</strong> — all credentials are hashed</li>
+            <li><strong>Regular code security reviews</strong></li>
+        </ul>
+        <p>Despite these measures, no internet transmission is 100% secure. We commit to notifying you in the event of a data breach affecting your personal information.</p>
+
+        <h2>13. Third-Party Links</h2>
+        <p>The App may contain links to third-party services. We are not responsible for their privacy practices. Review their policies:</p>
+        <ul>
+            <li><a href="https://razorpay.com/privacy/" target="_blank">Razorpay Privacy Policy</a></li>
+            <li><a href="https://www.truecaller.com/privacy-policy" target="_blank">Truecaller Privacy Policy</a></li>
+            <li><a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a></li>
+        </ul>
+
+        <h2>14. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy periodically. When we do, we will update the "Last Updated" date at the top. For material changes, we will send an in-app notification. Continued use of the App after changes constitutes acceptance.</p>
+
+        <h2>15. Grievance Officer & Contact</h2>
+        <p>For any privacy concerns, complaints, or requests, contact us as required under the IT (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011:</p>
+        <div class="info-card">
+            <p><strong>UniteFix Support</strong></p>
+            <p>📧 Email: <a href="mailto:support@unitefix.com">support@unitefix.com</a></p>
+            <p>🌐 Website: <a href="https://www.unitefix.com">www.unitefix.com</a></p>
+            <p>📋 Privacy Policy: <a href="https://www.unitefix.com/privacy-policy">www.unitefix.com/privacy-policy</a></p>
+            <p>⏱️ Response time: Within <strong>30 days</strong> of receipt</p>
+        </div>
+        <br>
+        <p style="text-align:center; color: var(--text-muted); font-size:0.88rem;">
+            <em>This Privacy Policy is compliant with the Information Technology Act, 2000; the IT (SPDI) Rules, 2011; and the Google Play Store Developer Program Policy.</em>
+        </p>
+        <p style="text-align:center; color: var(--text-muted); font-size:0.88rem;">
+            © 2025 UniteFix. All rights reserved.
+        </p>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="index.html#services"><i class="fas fa-cogs"></i> Services</a>
+                <a href="index.html#about"><i class="fas fa-info-circle"></i> About</a>
+                <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="privacy-policy.html"><i class="fas fa-shield-halved"></i> Privacy Policy</a>
+            </div>
+            <hr class="footer-divider">
+            <p>© 2026 UniteFix Services. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
