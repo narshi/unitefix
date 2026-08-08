@@ -498,11 +498,18 @@
           });
 
           if (ok && data && data.success){
-            setMessage('📧 Verification code sent. Please check your email (and spam folder).', 'success');
+            // Existing numbers get the code at their account's registered
+            // email (masked by the backend), not the address typed above.
+            const displayEmail = data.maskedEmail || email;
+            if (data.sentToRegisteredEmail){
+              setMessage(`📧 This number already has an account — the code was sent to its registered email ${displayEmail}, not the address entered above.`, 'success');
+            } else {
+              setMessage('📧 Verification code sent. Please check your email (and spam folder).', 'success');
+            }
             if (otpStepActive) {
               startResendCooldown(RESEND_COOLDOWN_SECONDS);
             } else {
-              enterOtpStep(email);
+              enterOtpStep(displayEmail);
             }
             cooldownStarted = true;
             return;
