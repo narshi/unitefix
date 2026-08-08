@@ -46,18 +46,18 @@
       border: 1px solid rgba(0,0,0,0.03);
     }
 
-    h2 { 
-        color: var(--primary); 
-        text-align: center; 
-        margin-bottom: 8px; 
-        font-size: 2rem; 
+    h2 {
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 8px;
+        font-size: 2rem;
         font-weight: 800;
         letter-spacing: -0.025em;
     }
     .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 32px; font-size: 1rem; }
 
     label { display: block; margin: 20px 0 8px; font-weight: 600; color: var(--primary); font-size: 0.9rem; }
-    
+
     input[type="text"], input[type="tel"], input[type="email"], textarea {
       width: 100%;
       padding: 14px 16px;
@@ -72,6 +72,12 @@
     input:focus, textarea:focus {
         border-color: var(--accent);
         box-shadow: 0 0 0 4px var(--accent-glow);
+    }
+
+    input:disabled, textarea:disabled {
+        background: #f1f5f9;
+        color: var(--text-muted);
+        cursor: not-allowed;
     }
 
     textarea { min-height: 100px; resize: vertical; }
@@ -90,9 +96,9 @@
       transition: var(--transition);
       box-shadow: 0 4px 12px var(--accent-glow);
     }
-    
-    button:hover { 
-        background: #1d4ed8; 
+
+    button:hover {
+        background: #1d4ed8;
         transform: translateY(-2px);
         box-shadow: 0 8px 20px var(--accent-glow);
     }
@@ -100,9 +106,12 @@
     button:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+        transform: none;
     }
 
     .required { color: #ef4444; margin-left: 4px; }
+
+    .field-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; }
 
     /* Multi-select styling */
     .multi-select-container { position: relative; }
@@ -162,11 +171,51 @@
 
     .service-option label { margin: 0; font-weight: 500; font-size: 0.95rem; }
 
+    /* Locked state while the OTP step is active */
+    .form-locked .multi-select-header {
+      pointer-events: none;
+      background: #f1f5f9;
+      opacity: 0.7;
+    }
+
     /* Terms & Footer */
     .terms-container { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
     .terms-container input { width: 18px; height: 18px; accent-color: var(--accent); }
     .terms-container label { margin: 0; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
     .terms-container a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    /* OTP step */
+    #otpSection { margin-top: 8px; }
+
+    #otp {
+      text-align: center;
+      letter-spacing: 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .otp-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .link-button {
+      width: auto;
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 4px 0;
+      margin: 0;
+      box-shadow: none;
+    }
+    .link-button:hover { background: none; text-decoration: underline; transform: none; box-shadow: none; }
+    .link-button:disabled { color: var(--text-muted); text-decoration: none; }
 
     #response { margin-top: 16px; text-align: center; font-weight: 600; font-size: 0.95rem; }
 
@@ -186,8 +235,9 @@
       <label for="phone">Phone Number <span class="required">*</span></label>
       <input id="phone" name="phone" type="tel" pattern="[0-9]{10}" placeholder="10-digit number" required>
 
-      <label for="email">Email (optional)</label>
-      <input id="email" name="email" type="email">
+      <label for="email">Email <span class="required">*</span></label>
+      <input id="email" name="email" type="email" required>
+      <p class="field-hint">We'll send a verification code to this email.</p>
 
       <label for="address">Address <span class="required">*</span></label>
       <textarea id="address" name="address" required></textarea>
@@ -206,9 +256,8 @@
           <div class="service-option"><input id="s3" name="services" type="checkbox" value="Biometric Device"><label for="s3">Biometric Device</label></div>
           <div class="service-option"><input id="s4" name="services" type="checkbox" value="UPS & Batteries"><label for="s4">UPS & Batteries</label></div>
           <div class="service-option"><input id="s5" name="services" type="checkbox" value="Water Purifiers"><label for="s5">Water Purifiers</label></div>
-          <div class="service-option"><input id="s4" name="services" type="checkbox" value="Software Development"><label for="s4">Software Development</label></div>
-          <div class="service-option"><input id="s4" name="services" type="checkbox" value="Digital Services"><label for="s4">Digital Services</label></div>
-          <div class="service-option"><input id="s5" name="services" type="checkbox" value="Water Purifiers"><label for="s5">Water Purifiers</label></div>
+          <div class="service-option"><input id="s37" name="services" type="checkbox" value="Software Development"><label for="s37">Software Development</label></div>
+          <div class="service-option"><input id="s38" name="services" type="checkbox" value="Digital Services"><label for="s38">Digital Services</label></div>
           <div class="service-option"><input id="s6" name="services" type="checkbox" value="Internet & Broadband"><label for="s6">Internet & Broadband</label></div>
           <div class="service-option"><input id="s7" name="services" type="checkbox" value="Solar & Heat Pumps"><label for="s7">Solar & Heat Pumps</label></div>
           <div class="service-option"><input id="s8" name="services" type="checkbox" value="WTP & STP"><label for="s8">WTP & STP</label></div>
@@ -248,14 +297,29 @@
       <div class="terms-container">
         <input id="terms" name="terms" type="checkbox" required>
         <label for="terms">
-          I agree to all the 
+          I agree to all the
           <a href="assets/terms-and-conditions.pdf" target="_blank" rel="noopener noreferrer">
             <strong>Terms and Conditions</strong>
           </a>.
         </label>
       </div>
 
-      <button type="submit">Submit Registration</button>
+      <button type="submit" id="submitBtn">Register</button>
+
+      <!-- Step 2: email OTP verification (hidden until the code is sent) -->
+      <div id="otpSection" hidden>
+        <label for="otp">Verification Code <span class="required">*</span></label>
+        <input id="otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="______">
+        <p class="field-hint" id="otpHint"></p>
+
+        <button type="button" id="verifyBtn">Verify &amp; Complete Registration</button>
+
+        <div class="otp-actions">
+          <button type="button" class="link-button" id="editDetailsBtn">← Edit details</button>
+          <button type="button" class="link-button" id="resendBtn" disabled>Resend code</button>
+        </div>
+      </div>
+
       <p id="response" aria-live="polite"></p>
     </form>
 
@@ -264,6 +328,12 @@
 
   <script>
     (function(){
+      // UniteFix backend (see narshi/UniteFix_backend, server/routes/auth-truecaller.routes.ts).
+      // The registration API only needs phone/email/name/role — address and selected
+      // services stay client-side; the partner completes their profile in the app.
+      const BACKEND_URL = "https://unitefix-backend.onrender.com";
+      const RESEND_COOLDOWN_SECONDS = 60; // matches the backend's OTP re-request cooldown
+
       const header = document.getElementById('multiSelectHeader');
       const dropdown = document.getElementById('multiSelectDropdown');
       const arrow = document.getElementById('dropdownArrow');
@@ -312,61 +382,208 @@
       // initialize
       updateSelectedServices();
 
-      // Form submit handling
+      // ── Registration flow: form → request OTP → verify OTP ──────────
+
       const form = document.getElementById('registerForm');
       const responseEl = document.getElementById('response');
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const scriptURL = "https://script.google.com/macros/s/AKfycbw8vdgRz0vztwgrrsOQiQ_QdmdnoQxFl0pmunDOciwHTjOcnrCVtg8ME8t4derFdy1P/exec";
+      const submitBtn = document.getElementById('submitBtn');
+      const otpSection = document.getElementById('otpSection');
+      const otpInput = document.getElementById('otp');
+      const otpHint = document.getElementById('otpHint');
+      const verifyBtn = document.getElementById('verifyBtn');
+      const resendBtn = document.getElementById('resendBtn');
+      const editDetailsBtn = document.getElementById('editDetailsBtn');
 
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
+      let otpStepActive = false;
+      let resendTimer = null;
 
-        // native validation first
+      function setMessage(text, tone){
+        responseEl.textContent = text;
+        responseEl.style.color = { success: 'green', error: 'red', warn: 'orange', info: 'gray' }[tone] || 'gray';
+      }
+
+      function getDetails(){
+        const nameParts = document.getElementById('name').value.trim().split(/\s+/);
+        return {
+          firstName: nameParts[0] || '',
+          lastName: nameParts.slice(1).join(' '),
+          phone: document.getElementById('phone').value.replace(/\D/g, ''),
+          email: document.getElementById('email').value.trim().toLowerCase(),
+        };
+      }
+
+      async function callApi(path, body){
+        const res = await fetch(BACKEND_URL + path, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        let data = null;
+        try { data = await res.json(); } catch { /* non-JSON error page */ }
+        return { ok: res.ok, status: res.status, data };
+      }
+
+      function setFormLocked(locked){
+        form.querySelectorAll('input:not(#otp), textarea').forEach(el => { el.disabled = locked; });
+        form.classList.toggle('form-locked', locked);
+        if (locked) {
+          dropdown.classList.remove('open');
+          arrow.classList.remove('open');
+        }
+      }
+
+      function startResendCooldown(seconds){
+        clearInterval(resendTimer);
+        let remaining = seconds;
+        resendBtn.disabled = true;
+        resendBtn.textContent = `Resend code (${remaining}s)`;
+        resendTimer = setInterval(() => {
+          remaining -= 1;
+          if (remaining <= 0) {
+            clearInterval(resendTimer);
+            resendBtn.disabled = false;
+            resendBtn.textContent = 'Resend code';
+          } else {
+            resendBtn.textContent = `Resend code (${remaining}s)`;
+          }
+        }, 1000);
+      }
+
+      function enterOtpStep(email){
+        otpStepActive = true;
+        setFormLocked(true);
+        submitBtn.hidden = true;
+        otpSection.hidden = false;
+        otpHint.textContent = `Enter the 6-digit code sent to ${email}. It expires in 10 minutes.`;
+        otpInput.value = '';
+        otpInput.focus();
+        startResendCooldown(RESEND_COOLDOWN_SECONDS);
+      }
+
+      function exitOtpStep(){
+        otpStepActive = false;
+        setFormLocked(false);
+        submitBtn.hidden = false;
+        otpSection.hidden = true;
+        clearInterval(resendTimer);
+        setMessage('', 'info');
+      }
+
+      function validateForm(){
         if (!form.checkValidity()){
-          // show native browser UI for first invalid control
           form.reportValidity();
-          return;
+          return false;
         }
-
-        // ensure at least one service selected
-        const selected = serviceCheckboxes.filter(cb => cb.checked);
-        if (selected.length === 0){
-          responseEl.textContent = "⚠️ Please select at least one service.";
-          responseEl.style.color = "orange";
-          return;
+        const { phone } = getDetails();
+        if (!/^[6-9]\d{9}$/.test(phone)){
+          setMessage('⚠️ Please enter a valid 10-digit Indian mobile number.', 'warn');
+          return false;
         }
+        if (!serviceCheckboxes.some(cb => cb.checked)){
+          setMessage('⚠️ Please select at least one service.', 'warn');
+          return false;
+        }
+        return true;
+      }
 
-        responseEl.textContent = "Submitting...";
-        responseEl.style.color = "gray";
-        submitBtn.disabled = true;
+      async function requestOtp(trigger){
+        const { firstName, lastName, phone, email } = getDetails();
+        trigger.disabled = true;
+        setMessage('Sending verification code…', 'info');
+        let cooldownStarted = false;
 
         try {
-          const res = await fetch(scriptURL, { method: 'POST', body: new FormData(form) });
-          // try to parse JSON safely
-          let data;
-          try { data = await res.json(); } catch {
-            const txt = await res.text();
-            responseEl.textContent = "Server response: " + txt;
-            responseEl.style.color = "red";
-            submitBtn.disabled = false;
+          const { ok, status, data } = await callApi('/api/auth/fallback/request-otp', {
+            phone, email, role: 'serviceman', firstName, lastName,
+          });
+
+          if (ok && data && data.success){
+            setMessage('📧 Verification code sent. Please check your email (and spam folder).', 'success');
+            if (otpStepActive) {
+              startResendCooldown(RESEND_COOLDOWN_SECONDS);
+            } else {
+              enterOtpStep(email);
+            }
+            cooldownStarted = true;
             return;
           }
-          if (data && data.success){
-            responseEl.textContent = "✅ Success! Thank you for registering. We will contact you shortly.";
-            responseEl.style.color = "green";
-            form.reset();
-            updateSelectedServices();
-            setTimeout(()=> location.href = 'index.html', 2500);
-          } else {
-            throw new Error(data && data.message ? data.message : 'Server error');
+
+          const message = (data && data.message) || `Request failed (HTTP ${status}). Please try again.`;
+          setMessage('❌ ' + message, 'error');
+          if (status === 429 && otpStepActive) {
+            startResendCooldown((data && data.retryAfterSeconds) || RESEND_COOLDOWN_SECONDS);
+            cooldownStarted = true;
           }
         } catch (err) {
           console.error(err);
-          responseEl.textContent = "❌ Something went wrong. Please try again later.";
-          responseEl.style.color = "red";
+          setMessage('❌ Could not reach the server. Please check your connection and try again.', 'error');
         } finally {
-          submitBtn.disabled = false;
+          if (trigger === submitBtn) {
+            submitBtn.disabled = false;
+          } else if (!cooldownStarted) {
+            resendBtn.disabled = false;
+            resendBtn.textContent = 'Resend code';
+          }
         }
+      }
+
+      async function verifyOtp(){
+        const code = otpInput.value.trim();
+        if (!/^\d{6}$/.test(code)){
+          setMessage('⚠️ Please enter the 6-digit code from your email.', 'warn');
+          return;
+        }
+
+        const { firstName, lastName, phone, email } = getDetails();
+        verifyBtn.disabled = true;
+        setMessage('Verifying…', 'info');
+
+        try {
+          const { ok, status, data } = await callApi('/api/auth/fallback/verify-otp', {
+            phone, email, code, role: 'serviceman', firstName, lastName, mode: 'signup',
+          });
+
+          if (ok && data && data.success){
+            if (data.alreadyRegistered){
+              setMessage('✅ This number already has a UniteFix account. Please login in the app.', 'success');
+            } else {
+              setMessage('✅ Registration Successful! Please login in the app.', 'success');
+            }
+            otpInput.disabled = true;
+            resendBtn.disabled = true;
+            editDetailsBtn.disabled = true;
+            clearInterval(resendTimer);
+            setTimeout(() => { location.href = 'index.html'; }, 3000);
+            return;
+          }
+
+          const message = (data && data.message) || `Verification failed (HTTP ${status}). Please try again.`;
+          setMessage('❌ ' + message, 'error');
+          verifyBtn.disabled = false;
+        } catch (err) {
+          console.error(err);
+          setMessage('❌ Could not reach the server. Please check your connection and try again.', 'error');
+          verifyBtn.disabled = false;
+        }
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if (otpStepActive){
+          verifyOtp();
+          return;
+        }
+        if (!validateForm()) return;
+        requestOtp(submitBtn);
+      });
+
+      verifyBtn.addEventListener('click', verifyOtp);
+      resendBtn.addEventListener('click', function(){ requestOtp(resendBtn); });
+      editDetailsBtn.addEventListener('click', exitOtpStep);
+
+      // digits only in the code field
+      otpInput.addEventListener('input', function(){
+        otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
       });
     })();
   </script>
