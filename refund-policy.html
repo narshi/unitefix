@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UniteFix Privacy Policy - Learn how we collect, use, and protect your personal information.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Refund & Cancellation Policy | UniteFix">
+    <meta property="og:description" content="UniteFix Refund & Cancellation Policy">
+    <meta property="og:url" content="https://unitefix.com/refund-policy">
+    <meta property="og:type" content="website">
+
+    <title>Refund & Cancellation Policy | UniteFix Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-premium: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06), 0 20px 25px -5px rgba(0,0,0,0.05);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .header-logo img {
+            height: 40px;
+            border-radius: 8px;
+        }
+        .header-back {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-back:hover { color: #fff; }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            background: var(--accent-gradient);
+            padding: 80px 0 60px;
+            text-align: center;
+            color: #fff;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 18px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            margin-top: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Content */
+        .content {
+            max-width: 860px;
+            margin: -40px auto 60px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-premium);
+            padding: 48px 56px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .content h2:first-of-type { margin-top: 0; }
+
+        .content h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 28px 0 10px;
+        }
+
+        .content p, .content li {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.8;
+        }
+        .content p { margin-bottom: 14px; }
+
+        .content ul, .content ol {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        .content li { margin-bottom: 6px; }
+
+        .content strong { color: var(--text-dark); }
+
+        .content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: var(--transition);
+        }
+        .content a:hover { border-bottom-color: var(--accent); }
+
+        /* Info cards */
+        .info-card {
+            background: #f1f5f9;
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-left: 4px solid var(--accent);
+        }
+        .info-card p { margin-bottom: 4px; }
+
+        /* Tables */
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 0.92rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .content th {
+            background: var(--primary);
+            color: #fff;
+            text-align: left;
+            padding: 14px 18px;
+            font-weight: 600;
+        }
+        .content td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #e2e8f0;
+            color: var(--text-muted);
+        }
+        .content tr:last-child td { border-bottom: none; }
+        .content tr:nth-child(even) { background: #f8fafc; }
+
+        /* Blockquote */
+        .content blockquote {
+            background: linear-gradient(135deg, #eff6ff, #f0f4ff);
+            border-left: 4px solid var(--accent);
+            padding: 16px 24px;
+            margin: 20px 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-style: italic;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            padding: 40px 0 24px;
+            text-align: center;
+        }
+        footer a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        footer a:hover { color: #fff; }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content { padding: 32px 24px; margin: -30px 16px 40px; }
+            .hero { padding: 60px 0 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <a href="index.html" class="header-logo">
+                <img src="assets/app_icon.png" alt="UniteFix Logo">
+                <span>UniteFix</span>
+            </a>
+            <a href="index.html" class="header-back">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Refund & Cancellation Policy</h1>
+            <p>Guidelines for cancellations and service refunds</p>
+            <span class="badge"><i class="fas fa-file-invoice-dollar"></i>&nbsp; Effective Date: 13 August 2026</span>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="content">
+
+
+<p>Unitefix Services Private Limited (“Unitefix”, “we”, “our”, or “us”) operates an online service booking and service-provider marketplace through the Unitefix application, website, and related platforms (“Platform”).</p>
+<p>This Refund and Cancellation Policy explains the circumstances under which customers may cancel bookings or request refunds for services booked through Unitefix.</p>
+
+<h2>1. Service Booking Payments</h2>
+<p>Customers may be required to pay service charges, booking fees, advance payments, platform fees, or other applicable charges when booking a service through Unitefix.</p>
+<p>The applicable service price, cancellation terms, applicable fees, and refund conditions will be displayed to the customer, where applicable, before the booking is confirmed.</p>
+<p>Where a service is provided by an independent service provider listed on the Platform, the applicable service-provider terms may also apply.</p>
+
+<h2>2. Customer Cancellation</h2>
+<p>Customers may request cancellation of a booking before the service provider starts the service.</p>
+<p>The cancellation deadline and any applicable cancellation charge may vary depending on the service and will be communicated at the time of booking.</p>
+<p>Where a customer cancels within the applicable permitted cancellation period, the customer will generally be eligible for a refund of the refundable amount paid for the booking.</p>
+<p>Where a cancellation charge applies, the applicable amount will be disclosed to the customer before or at the time of booking.</p>
+<p>Once the service has started, cancellation may not qualify for a refund except where provided under this Policy, the applicable service terms, or applicable law.</p>
+
+<h2>3. Customer No-Show or Failure to Provide Access</h2>
+<p>If a service provider arrives at the agreed location and the customer is unavailable, fails to provide reasonable access, or otherwise prevents the service from being performed, the booking may be treated as a customer no-show.</p>
+<p>In such circumstances, the customer may not be eligible for a full refund and applicable visit, cancellation, or other charges may be deducted where those charges were disclosed at the time of booking.</p>
+<p>Unitefix may consider exceptional circumstances on a case-by-case basis.</p>
+
+<h2>4. Cancellation or No-Show by Service Provider</h2>
+<p>If a service provider cancels a confirmed booking, fails to attend, or fails to provide the booked service without an applicable or unavoidable reason, the customer may be eligible for a refund of the amount paid for the affected service.</p>
+<p>Where appropriate, Unitefix may also assist the customer in rescheduling the service or finding an alternative service provider.</p>
+
+<h2>5. Service Not Provided or Incomplete Service</h2>
+<p>If the customer has paid for a service that was not provided, was only partially provided, or was materially different from the agreed scope of service, the customer may contact Unitefix for assistance.</p>
+<p>Unitefix may review the booking and service details and, depending on the circumstances, provide:</p>
+<ul>
+    <li>a full refund;</li>
+    <li>a partial refund;</li>
+    <li>an opportunity to have the service corrected or completed;</li>
+    <li>rescheduling with the same or another service provider; or</li>
+    <li>another appropriate resolution.</li>
+</ul>
+<p>The outcome may depend on the scope of work, amount of work completed, agreed price, communications between the parties, photographs or other evidence, service-provider information, and other relevant circumstances.</p>
+
+<h2>6. Unsatisfactory or Deficient Service</h2>
+<p>If a customer believes that a completed service was defective, incomplete, materially below the agreed scope, or otherwise unsatisfactory, the customer should contact Unitefix as soon as reasonably possible and preferably within 48 hours of completion of the service.</p>
+<p>Customers may be requested to provide relevant information or supporting evidence, including photographs, videos, invoices, booking details, or other documentation.</p>
+<p>Unitefix may review the complaint with the customer and service provider and determine an appropriate resolution based on the available evidence and applicable terms.</p>
+<p>A complaint submitted after 48 hours may still be considered where appropriate, particularly where the issue could not reasonably have been identified earlier or where applicable law provides otherwise.</p>
+
+<h2>7. Non-Refundable Charges</h2>
+<p>Certain charges may be non-refundable where clearly disclosed to the customer before the booking is confirmed.</p>
+<p>These may include applicable cancellation charges, platform charges, or other charges that are expressly identified as non-refundable.</p>
+<p>However, non-refundable charges will not automatically apply where a refund is required due to cancellation or failure by the service provider, technical errors, duplicate payments, or other circumstances where a refund is required under this Policy or applicable law.</p>
+
+<h2>8. Refund Eligibility and Amount</h2>
+<p>The amount of any refund will depend on the circumstances of the booking and the applicable cancellation, service, and payment terms.</p>
+<p>Where only part of a service has been completed, Unitefix may determine an appropriate partial refund based on the work completed, the agreed scope, the amount paid, and other relevant evidence.</p>
+<p>Unitefix will not unreasonably withhold an eligible refund where the applicable refund conditions have been satisfied.</p>
+
+<h2>9. Refund Processing</h2>
+<p>Approved refunds will normally be initiated by Unitefix within 7 business days after the refund has been approved, unless a different timeline is required due to the nature of the transaction or applicable law.</p>
+<p>Refunds will generally be processed to the original payment method used by the customer.</p>
+<p>After Unitefix initiates the refund, the time required for the amount to appear in the customer's account may depend on the customer's bank, card issuer, UPI provider, payment gateway, or other payment service provider.</p>
+
+<h2>10. Duplicate or Incorrect Payments</h2>
+<p>If a customer is charged more than once for the same booking or makes a payment due to a technical or processing error, the customer should report the issue to Unitefix as soon as possible.</p>
+<p>After verification, any eligible excess amount will be refunded to the original payment method, subject to applicable payment-provider procedures.</p>
+
+<h2>11. Unauthorized or Fraudulent Transactions</h2>
+<p>Customers should immediately notify Unitefix if they suspect that a transaction associated with their Unitefix account was unauthorized or fraudulent.</p>
+<p>Customers may be required to provide transaction details and other information reasonably necessary to investigate the matter.</p>
+<p>Unitefix may investigate the transaction and coordinate with the relevant payment gateway, bank, UPI provider, or other payment service provider. Any refund or reversal will be handled in accordance with applicable law and the procedures of the relevant payment provider.</p>
+
+<h2>12. Refund Review and Disputes</h2>
+<p>Refund requests may be reviewed using relevant information, including:</p>
+<ul>
+    <li>booking records;</li>
+    <li>payment and transaction records;</li>
+    <li>service-provider information;</li>
+    <li>customer communications;</li>
+    <li>photographs or videos;</li>
+    <li>invoices or other documents;</li>
+    <li>service descriptions and agreed scope; and</li>
+    <li>other relevant evidence.</li>
+</ul>
+<p>Unitefix may request additional information from the customer or service provider where reasonably necessary to investigate a dispute.</p>
+<p>A refund request may be declined where the available evidence does not support the claim, where the customer has already received the applicable service or resolution, or where the request is inconsistent with the applicable booking terms or this Policy.</p>
+<p>Nothing in this Policy is intended to exclude or restrict any rights or remedies available to consumers under applicable law.</p>
+
+<h2>13. Force Majeure and Unavoidable Circumstances</h2>
+<p>A cancellation or failure to provide a service caused by circumstances reasonably beyond the control of Unitefix or the service provider, including severe weather, natural disasters, government restrictions, emergencies, transportation disruptions, or other extraordinary circumstances, may be handled on a case-by-case basis.</p>
+<p>Where appropriate, Unitefix may offer rescheduling, an alternative service provider, a refund, or another reasonable resolution.</p>
+
+<h2>14. Grievance Redressal</h2>
+<p>Customers may raise refund, cancellation, service, or other complaints through the contact details provided below.</p>
+<div class="info-card">
+    <p><strong>Grievance Officer:</strong></p>
+    <p>Name: Grievance Officer</p>
+    <p>Designation: Grievance Officer</p>
+    <p>Email: unitefixservices@gmail.com</p>
+</div>
+<p>Unitefix will acknowledge consumer complaints within 48 hours of receipt and will endeavour to resolve the complaint within the period prescribed under applicable law.</p>
+<p>For faster resolution, customers should provide their booking ID, transaction details, registered mobile number, and a clear description of the issue.</p>
+
+<h2>15. Contact Us</h2>
+<p>For refund, cancellation, payment, or service-related assistance:</p>
+<p><strong>Unitefix Services Private Limited</strong></p>
+<p>Email: <a href="mailto:unitefixservices@gmail.com">unitefixservices@gmail.com</a></p>
+<p>Customers should include their:</p>
+<ul>
+    <li>Booking ID;</li>
+    <li>transaction/reference number;</li>
+    <li>registered mobile number;</li>
+    <li>date of booking; and</li>
+    <li>reason for requesting cancellation or refund.</li>
+</ul>
+
+<h2>16. Policy Changes</h2>
+<p>Unitefix may update this Refund and Cancellation Policy from time to time to reflect changes in its services, Platform, business practices, or applicable law.</p>
+<p>Any revised version will be made available through the Unitefix application or website and will specify its effective date.</p>
+
+<h2>17. Acceptance</h2>
+<p>By using the Unitefix Platform or booking a service through Unitefix, customers acknowledge that they have read and understood this Refund and Cancellation Policy and agree to the applicable booking terms and conditions.</p>
+<p>Nothing in this Policy limits any consumer rights that cannot lawfully be excluded or restricted under applicable law.</p>
+
+
+</main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="index.html#services"><i class="fas fa-cogs"></i> Services</a>
+                <a href="index.html#about"><i class="fas fa-info-circle"></i> About</a>
+                <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="privacy-policy.html"><i class="fas fa-shield-halved"></i> Privacy Policy</a>
+                <a href="refund-policy.html"><i class="fas fa-file-invoice-dollar"></i> Refund Policy</a>
+            </div>
+            <hr class="footer-divider">
+            <p>© 2026 UniteFix Services. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
