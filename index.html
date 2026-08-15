@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -404,8 +404,8 @@
 
         .services-mobile-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            grid-template-columns: 1fr;
+            gap: 12px;
             width: 100%;
             padding: 10px 0;
         }
@@ -1639,14 +1639,14 @@
         const GAP_DEG = 5;
 
         const CATS = [
-            { id:'tech', label:'Technology', emoji:'\u{1F4BB}', hex:'#2563eb', desc:'Expert digital and hardware solutions for home and office environments.', subs:['Computer & Printer','CCTV Camera','Biometric Device','Software Development','Internet & Broadband','DTH Services'] },
-            { id:'home', label:'Home', emoji:'\u{1F3E0}', hex:'#16a34a', desc:'Essential upkeep and specialized products for smooth home living.', subs:['Water Purifiers','Solar & Heat Pumps','WTP & STP','Home Appliances','Household Repairs','Electrical & Plumbing','Packers & Movers','Pest Controlling System','Interior Design','Welding','Hardware & Painting'] },
-            { id:'professional', label:'Professional', emoji:'\u{1F454}', hex:'#7c3aed', desc:'Dedicated expert services for business, legal, and complex project requirements.', subs:['Architecture','Agriculture Product Services','Earth Movers','Event Management','Lawyers & Advocates'] },
-            { id:'repairs', label:'Repairs', emoji:'\u{1F527}', hex:'#d97706', desc:'Skilled repair services for power, mobility, and critical equipment.', subs:['UPS & Batteries','Mobile Repairs','Digital Camera Services','Generators & Pumps','Vehicle Service'] },
-            { id:'business', label:'Business', emoji:'\u{1F4BC}', hex:'#059669', desc:'Strategic consultation and guidance for growth and personal security.', subs:['Tax & Audit','Digital Services','Real Estate','Loans & Insurance'] },
-            { id:'travel', label:'Travel', emoji:'\u2708\uFE0F', hex:'#0891b2', desc:'End-to-end travel planning and luxury resort bookings.', subs:['Travel & Tourism','Hotels & Resorts'] },
-            { id:'lifestyle', label:'Lifestyle', emoji:'\u2764\uFE0F', hex:'#db2777', desc:'Personalized services that empower your daily life and events.', subs:['Driving School','Astrology Services','Catering Services','Education'] },
-            { id:'health', label:'Health', emoji:'\u{1F3E5}', hex:'#e11d48', desc:'Proactive health and wellness solutions for you and your family.', subs:['Health Services'] }
+            { id:'tech', label:'Technology', icon:'fas fa-laptop', hex:'#2563eb', desc:'Expert digital and hardware solutions for home and office environments.', subs:['Computer & Printer','CCTV Camera','Biometric Device','Software Development','Internet & Broadband','DTH Services'] },
+            { id:'home', label:'Home', icon:'fas fa-home', hex:'#16a34a', desc:'Essential upkeep and specialized products for smooth home living.', subs:['Water Purifiers','Solar & Heat Pumps','WTP & STP','Home Appliances','Household Repairs','Electrical & Plumbing','Packers & Movers','Pest Controlling System','Interior Design','Welding','Hardware & Painting'] },
+            { id:'professional', label:'Professional', icon:'fas fa-user-tie', hex:'#7c3aed', desc:'Dedicated expert services for business, legal, and complex project requirements.', subs:['Architecture','Agriculture Product Services','Earth Movers','Event Management','Lawyers & Advocates'] },
+            { id:'repairs', label:'Repairs', icon:'fas fa-tools', hex:'#d97706', desc:'Skilled repair services for power, mobility, and critical equipment.', subs:['UPS & Batteries','Mobile Repairs','Digital Camera Services','Generators & Pumps','Vehicle Service'] },
+            { id:'business', label:'Business', icon:'fas fa-briefcase', hex:'#059669', desc:'Strategic consultation and guidance for growth and personal security.', subs:['Tax & Audit','Digital Services','Real Estate','Loans & Insurance'] },
+            { id:'travel', label:'Travel', icon:'fas fa-plane', hex:'#0891b2', desc:'End-to-end travel planning and luxury resort bookings.', subs:['Travel & Tourism','Hotels & Resorts'] },
+            { id:'lifestyle', label:'Lifestyle', icon:'fas fa-heart', hex:'#db2777', desc:'Personalized services that empower your daily life and events.', subs:['Driving School','Astrology Services','Catering Services','Education'] },
+            { id:'health', label:'Health', icon:'fas fa-hospital', hex:'#e11d48', desc:'Proactive health and wellness solutions for you and your family.', subs:['Health Services'] }
         ];
 
         const N = CATS.length, SLICE = 360 / N;
@@ -1752,7 +1752,7 @@
                 card.className = 'mobile-card';
                 card.innerHTML = `
                     <div style="display: flex; align-items: center; width: 100%; gap: 12px;">
-                        <div class="m-icon">${cat.emoji}</div>
+                        <div class="m-icon"><i class="${cat.icon}" style="color: ${cat.hex}"></i></div>
                         <div class="m-label">${cat.label}</div>
                         <i class="fas fa-chevron-down m-chevron"></i>
                     </div>
