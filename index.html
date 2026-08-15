@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -487,7 +487,7 @@
         }
 
         .sub-item::before {
-            content: '•';
+            content: 'â€¢';
             color: var(--accent);
             font-weight: bold;
         }
@@ -778,97 +778,203 @@
         }
 
         /* App Banner */
-        #app-banner {
-            padding: 80px 0;
-        }
-        
-        .app-promo-banner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px;
-            background: linear-gradient(135deg, var(--primary), #1e293b);
-            color: white;
-            border-radius: var(--radius-xl);
-            box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.3);
-            position: relative;
-            overflow: hidden;
+        /* Modern App Banner Redesign */
+        .modern-app-section {
+            padding: 8rem 0;
+            background: var(--bg-body);
         }
 
-        .app-promo-banner::after {
-            content: '';
+        .modern-app-card {
+            background: #0f172a;
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 40px 80px -20px rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blob {
             position: absolute;
-            top: -50%;
-            right: -10%;
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .blob-1 {
             width: 300px;
             height: 300px;
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 50%;
-            filter: blur(60px);
+            background: #2563eb;
+            top: -100px;
+            left: -50px;
         }
-        
-        .app-info {
-            display: flex;
-            align-items: center;
-            gap: 32px;
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #7c3aed;
+            bottom: -150px;
+            right: -100px;
+        }
+
+        .modern-app-content {
             position: relative;
             z-index: 1;
-        }
-        
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255,255,255,0.2);
-            border-radius: 22px;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
             align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 5rem;
         }
-        
-        .app-text h3 {
-            font-size: 2rem;
+
+        .app-text-area {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .app-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .app-text-area h2 {
+            font-size: 3.5rem;
             font-weight: 800;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
         }
-        
-        .app-text p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
-            font-weight: 500;
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
-        .store-icons {
-            display: flex;
-            gap: 20px;
+
+        .app-text-area p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 480px;
         }
-        
-        .store-icons a {
-            width: 64px;
-            height: 64px;
-            background: white;
-            color: var(--primary);
-            border-radius: 16px;
+
+        .playstore-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            transition: var(--transition);
+            gap: 12px;
+            background: #fff;
+            color: #0f172a;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        
-        .store-icons a:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+        .playstore-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,255,255,0.2);
+            background: #f8fafc;
+        }
+
+        .playstore-btn i {
+            font-size: 32px;
+            color: #000;
+        }
+
+        .playstore-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .playstore-btn-text span {
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .playstore-btn-text strong {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .app-visual-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .phone-mockup {
+            width: 280px;
+            height: 580px;
+            background: #fff;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 4px solid #334155;
+            position: relative;
+            transform: rotateY(-15deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+
+        .phone-mockup:hover {
+            transform: rotateY(0deg) rotateX(0deg);
+        }
+
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #334155;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 2;
+        }
+
+        .phone-mockup img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 28px;
         }
 
         @media (max-width: 968px) {
-            .app-promo-banner { flex-direction: column; text-align: center; gap: 40px; padding: 40px 20px; }
-            .app-info { flex-direction: column; gap: 20px; }
+            .modern-app-content {
+                grid-template-columns: 1fr;
+                padding: 3rem 2rem;
+                text-align: center;
+            }
+            .app-text-area {
+                align-items: center;
+            }
+            .app-text-area h2 {
+                font-size: 2.5rem;
+            }
+            .phone-mockup {
+                transform: none;
+                margin-top: 2rem;
+            }
         }
 
         /* Footer */
@@ -1113,6 +1219,163 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* --- Premium How It Works Section --- */
+        .how-it-works-section {
+            padding: 8rem 0;
+            background: var(--bg-card);
+            position: relative;
+        }
+
+        .hiw-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hiw-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hiw-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hiw-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .hiw-visuals {
+            position: relative;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(37,99,235,0.05), rgba(124,58,237,0.05));
+            border-radius: 2rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+        }
+
+        .hiw-visual-item {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hiw-visual-item.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 2;
+        }
+
+        .hiw-visual-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hiw-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hiw-list-item {
+            position: relative;
+            padding: 1.5rem 2rem 1.5rem 3rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .hiw-list-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            bottom: 1.5rem;
+            width: 3px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 3px;
+        }
+
+        .hiw-progress {
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            width: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            height: 0;
+            transition: height 0.1s linear;
+        }
+
+        .hiw-list-item.active {
+            background: var(--bg-body);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hiw-list-item h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .hiw-list-item.active h3 {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .hiw-list-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .hiw-list-item.active p {
+            max-height: 150px;
+            opacity: 1;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .hiw-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hiw-visuals {
+                aspect-ratio: 16/9;
+                max-width: 400px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1124,9 +1387,11 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#" id="contactLink">Contact</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#app-banner">App</a></li>
+                <li><a href="#footer" id="contactLink">Contact</a></li>
                 <li><a href="register.html" class="register-btn">Register Now</a></li>
             </ul>
             <div class="burger">
@@ -1146,53 +1411,6 @@
         </div>
     </section>
 
-    <section id="about" class="reveal">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-text">
-                    <h2>Delivering <span class="highlight">Excellence</span> at Your Doorstep</h2>
-                    <p>We are dedicated to providing <strong>TRUE SERVICE</strong>, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
-                    <p>For over 10+ years, we have been providing expert services for your multiple needs at your doorstep. Now, we are expanding into the digital market to bring premium quality even closer to you. Our highly trained service providers are committed to excellence—that's our promise.</p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card featured">
-                        <i class="fas fa-history"></i>
-                        <h4>10+ Years</h4>
-                        <span>Proven Experience</span>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-user-shield"></i>
-                        <h4>100%</h4>
-                        <span>Trusted Pros</span>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-truck-loading"></i>
-                        <h4>Fast</h4>
-                        <span>Doorstep Delivery</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="app-banner">
-        <div class="container">
-            <div class="app-promo-banner">
-                <div class="app-info">
-                    <div class="app-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="app-text">
-                        <h3>Unitefix Mobile App</h3>
-                        <p>Download now on Google Play</p>
-                    </div>
-                </div>
-                <div class="store-icons">
-                    <a href="https://play.google.com/store/apps/details?id=com.unitefix.app" target="_blank"><i class="fab fa-google-play"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section id="services">
         <div class="container" style="display: flex; flex-direction: column; align-items: center;">
@@ -1224,7 +1442,110 @@
             </div>
         </div>
     </section>
- 
+
+    <section id="app-banner" class="modern-app-section">
+        <div class="container">
+            <div class="modern-app-card">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+
+                <div class="modern-app-content">
+                    <div class="app-text-area">
+                        <span class="app-badge">NEW RELEASE</span>
+                        <h2>Your Home Expert<br>in <span class="gradient-text">Your Pocket</span></h2>
+                        <p>Experience seamless booking, real-time tracking, and exclusive app-only offers. The all-new Unitefix app is here to simplify your life.</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.unitefix.app&pcampaignid=web_share" target="_blank" class="playstore-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div class="playstore-btn-text">
+                                <span>GET IT ON</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-visual-area">
+                        <div class="phone-mockup">
+                            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600" alt="Unitefix App Interface">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="hiw-header">
+            <h2>How It Works</h2>
+            <p>Your seamless experience from booking to completion.</p>
+        </div>
+        <div class="hiw-grid">
+            <div class="hiw-visuals">
+                <div class="hiw-visual-item active">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800" alt="Book Service" />
+                </div>
+                <div class="hiw-visual-item">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800" alt="Professional Assigned" />
+                </div>
+                <div class="hiw-visual-item">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=800" alt="Job Done" />
+                </div>
+                <div class="hiw-visual-item">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800" alt="Secure Payment" />
+                </div>
+            </div>
+            <div class="hiw-list">
+                <div class="hiw-list-item active">
+                    <div class="hiw-progress"></div>
+                    <h3>1. Book Service</h3>
+                    <p>Choose the service you need from our app or website in just a few clicks.</p>
+                </div>
+                <div class="hiw-list-item">
+                    <div class="hiw-progress"></div>
+                    <h3>2. Pro Assigned</h3>
+                    <p>We instantly assign a verified and skilled professional to your request.</p>
+                </div>
+                <div class="hiw-list-item">
+                    <div class="hiw-progress"></div>
+                    <h3>3. Job Done</h3>
+                    <p>Our expert arrives at your doorstep and resolves your issue efficiently.</p>
+                </div>
+                <div class="hiw-list-item">
+                    <div class="hiw-progress"></div>
+                    <h3>4. Secure Payment</h3>
+                    <p>Pay securely after the job is completed to your satisfaction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="reveal">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Delivering <span class="highlight">Excellence</span> at Your Doorstep</h2>
+                    <p>We are dedicated to providing <strong>TRUE SERVICE</strong>, building client relationships that are positive & beneficial. We share our knowledge & keep customers informed to provide a family-like trust & experience.</p>
+                    <p>For over 10+ years, we have been providing expert services for your multiple needs at your doorstep. Now, we are expanding into the digital market to bring premium quality even closer to you. Our highly trained service providers are committed to excellenceâ€”that's our promise.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card featured">
+                        <i class="fas fa-history"></i>
+                        <h4>10+ Years</h4>
+                        <span>Proven Experience</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-user-shield"></i>
+                        <h4>100%</h4>
+                        <span>Trusted Pros</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-truck-loading"></i>
+                        <h4>Fast</h4>
+                        <span>Doorstep Delivery</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="join-team reveal">
         <div class="container">
             <div class="join-box">
@@ -1487,6 +1808,57 @@
         window.addEventListener('resize', render);
         render();
     })();
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const items = document.querySelectorAll('.hiw-list-item');
+            const visuals = document.querySelectorAll('.hiw-visual-item');
+            if(items.length === 0) return;
+
+            let currentIndex = 0;
+            let progress = 0;
+            const duration = 2500; // 2.5 seconds per step
+            const intervalTime = 50; // update progress every 50ms
+            const step = (intervalTime / duration) * 100;
+            let timer;
+
+            function setActive(index) {
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                    item.querySelector('.hiw-progress').style.height = i === index ? '100%' : '0';
+                });
+                visuals.forEach((visual, i) => {
+                    visual.classList.toggle('active', i === index);
+                });
+            }
+
+            function loop() {
+                progress += step;
+                if (progress >= 100) {
+                    progress = 0;
+                    items[currentIndex].querySelector('.hiw-progress').style.height = '0';
+                    currentIndex = (currentIndex + 1) % items.length;
+                    setActive(currentIndex);
+                } else {
+                    items[currentIndex].querySelector('.hiw-progress').style.height = progress + '%';
+                }
+            }
+
+            setActive(currentIndex);
+            timer = setInterval(loop, intervalTime);
+
+            // Click to switch
+            items.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    progress = 0;
+                    items[currentIndex].querySelector('.hiw-progress').style.height = '0';
+                    currentIndex = index;
+                    setActive(currentIndex);
+                    clearInterval(timer);
+                    timer = setInterval(loop, intervalTime);
+                });
+            });
+        });
     </script>
 </body>
 </html>
