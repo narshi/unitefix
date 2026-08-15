@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1420,25 +1420,17 @@
             </div>
 
             <div class="uf-root">
-                <!-- Desktop Radial Wheel -->
-                <div class="desktop-only">
-                    <div class="wheel-wrap" id="ww">
-                        <canvas id="wc" width="640" height="640" class="wc"></canvas>
-                        <div id="cat-layers"></div>
-                        <svg id="ws" class="ws" viewBox="0 0 640 640" aria-hidden="true"></svg>
-                        <div class="hub">
-                            <i class="fas fa-handshake" style="font-size: 34px; color: var(--primary); margin-bottom: 6px;"></i>
-                            <span class="hub-name">Unitefix</span>
-                            <span class="hub-tag">services</span>
-                        </div>
+                <!-- Radial Wheel -->
+                <div class="wheel-wrap" id="ww">
+                    <canvas id="wc" width="640" height="640" class="wc"></canvas>
+                    <div id="cat-layers"></div>
+                    <svg id="ws" class="ws" viewBox="0 0 640 640" aria-hidden="true"></svg>
+                    <div class="hub">
+                        <i class="fas fa-handshake" style="font-size: 34px; color: var(--primary); margin-bottom: 6px;"></i>
+                        <span class="hub-name">Unitefix</span>
+                        <span class="hub-tag">services</span>
                     </div>
                 </div>
-
-                <!-- Mobile Grid Layout -->
-                <div class="mobile-only" style="width: 100%;">
-                    <div class="services-mobile-grid" id="m-grid"></div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -1771,11 +1763,6 @@
         }
 
         function tick() {
-            if(window.innerWidth <= 768) {
-                if(rafId) { cancelAnimationFrame(rafId); rafId = null; }
-                renderMobileGrid();
-                return;
-            }
             let d = false; alpha.forEach((v, i) => {
                 const df = (hovCat===i ? 1 : 0) - v;
                 if(Math.abs(df)>0.01){ alpha[i]+=df*0.15; d=true; } else alpha[i] = hovCat===i ? 1 : 0;
