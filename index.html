@@ -1662,7 +1662,7 @@
         CATS.forEach((cat, i) => {
             const div = document.createElement('div');
             div.className = 'cat-seg';
-            div.innerHTML = `<div class="icon">${cat.emoji}</div><div class="label">${cat.label}</div>`;
+            div.innerHTML = `<div class="icon"><i class="${cat.icon}" style="font-size:24px; color:${cat.hex}"></i></div><div class="label">${cat.label}</div>`;
             div.addEventListener('mouseenter', () => activate(i));
             div.addEventListener('mouseleave', () => activate(-1));
             layers.appendChild(div);
