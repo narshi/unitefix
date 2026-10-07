@@ -1376,7 +1376,25 @@
                 width: 100%;
             }
         }
-    </style>
+    
+        /* Work with UniteFix: the two ways to join */
+        .join-section { padding: 80px 20px; background: #f8fafc; }
+        .join-section .join-head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+        .join-section .join-head h2 { font-size: 2.2rem; font-weight: 800; color: var(--primary); letter-spacing: -0.025em; }
+        .join-section .join-head p { color: #64748b; margin-top: 10px; font-size: 1.05rem; }
+        .join-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px; max-width: 980px; margin: 0 auto; }
+        .join-card { background: #fff; border: 1px solid rgba(15,23,42,0.08); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
+        .join-card .join-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: #eff6ff; color: #2563eb; font-size: 1.3rem; }
+        .join-card h3 { font-size: 1.35rem; font-weight: 800; color: var(--primary); }
+        .join-card p { color: #475569; }
+        .join-card ul { list-style: none; display: grid; gap: 8px; color: #334155; font-size: 0.95rem; }
+        .join-card li::before { content: '✓'; color: #059669; font-weight: 800; margin-right: 8px; }
+        .join-card .join-cta { margin-top: auto; display: inline-block; text-align: center; background: #2563eb; color: #fff; text-decoration: none; font-weight: 700; padding: 14px 20px; border-radius: 12px; }
+        .join-card .join-cta:hover { background: #1d4ed8; }
+        .join-card.business .join-icon { background: #f5f3ff; color: #7c3aed; }
+        .join-card.business .join-cta { background: #0f172a; }
+        .join-card.business .join-cta:hover { background: #1e293b; }
+</style>
 </head>
 <body>
     <header id="header">
@@ -1392,7 +1410,7 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#app-banner">App</a></li>
                 <li><a href="#footer" id="contactLink">Contact</a></li>
-                <li><a href="register.html" class="register-btn">Register Now</a></li>
+                <li><a href="#join" class="register-btn">Join UniteFix</a></li>
             </ul>
             <div class="burger">
                 <i class="fas fa-bars-staggered"></i>
@@ -1546,17 +1564,6 @@
         </div>
     </section>
 
-    <section class="join-team reveal">
-        <div class="container">
-            <div class="join-box">
-                <h2>Are you a Service Expert?</h2>
-                <p>Join Unitefix as a trusted professional. Secure your future, earn consistently, and be part of an elite team dedicated to quality service.</p>
-                <a href="register.html" class="join-btn">Register Now</a>
-            </div>
-        </div>
-    </section>
-
-
     <div id="contactModal" class="modal">
       <div class="modal-content">
         <span class="close-btn" id="closeModal">&times;</span>
@@ -1571,6 +1578,38 @@
         </p>
       </div>
     </div>
+
+
+    <section id="join" class="join-section">
+        <div class="join-head">
+            <h2>Work with UniteFix</h2>
+            <p>Whether you fix things yourself or run a business with a team, UniteFix brings you customers in your area.</p>
+        </div>
+        <div class="join-grid">
+            <div class="join-card">
+                <div class="join-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                <h3>Service expert</h3>
+                <p>For individual technicians — electricians, AC, computer, CCTV, appliance and more.</p>
+                <ul>
+                    <li>Jobs near you, straight to your phone</li>
+                    <li>Fixed prices — no haggling with customers</li>
+                    <li>Earnings paid out to your bank or UPI</li>
+                </ul>
+                <a class="join-cta" href="register.html">Join as a service expert</a>
+            </div>
+            <div class="join-card business">
+                <div class="join-icon"><i class="fas fa-store"></i></div>
+                <h3>Business partner</h3>
+                <p>For shops and firms — repair centres, CCTV installers, broadband operators, electronics dealers, consultants and event companies.</p>
+                <ul>
+                    <li>UniteFix jobs in your own service area</li>
+                    <li>Invoices, GST returns, team and payments in one Partner Hub</li>
+                    <li>Sell products and take online payments</li>
+                </ul>
+                <a class="join-cta" href="partner.html">Register your business</a>
+            </div>
+        </div>
+    </section>
 
     <footer id="footer">
         <div class="container">
@@ -1588,7 +1627,8 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="#about">About Us</a></li>
-                        <li><a href="register.html">Register Now</a></li>
+                        <li><a href="register.html">Join as a service expert</a></li>
+                        <li><a href="partner.html">Register your business</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">

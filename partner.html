@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner with UniteFix | Register your business</title>
+  <meta name="description" content="Register your business with UniteFix — repair shops, CCTV installers, broadband operators, electronics dealers, consultants and event firms. Get jobs, invoicing, GST and payments in one Partner Hub.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/join.css">
+</head>
+<body>
+  <main class="container">
+    <nav class="switch" aria-label="Who is joining">
+      <a href="register.html">I'm a technician</a>
+      <a href="partner.html" aria-current="page">I run a business</a>
+    </nav>
+
+    <h1>Partner with UniteFix</h1>
+    <p class="subtitle">Get jobs from UniteFix customers in your area, and run your invoices, GST, team and payments from one Partner Hub.</p>
+
+    <form id="applyForm" novalidate>
+      <fieldset>
+        <legend>What does your business do?</legend>
+        <div id="verticals" class="types" role="group" aria-label="Business type"><span class="hint">Loading…</span></div>
+        <div id="coverageBox" hidden>
+          <label for="coverage">Pincodes where you provide broadband <span class="req">*</span></label>
+          <textarea id="coverage" rows="2" placeholder="581301, 581302, 581401"></textarea>
+          <p class="hint">Separate with commas or spaces.</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Your business</legend>
+        <label for="businessName">Business name <span class="req">*</span></label>
+        <input id="businessName" autocomplete="organization" required placeholder="As customers know it">
+        <div class="grid2">
+          <div>
+            <label for="gstin">GSTIN <span class="opt">(if registered)</span></label>
+            <input id="gstin" maxlength="15" autocapitalize="characters" placeholder="29ABCDE1234F1Z5">
+          </div>
+          <div>
+            <label for="pan">PAN <span class="opt">(if no GSTIN)</span></label>
+            <input id="pan" maxlength="10" autocapitalize="characters">
+          </div>
+        </div>
+        <label for="address">Business address <span class="req">*</span></label>
+        <textarea id="address" rows="2" autocomplete="street-address" required></textarea>
+        <div class="grid2">
+          <div>
+            <label for="pincode">Pincode <span class="req">*</span></label>
+            <input id="pincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" required>
+          </div>
+          <div>
+            <label for="district">District</label>
+            <input id="district" autocomplete="address-level2" placeholder="Uttara Kannada">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>You — the owner or manager</legend>
+        <div class="grid2">
+          <div>
+            <label for="contactName">Your name <span class="req">*</span></label>
+            <input id="contactName" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="phone">Mobile number <span class="req">*</span></label>
+            <input id="phone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" required>
+          </div>
+        </div>
+        <label for="email">Email <span class="req">*</span></label>
+        <input id="email" type="email" autocomplete="email" required>
+        <p class="hint">This is your Partner Hub sign-in.</p>
+        <label for="password">Choose a password <span class="req">*</span></label>
+        <input id="password" type="password" autocomplete="new-password" minlength="8" required>
+        <p class="hint">At least 8 characters.</p>
+      </fieldset>
+
+      <label class="check"><input id="terms" type="checkbox" required> <span>I agree to the <a href="assets/terms-and-conditions.pdf" target="_blank" rel="noopener">Terms and Conditions</a> and the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>. I confirm the details are true.</span></label>
+
+      <button type="submit" id="applyBtn">Send application</button>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <section id="done" hidden aria-live="polite">
+      <div class="ok-mark" aria-hidden="true">✓</div>
+      <h2>Application received</h2>
+      <p class="lead" id="doneLead"></p>
+      <ol class="next">
+        <li><b>Sign in to the Partner Hub</b> with <span id="doneEmail"></span> and your password.</li>
+        <li><b>Upload your documents</b> (ID, address and business proof) and accept the partner agreement.</li>
+        <li><b>UniteFix reviews</b> your application, usually within 48 hours. You are told by email and in the Hub.</li>
+      </ol>
+      <a class="btn" id="hubLink" href="https://unitefix-backend.onrender.com/" target="_blank" rel="noopener">Open the Partner Hub</a>
+      <p class="hint center">Keep your reference: <b id="doneCode"></b></p>
+    </section>
+
+    <a class="back" href="index.html">← Back to home</a>
+  </main>
+
+  <script>
+  (function () {
+    // UniteFix backend: GET /api/hub/verticals, POST /api/hub/apply (creates the
+    // application and the owner's Partner Hub sign-in; documents follow in the Hub).
+    var API = 'https://unitefix-backend.onrender.com';
+    var $ = function (id) { return document.getElementById(id); };
+    var form = $('applyForm'), m = $('msg');
+
+    function msg(text, tone) { m.textContent = text || ''; m.dataset.tone = tone || ''; }
+    async function call(method, path, body) {
+      try {
+        var res = await fetch(API + path, { method: method, headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+        var data = null; try { data = await res.json(); } catch (e) {}
+        return { ok: res.ok, status: res.status, data: data };
+      } catch (e) { return { ok: false, status: 0, data: null }; }
+    }
+
+    // Business types come from UniteFix, so a new one appears here without a website change.
+    (async function () {
+      var box = $('verticals');
+      var r = await call('GET', '/api/hub/verticals');
+      var list = r.ok && r.data && Array.isArray(r.data.data) ? r.data.data : [];
+      if (!list.length) { box.innerHTML = '<span class="hint">Could not load business types. Please refresh the page.</span>'; return; }
+      box.innerHTML = '';
+      list.forEach(function (v) {
+        var l = document.createElement('label'); l.className = 'type';
+        var i = document.createElement('input'); i.type = 'checkbox'; i.value = v.code; i.name = 'vertical';
+        i.addEventListener('change', function () { $('coverageBox').hidden = !box.querySelector('input[value="isp"]:checked'); });
+        var t = document.createElement('span');
+        var b = document.createElement('b'); b.textContent = v.name;
+        t.appendChild(b);
+        if (v.description) { var s = document.createElement('small'); s.textContent = v.description; t.appendChild(s); }
+        l.appendChild(i); l.appendChild(t); box.appendChild(l);
+      });
+    })();
+
+    $('phone').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 10); });
+    $('pincode').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 6); });
+    ['gstin', 'pan'].forEach(function (id) { $(id).addEventListener('input', function () { this.value = this.value.toUpperCase().replace(/\s/g, ''); }); });
+
+    function focusFail(id, text) { msg(text, 'warn'); if (id) $(id).focus(); return null; }
+    function collect() {
+      var verticals = Array.from(document.querySelectorAll('input[name="vertical"]:checked')).map(function (i) { return i.value; });
+      var v = {
+        businessName: $('businessName').value.trim(), gstin: $('gstin').value.trim() || null, pan: $('pan').value.trim() || null,
+        contactName: $('contactName').value.trim(), phone: $('phone').value.trim(), email: $('email').value.trim().toLowerCase(),
+        address: $('address').value.trim() || null, pincode: $('pincode').value.trim() || null, district: $('district').value.trim() || null,
+        verticals: verticals, password: $('password').value,
+        coveragePincodes: verticals.indexOf('isp') >= 0 ? Array.from(new Set(($('coverage').value.match(/\d{6}/g) || []))) : [],
+      };
+      if (!verticals.length) return focusFail(null, 'Choose what your business does.');
+      if (verticals.indexOf('isp') >= 0 && !v.coveragePincodes.length) return focusFail('coverage', 'Add the pincodes where you provide broadband.');
+      if (v.businessName.length < 2) return focusFail('businessName', 'Enter your business name.');
+      if (v.gstin && !/^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/.test(v.gstin)) return focusFail('gstin', 'A GSTIN is 15 characters, like 29ABCDE1234F1Z5.');
+      if (v.pan && !/^[A-Z]{5}\d{4}[A-Z]$/.test(v.pan)) return focusFail('pan', 'A PAN is 10 characters, like ABCDE1234F.');
+      if (!v.address || v.address.length < 5) return focusFail('address', 'Enter your business address.');
+      if (!/^\d{6}$/.test(v.pincode || '')) return focusFail('pincode', 'Enter the 6-digit pincode.');
+      if (v.contactName.length < 2) return focusFail('contactName', 'Enter your name.');
+      if (!/^[6-9]\d{9}$/.test(v.phone)) return focusFail('phone', 'Enter a 10-digit Indian mobile number.');
+      if (!/^\S+@\S+\.\S+$/.test(v.email)) return focusFail('email', 'Enter a valid email address.');
+      if (v.password.length < 8) return focusFail('password', 'The password needs at least 8 characters.');
+      if (!$('terms').checked) return focusFail(null, 'Please agree to the terms to continue.');
+      return v;
+    }
+
+    // A hint about the last attempt stops being true once the form changes.
+    form.addEventListener('input', function () { if (m.dataset.tone === 'warn') msg('', ''); });
+    form.addEventListener('change', function () { if (m.dataset.tone === 'warn') msg('', ''); });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var v = collect(); if (!v) return;
+      $('applyBtn').disabled = true; msg('Sending your application…', 'info');
+      var r = await call('POST', '/api/hub/apply', v);
+      $('applyBtn').disabled = false;
+      if (r.ok && r.data && r.data.success) {
+        $('doneLead').textContent = 'Thank you, ' + v.contactName.split(' ')[0] + '. ' + v.businessName + ' is registered and waiting for review.';
+        $('doneEmail').textContent = v.email;
+        $('doneCode').textContent = (r.data.data && r.data.data.partnerCode) || '—';
+        form.hidden = true; $('done').hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      msg(r.status === 0 ? 'Could not reach UniteFix. Check your connection and try again.'
+        : r.status === 429 ? 'Too many applications from this connection. Please try again in a while.'
+        : (r.data && r.data.errors && r.data.errors[0] && r.data.errors[0].message) || (r.data && r.data.message) || 'Something went wrong (' + r.status + '). Please try again.', 'error');
+    });
+  })();
+  </script>
+</body>
+</html>

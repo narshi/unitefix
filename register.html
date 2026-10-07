@@ -1,599 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Register as Service Provider - UniteFix</title>
-  <link rel="icon" type="image/png" href="assets/app_icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join as a Service Expert | UniteFix</title>
+  <meta name="description" content="Register as a UniteFix service expert: verify your email, choose your trades, and start getting jobs in your area through the UniteFix app.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --accent-glow: rgba(37, 99, 235, 0.2);
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --bg-body: #f8fafc;
-      --bg-card: #ffffff;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg-body);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 40px 20px;
-      line-height: 1.6;
-    }
-
-    .container {
-      background: var(--bg-card);
-      width: 100%;
-      max-width: 600px;
-      border-radius: var(--radius-lg);
-      padding: 48px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.03);
-    }
-
-    h2 {
-        color: var(--primary);
-        text-align: center;
-        margin-bottom: 8px;
-        font-size: 2rem;
-        font-weight: 800;
-        letter-spacing: -0.025em;
-    }
-    .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 32px; font-size: 1rem; }
-
-    label { display: block; margin: 20px 0 8px; font-weight: 600; color: var(--primary); font-size: 0.9rem; }
-
-    input[type="text"], input[type="tel"], input[type="email"], textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(0,0,0,0.1);
-      font-size: 1rem;
-      font-family: inherit;
-      background: #fff;
-      transition: var(--transition);
-    }
-
-    input:focus, textarea:focus {
-        border-color: var(--accent);
-        box-shadow: 0 0 0 4px var(--accent-glow);
-    }
-
-    input:disabled, textarea:disabled {
-        background: #f1f5f9;
-        color: var(--text-muted);
-        cursor: not-allowed;
-    }
-
-    textarea { min-height: 100px; resize: vertical; }
-
-    button {
-      width: 100%;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 32px;
-      transition: var(--transition);
-      box-shadow: 0 4px 12px var(--accent-glow);
-    }
-
-    button:hover {
-        background: #1d4ed8;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px var(--accent-glow);
-    }
-
-    button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .required { color: #ef4444; margin-left: 4px; }
-
-    .field-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; }
-
-    /* Multi-select styling */
-    .multi-select-container { position: relative; }
-
-    .multi-select-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(0,0,0,0.1);
-      background: #fff;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .multi-select-header:hover { border-color: var(--accent); }
-
-    .selected-services { color: var(--text-muted); font-size: 0.95rem; }
-
-    .dropdown-arrow { transition: transform .3s ease; color: var(--text-muted); }
-    .dropdown-arrow.open { transform: rotate(180deg); }
-
-    .multi-select-dropdown {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      right: 0;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.05);
-      border-radius: var(--radius-md);
-      max-height: 300px;
-      overflow-y: auto;
-      display: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      padding: 12px;
-      z-index: 100;
-    }
-    .multi-select-dropdown.open { display: block; }
-
-    .service-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .service-option:hover { background: #f1f5f9; }
-
-    .service-option input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
-    }
-
-    .service-option label { margin: 0; font-weight: 500; font-size: 0.95rem; }
-
-    /* Locked state while the OTP step is active */
-    .form-locked .multi-select-header {
-      pointer-events: none;
-      background: #f1f5f9;
-      opacity: 0.7;
-    }
-
-    /* Terms & Footer */
-    .terms-container { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
-    .terms-container input { width: 18px; height: 18px; accent-color: var(--accent); }
-    .terms-container label { margin: 0; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
-    .terms-container a { color: var(--accent); text-decoration: none; font-weight: 600; }
-
-    /* OTP step */
-    #otpSection { margin-top: 8px; }
-
-    #otp {
-      text-align: center;
-      letter-spacing: 8px;
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-
-    .otp-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 16px;
-      font-size: 0.9rem;
-    }
-
-    .link-button {
-      width: auto;
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      padding: 4px 0;
-      margin: 0;
-      box-shadow: none;
-    }
-    .link-button:hover { background: none; text-decoration: underline; transform: none; box-shadow: none; }
-    .link-button:disabled { color: var(--text-muted); text-decoration: none; }
-
-    #response { margin-top: 16px; text-align: center; font-weight: 600; font-size: 0.95rem; }
-
-    .back-link { display: block; text-align: center; margin-top: 24px; color: var(--text-muted); text-decoration: none; font-weight: 600; transition: var(--transition); }
-    .back-link:hover { color: var(--primary); transform: translateX(-4px); }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/join.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Service Provider Registration</h2>
-    <p class="subtitle">Join our network of professional service providers</p>
+  <main class="container">
+    <nav class="switch" aria-label="Who is joining">
+      <a href="register.html" aria-current="page">I'm a technician</a>
+      <a href="partner.html">I run a business</a>
+    </nav>
 
-    <form id="registerForm" novalidate>
-      <label for="name">Full Name <span class="required">*</span></label>
-      <input id="name" name="name" type="text" required>
+    <h1>Join as a service expert</h1>
+    <p class="subtitle">Get repair and installation jobs near you through the UniteFix app. Free to join.</p>
 
-      <label for="phone">Phone Number <span class="required">*</span></label>
-      <input id="phone" name="phone" type="tel" pattern="[0-9]{10}" placeholder="10-digit number" required>
+    <ol class="steps" aria-label="How joining works">
+      <li class="on" id="st1"><span>1</span>Your details</li>
+      <li id="st2"><span>2</span>Verify email</li>
+      <li id="st3"><span>3</span>Done</li>
+    </ol>
 
-      <label for="email">Email <span class="required">*</span></label>
-      <input id="email" name="email" type="email" required>
-      <p class="field-hint">We'll send a verification code to this email.</p>
-
-      <label for="address">Address <span class="required">*</span></label>
-      <textarea id="address" name="address" required></textarea>
-
-      <label>Services You Provide <span class="required">*</span></label>
-      <div class="multi-select-container">
-        <div class="multi-select-header" id="multiSelectHeader" aria-haspopup="listbox" role="button" tabindex="0">
-          <span class="selected-services" id="selectedServicesDisplay">Select services...</span>
-          <i class="fas fa-chevron-down dropdown-arrow" id="dropdownArrow"></i>
+    <!-- Step 1 -->
+    <form id="detailsForm" novalidate>
+      <div class="grid2">
+        <div>
+          <label for="name">Full name <span class="req">*</span></label>
+          <input id="name" autocomplete="name" required>
         </div>
-
-        <div class="multi-select-dropdown" id="multiSelectDropdown" role="listbox" aria-multiselectable="true">
-          <!-- each checkbox has an id and matching label for proper click behavior -->
-          <div class="service-option"><input id="s1" name="services" type="checkbox" value="Computer & Printer"><label for="s1">Computer & Printer</label></div>
-          <div class="service-option"><input id="s2" name="services" type="checkbox" value="CCTV Camera"><label for="s2">CCTV Camera</label></div>
-          <div class="service-option"><input id="s3" name="services" type="checkbox" value="Biometric Device"><label for="s3">Biometric Device</label></div>
-          <div class="service-option"><input id="s4" name="services" type="checkbox" value="UPS & Batteries"><label for="s4">UPS & Batteries</label></div>
-          <div class="service-option"><input id="s5" name="services" type="checkbox" value="Water Purifiers"><label for="s5">Water Purifiers</label></div>
-          <div class="service-option"><input id="s37" name="services" type="checkbox" value="Software Development"><label for="s37">Software Development</label></div>
-          <div class="service-option"><input id="s38" name="services" type="checkbox" value="Digital Services"><label for="s38">Digital Services</label></div>
-          <div class="service-option"><input id="s6" name="services" type="checkbox" value="Internet & Broadband"><label for="s6">Internet & Broadband</label></div>
-          <div class="service-option"><input id="s7" name="services" type="checkbox" value="Solar & Heat Pumps"><label for="s7">Solar & Heat Pumps</label></div>
-          <div class="service-option"><input id="s8" name="services" type="checkbox" value="WTP & STP"><label for="s8">WTP & STP</label></div>
-          <div class="service-option"><input id="s9" name="services" type="checkbox" value="Mobile Repairs"><label for="s9">Mobile Repairs</label></div>
-          <div class="service-option"><input id="s10" name="services" type="checkbox" value="Digital Camera Services"><label for="s10">Digital Camera Services</label></div>
-          <div class="service-option"><input id="s11" name="services" type="checkbox" value="Home Appliances"><label for="s11">Home Appliances</label></div>
-          <div class="service-option"><input id="s12" name="services" type="checkbox" value="Generators, Water Pumps, Water Cutoff Sensors"><label for="s12">Generators, Water Pumps, Water Cutoff Sensors</label></div>
-          <div class="service-option"><input id="s13" name="services" type="checkbox" value="Household Repairs"><label for="s13">Household Repairs</label></div>
-          <div class="service-option"><input id="s14" name="services" type="checkbox" value="Electrical & Plumbing"><label for="s14">Electrical & Plumbing</label></div>
-          <div class="service-option"><input id="s15" name="services" type="checkbox" value="Architecture"><label for="s15">Architecture</label></div>
-          <div class="service-option"><input id="s16" name="services" type="checkbox" value="Vehicle Service"><label for="s16">Vehicle Service</label></div>
-          <div class="service-option"><input id="s17" name="services" type="checkbox" value="Agriculture Product Services"><label for="s17">Agriculture Product Services</label></div>
-          <div class="service-option"><input id="s18" name="services" type="checkbox" value="Earth Movers"><label for="s18">Earth Movers</label></div>
-          <div class="service-option"><input id="s19" name="services" type="checkbox" value="Packers & Movers"><label for="s19">Packers & Movers</label></div>
-          <div class="service-option"><input id="s20" name="services" type="checkbox" value="Pest Controlling System"><label for="s20">Pest Controlling System</label></div>
-          <div class="service-option"><input id="s21" name="services" type="checkbox" value="Tax & Audit"><label for="s21">Tax & Audit</label></div>
-          <div class="service-option"><input id="s22" name="services" type="checkbox" value="DTH Services"><label for="s22">DTH Services</label></div>
-          <div class="service-option"><input id="s23" name="services" type="checkbox" value="Travel & Tourism"><label for="s23">Travel & Tourism</label></div>
-          <div class="service-option"><input id="s24" name="services" type="checkbox" value="Hotels, Homestay, Lodge, Restaurant & Resorts"><label for="s24">Hotels, Homestay, Lodge, Restaurant & Resorts</label></div>
-          <div class="service-option"><input id="s25" name="services" type="checkbox" value="Real Estate"><label for="s25">Real Estate</label></div>
-          <div class="service-option"><input id="s26" name="services" type="checkbox" value="Driving School"><label for="s26">Driving School</label></div>
-          <div class="service-option"><input id="s27" name="services" type="checkbox" value="Loans & All Types of Insurance"><label for="s27">Loans & All Types of Insurance</label></div>
-          <div class="service-option"><input id="s28" name="services" type="checkbox" value="Astrology Services"><label for="s28">Astrology Services</label></div>
-          <div class="service-option"><input id="s29" name="services" type="checkbox" value="Event Management"><label for="s29">Event Management</label></div>
-          <div class="service-option"><input id="s30" name="services" type="checkbox" value="Interior Design"><label for="s30">Interior Design</label></div>
-          <div class="service-option"><input id="s31" name="services" type="checkbox" value="Welding"><label for="s31">Welding</label></div>
-          <div class="service-option"><input id="s32" name="services" type="checkbox" value="Catering Services"><label for="s32">Catering Services</label></div>
-          <div class="service-option"><input id="s33" name="services" type="checkbox" value="Lawyers & Advocates"><label for="s33">Lawyers & Advocates</label></div>
-          <div class="service-option"><input id="s34" name="services" type="checkbox" value="Hardware & Painting"><label for="s34">Hardware & Painting</label></div>
-          <div class="service-option"><input id="s35" name="services" type="checkbox" value="Education"><label for="s35">Education</label></div>
-          <div class="service-option"><input id="s36" name="services" type="checkbox" value="Health"><label for="s36">Health</label></div>
+        <div>
+          <label for="phone">Mobile number <span class="req">*</span></label>
+          <input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10 digits" required>
+          <p class="hint">You sign in to the app with this number.</p>
         </div>
       </div>
 
-      <input type="hidden" id="selectedServicesInput" name="serviceRequest">
+      <label for="email">Email <span class="req">*</span></label>
+      <input id="email" type="email" autocomplete="email" required>
+      <p class="hint">We send a 6-digit code here to confirm it is yours.</p>
 
-      <div class="terms-container">
-        <input id="terms" name="terms" type="checkbox" required>
-        <label for="terms">
-          I agree to all the
-          <a href="assets/terms-and-conditions.pdf" target="_blank" rel="noopener noreferrer">
-            <strong>Terms and Conditions</strong>
-          </a>.
-        </label>
-      </div>
+      <label>What work do you do? <span class="req">*</span></label>
+      <div id="trades" class="chips" role="group" aria-label="Your trades"><span class="hint">Loading trades…</span></div>
+      <p class="hint">Choose every trade you can take jobs for. You can change these later in the app.</p>
 
-      <button type="submit" id="submitBtn">Register</button>
+      <label for="address">Address <span class="req">*</span></label>
+      <textarea id="address" autocomplete="street-address" rows="2" required placeholder="House, street, area, town"></textarea>
 
-      <!-- Step 2: email OTP verification (hidden until the code is sent) -->
-      <div id="otpSection" hidden>
-        <label for="otp">Verification Code <span class="required">*</span></label>
-        <input id="otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="______">
-        <p class="field-hint" id="otpHint"></p>
-
-        <button type="button" id="verifyBtn">Verify &amp; Complete Registration</button>
-
-        <div class="otp-actions">
-          <button type="button" class="link-button" id="editDetailsBtn">← Edit details</button>
-          <button type="button" class="link-button" id="resendBtn" disabled>Resend code</button>
+      <div class="grid2">
+        <div>
+          <label for="pincode">Pincode <span class="req">*</span></label>
+          <input id="pincode" inputmode="numeric" autocomplete="postal-code" maxlength="6" required>
+          <p class="hint" id="pinHint"></p>
         </div>
       </div>
 
-      <p id="response" aria-live="polite"></p>
+      <label class="check"><input id="terms" type="checkbox" required> <span>I agree to the <a href="assets/terms-and-conditions.pdf" target="_blank" rel="noopener">Terms and Conditions</a> and the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
+
+      <button type="submit" id="sendBtn">Send verification code</button>
+      <p class="msg" id="msg1" role="status" aria-live="polite"></p>
     </form>
 
-    <a class="back-link" href="index.html">← Back to Home</a>
-  </div>
+    <!-- Step 2 -->
+    <form id="otpForm" novalidate hidden>
+      <p class="lead" id="otpLead"></p>
+      <label for="otp">Verification code</label>
+      <input id="otp" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••">
+      <button type="submit" id="verifyBtn">Verify and create my account</button>
+      <div class="row">
+        <button type="button" class="link" id="editBtn">← Change details</button>
+        <button type="button" class="link" id="resendBtn" disabled>Resend code</button>
+      </div>
+      <p class="msg" id="msg2" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- Step 3 -->
+    <section id="done" hidden aria-live="polite">
+      <div class="ok-mark" aria-hidden="true">✓</div>
+      <h2 id="doneTitle">You're registered</h2>
+      <p class="lead" id="doneLead"></p>
+      <ol class="next">
+        <li><b>Install the UniteFix app</b> and sign in with <span id="donePhone"></span>.</li>
+        <li><b>Upload your ID and photo</b> in the app. UniteFix checks them, usually within 1–2 working days.</li>
+        <li><b>Go online</b> once verified — jobs in your area come to you.</li>
+      </ol>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=com.unitefix.app" target="_blank" rel="noopener">Get the app on Google Play</a>
+      <p class="hint center" id="saveWarn" hidden></p>
+    </section>
+
+    <a class="back" href="index.html">← Back to home</a>
+  </main>
 
   <script>
-    (function(){
-      // UniteFix backend (see narshi/UniteFix_backend, server/routes/auth-truecaller.routes.ts).
-      // The registration API only needs phone/email/name/role — address and selected
-      // services stay client-side; the partner completes their profile in the app.
-      const BACKEND_URL = "https://unitefix-backend.onrender.com";
-      const RESEND_COOLDOWN_SECONDS = 60; // matches the backend's OTP re-request cooldown
+  (function () {
+    // UniteFix backend. Email OTP signup: /api/auth/fallback/*; trades: /api/technician-types;
+    // after verifying, the new account's trades and address are saved so the app
+    // skips those onboarding steps.
+    var API = 'https://unitefix-backend.onrender.com';
+    var COOLDOWN = 60;
 
-      const header = document.getElementById('multiSelectHeader');
-      const dropdown = document.getElementById('multiSelectDropdown');
-      const arrow = document.getElementById('dropdownArrow');
-      const display = document.getElementById('selectedServicesDisplay');
-      const hiddenInput = document.getElementById('selectedServicesInput');
-      const serviceCheckboxes = Array.from(document.querySelectorAll('input[name="services"]'));
+    var $ = function (id) { return document.getElementById(id); };
+    var form1 = $('detailsForm'), form2 = $('otpForm'), done = $('done');
+    var picked = new Set();
+    var timer = null;
 
-      // Toggle dropdown on click or Enter/Space
-      header.addEventListener('click', toggleDropdown);
-      header.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDropdown(); }
-      });
-
-      function toggleDropdown(){
-        dropdown.classList.toggle('open');
-        arrow.classList.toggle('open');
+    function msg(el, text, tone) { el.textContent = text || ''; el.dataset.tone = tone || ''; }
+    function step(n) {
+      [1, 2, 3].forEach(function (i) { $('st' + i).className = i < n ? 'done' : i === n ? 'on' : ''; });
+      form1.hidden = n !== 1; form2.hidden = n !== 2; done.hidden = n !== 3;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    async function call(method, path, body, token) {
+      var headers = { 'Content-Type': 'application/json' };
+      if (token) headers.Authorization = 'Bearer ' + token;
+      try {
+        var res = await fetch(API + path, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined });
+        var data = null; try { data = await res.json(); } catch (e) {}
+        return { ok: res.ok, status: res.status, data: data };
+      } catch (e) {
+        return { ok: false, status: 0, data: null };
       }
+    }
+    function details() {
+      var name = $('name').value.trim().replace(/\s+/g, ' ');
+      var parts = name.split(' ');
+      return {
+        name: name, firstName: parts[0] || '', lastName: parts.slice(1).join(' '),
+        phone: $('phone').value.replace(/\D/g, ''), email: $('email').value.trim().toLowerCase(),
+        address: $('address').value.trim(), pincode: $('pincode').value.trim(),
+      };
+    }
 
-      // Close when clicking outside
-      document.addEventListener('click', function(e){
-        if (!header.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.classList.remove('open');
-          arrow.classList.remove('open');
-        }
-      });
-
-      // update display text and hidden input
-      function updateSelectedServices(){
-        const selected = serviceCheckboxes.filter(cb => cb.checked).map(cb => cb.value);
-        if (!selected.length){
-          display.textContent = 'Select services...';
-          hiddenInput.value = '';
-        } else if (selected.length === 1){
-          display.textContent = selected[0];
-          hiddenInput.value = selected.join(', ');
-        } else {
-          display.textContent = `${selected.length} services selected`;
-          hiddenInput.value = selected.join(', ');
-        }
-      }
-
-      serviceCheckboxes.forEach(cb => {
-        cb.addEventListener('change', updateSelectedServices);
-      });
-
-      // initialize
-      updateSelectedServices();
-
-      // ── Registration flow: form → request OTP → verify OTP ──────────
-
-      const form = document.getElementById('registerForm');
-      const responseEl = document.getElementById('response');
-      const submitBtn = document.getElementById('submitBtn');
-      const otpSection = document.getElementById('otpSection');
-      const otpInput = document.getElementById('otp');
-      const otpHint = document.getElementById('otpHint');
-      const verifyBtn = document.getElementById('verifyBtn');
-      const resendBtn = document.getElementById('resendBtn');
-      const editDetailsBtn = document.getElementById('editDetailsBtn');
-
-      let otpStepActive = false;
-      let resendTimer = null;
-
-      function setMessage(text, tone){
-        responseEl.textContent = text;
-        responseEl.style.color = { success: 'green', error: 'red', warn: 'orange', info: 'gray' }[tone] || 'gray';
-      }
-
-      function getDetails(){
-        const nameParts = document.getElementById('name').value.trim().split(/\s+/);
-        return {
-          firstName: nameParts[0] || '',
-          lastName: nameParts.slice(1).join(' '),
-          phone: document.getElementById('phone').value.replace(/\D/g, ''),
-          email: document.getElementById('email').value.trim().toLowerCase(),
-        };
-      }
-
-      async function callApi(path, body){
-        const res = await fetch(BACKEND_URL + path, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
+    // ── trades, from the same list the app uses ──
+    (async function loadTrades() {
+      var box = $('trades');
+      var r = await call('GET', '/api/technician-types');
+      var list = r.ok && r.data && Array.isArray(r.data.data) ? r.data.data : [];
+      if (!list.length) { box.innerHTML = '<span class="hint">Could not load the trade list. You can choose your trades in the app after signing in.</span>'; return; }
+      box.innerHTML = '';
+      list.forEach(function (t) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'chip'; b.textContent = t.name; b.setAttribute('aria-pressed', 'false');
+        b.addEventListener('click', function () {
+          if (picked.has(t.name)) picked.delete(t.name); else picked.add(t.name);
+          b.setAttribute('aria-pressed', String(picked.has(t.name)));
         });
-        let data = null;
-        try { data = await res.json(); } catch { /* non-JSON error page */ }
-        return { ok: res.ok, status: res.status, data };
-      }
-
-      function setFormLocked(locked){
-        form.querySelectorAll('input:not(#otp), textarea').forEach(el => { el.disabled = locked; });
-        form.classList.toggle('form-locked', locked);
-        if (locked) {
-          dropdown.classList.remove('open');
-          arrow.classList.remove('open');
-        }
-      }
-
-      function startResendCooldown(seconds){
-        clearInterval(resendTimer);
-        let remaining = seconds;
-        resendBtn.disabled = true;
-        resendBtn.textContent = `Resend code (${remaining}s)`;
-        resendTimer = setInterval(() => {
-          remaining -= 1;
-          if (remaining <= 0) {
-            clearInterval(resendTimer);
-            resendBtn.disabled = false;
-            resendBtn.textContent = 'Resend code';
-          } else {
-            resendBtn.textContent = `Resend code (${remaining}s)`;
-          }
-        }, 1000);
-      }
-
-      function enterOtpStep(email){
-        otpStepActive = true;
-        setFormLocked(true);
-        submitBtn.hidden = true;
-        otpSection.hidden = false;
-        otpHint.textContent = `Enter the 6-digit code sent to ${email}. It expires in 10 minutes.`;
-        otpInput.value = '';
-        otpInput.focus();
-        startResendCooldown(RESEND_COOLDOWN_SECONDS);
-      }
-
-      function exitOtpStep(){
-        otpStepActive = false;
-        setFormLocked(false);
-        submitBtn.hidden = false;
-        otpSection.hidden = true;
-        clearInterval(resendTimer);
-        setMessage('', 'info');
-      }
-
-      function validateForm(){
-        if (!form.checkValidity()){
-          form.reportValidity();
-          return false;
-        }
-        const { phone } = getDetails();
-        if (!/^[6-9]\d{9}$/.test(phone)){
-          setMessage('⚠️ Please enter a valid 10-digit Indian mobile number.', 'warn');
-          return false;
-        }
-        if (!serviceCheckboxes.some(cb => cb.checked)){
-          setMessage('⚠️ Please select at least one service.', 'warn');
-          return false;
-        }
-        return true;
-      }
-
-      async function requestOtp(trigger){
-        const { firstName, lastName, phone, email } = getDetails();
-        trigger.disabled = true;
-        setMessage('Sending verification code…', 'info');
-        let cooldownStarted = false;
-
-        try {
-          const { ok, status, data } = await callApi('/api/auth/fallback/request-otp', {
-            phone, email, role: 'serviceman', firstName, lastName,
-          });
-
-          if (ok && data && data.success){
-            // Existing numbers get the code at their account's registered
-            // email (masked by the backend), not the address typed above.
-            const displayEmail = data.maskedEmail || email;
-            if (data.sentToRegisteredEmail){
-              setMessage(`📧 This number already has an account — the code was sent to its registered email ${displayEmail}, not the address entered above.`, 'success');
-            } else {
-              setMessage('📧 Verification code sent. Please check your email (and spam folder).', 'success');
-            }
-            if (otpStepActive) {
-              startResendCooldown(RESEND_COOLDOWN_SECONDS);
-            } else {
-              enterOtpStep(displayEmail);
-            }
-            cooldownStarted = true;
-            return;
-          }
-
-          const message = (data && data.message) || `Request failed (HTTP ${status}). Please try again.`;
-          setMessage('❌ ' + message, 'error');
-          if (status === 429 && otpStepActive) {
-            startResendCooldown((data && data.retryAfterSeconds) || RESEND_COOLDOWN_SECONDS);
-            cooldownStarted = true;
-          }
-        } catch (err) {
-          console.error(err);
-          setMessage('❌ Could not reach the server. Please check your connection and try again.', 'error');
-        } finally {
-          if (trigger === submitBtn) {
-            submitBtn.disabled = false;
-          } else if (!cooldownStarted) {
-            resendBtn.disabled = false;
-            resendBtn.textContent = 'Resend code';
-          }
-        }
-      }
-
-      async function verifyOtp(){
-        const code = otpInput.value.trim();
-        if (!/^\d{6}$/.test(code)){
-          setMessage('⚠️ Please enter the 6-digit code from your email.', 'warn');
-          return;
-        }
-
-        const { firstName, lastName, phone, email } = getDetails();
-        verifyBtn.disabled = true;
-        setMessage('Verifying…', 'info');
-
-        try {
-          const { ok, status, data } = await callApi('/api/auth/fallback/verify-otp', {
-            phone, email, code, role: 'serviceman', firstName, lastName, mode: 'signup',
-          });
-
-          if (ok && data && data.success){
-            if (data.alreadyRegistered){
-              setMessage('✅ This number already has a UniteFix account. Please login in the app.', 'success');
-            } else {
-              setMessage('✅ Registration Successful! Please login in the app.', 'success');
-            }
-            otpInput.disabled = true;
-            resendBtn.disabled = true;
-            editDetailsBtn.disabled = true;
-            clearInterval(resendTimer);
-            setTimeout(() => { location.href = 'index.html'; }, 3000);
-            return;
-          }
-
-          const message = (data && data.message) || `Verification failed (HTTP ${status}). Please try again.`;
-          setMessage('❌ ' + message, 'error');
-          verifyBtn.disabled = false;
-        } catch (err) {
-          console.error(err);
-          setMessage('❌ Could not reach the server. Please check your connection and try again.', 'error');
-          verifyBtn.disabled = false;
-        }
-      }
-
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        if (otpStepActive){
-          verifyOtp();
-          return;
-        }
-        if (!validateForm()) return;
-        requestOtp(submitBtn);
-      });
-
-      verifyBtn.addEventListener('click', verifyOtp);
-      resendBtn.addEventListener('click', function(){ requestOtp(resendBtn); });
-      editDetailsBtn.addEventListener('click', exitOtpStep);
-
-      // digits only in the code field
-      otpInput.addEventListener('input', function(){
-        otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
+        box.appendChild(b);
       });
     })();
+
+    // ── is the pincode one UniteFix serves? (informational — joining is allowed anywhere) ──
+    $('pincode').addEventListener('input', async function () {
+      var pin = this.value.replace(/\D/g, '').slice(0, 6); this.value = pin;
+      var hint = $('pinHint');
+      if (pin.length !== 6) { hint.textContent = ''; return; }
+      var r = await call('GET', '/api/customer/check-serviceability?pincode=' + pin);
+      if (r.ok && r.data) hint.textContent = (r.data.available || r.data.serviceable) ? 'UniteFix is active here.' : 'UniteFix is not live here yet — register anyway and we will reach out when it opens.';
+    });
+    $('phone').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 10); });
+    $('otp').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 6); });
+
+    function valid() {
+      var d = details(), m = $('msg1');
+      if (d.name.length < 2) { msg(m, 'Enter your full name.', 'warn'); $('name').focus(); return false; }
+      if (!/^[6-9]\d{9}$/.test(d.phone)) { msg(m, 'Enter a 10-digit Indian mobile number.', 'warn'); $('phone').focus(); return false; }
+      if (!/^\S+@\S+\.\S+$/.test(d.email)) { msg(m, 'Enter a valid email address.', 'warn'); $('email').focus(); return false; }
+      if (!picked.size && $('trades').querySelector('.chip')) { msg(m, 'Choose at least one trade.', 'warn'); return false; }
+      if (d.address.length < 5) { msg(m, 'Enter your address.', 'warn'); $('address').focus(); return false; }
+      if (!/^\d{6}$/.test(d.pincode)) { msg(m, 'Enter your 6-digit pincode.', 'warn'); $('pincode').focus(); return false; }
+      if (!$('terms').checked) { msg(m, 'Please agree to the terms to continue.', 'warn'); return false; }
+      return true;
+    }
+
+    function cooldown(sec) {
+      clearInterval(timer);
+      var left = sec, b = $('resendBtn');
+      b.disabled = true; b.textContent = 'Resend code (' + left + 's)';
+      timer = setInterval(function () {
+        left -= 1;
+        if (left <= 0) { clearInterval(timer); b.disabled = false; b.textContent = 'Resend code'; }
+        else b.textContent = 'Resend code (' + left + 's)';
+      }, 1000);
+    }
+
+    async function sendCode(button, m) {
+      var d = details();
+      button.disabled = true;
+      msg(m, 'Sending the code…', 'info');
+      var r = await call('POST', '/api/auth/fallback/request-otp', { phone: d.phone, email: d.email, role: 'serviceman', firstName: d.firstName, lastName: d.lastName });
+      button.disabled = false;
+      if (r.ok && r.data && r.data.success) {
+        var to = r.data.maskedEmail || d.email;
+        $('otpLead').textContent = r.data.sentToRegisteredEmail
+          ? 'This number already has a UniteFix account, so the code went to its email on file: ' + to + '.'
+          : 'We sent a 6-digit code to ' + to + '. Check spam if it is not in your inbox. It expires in 10 minutes.';
+        step(2); msg($('msg2'), '', ''); $('otp').value = ''; $('otp').focus(); cooldown(COOLDOWN);
+        return;
+      }
+      if (r.status === 429 && r.data && r.data.retryAfterSeconds) { step(2); cooldown(r.data.retryAfterSeconds); }
+      msg(m, r.status === 0 ? 'Could not reach UniteFix. Check your connection and try again.'
+        : (r.data && r.data.message) || 'Something went wrong (' + r.status + '). Please try again.', 'error');
+    }
+
+    // A hint about the last attempt stops being true once the form changes.
+    form1.addEventListener('input', function () { if ($('msg1').dataset.tone === 'warn') msg($('msg1'), '', ''); });
+    form1.addEventListener('submit', function (e) { e.preventDefault(); if (valid()) sendCode($('sendBtn'), $('msg1')); });
+    $('resendBtn').addEventListener('click', function () { sendCode($('resendBtn'), $('msg2')); });
+    $('editBtn').addEventListener('click', function () { clearInterval(timer); step(1); });
+
+    form2.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var code = $('otp').value.trim(), m = $('msg2');
+      if (!/^\d{6}$/.test(code)) { msg(m, 'Enter the 6-digit code from the email.', 'warn'); return; }
+      var d = details();
+      $('verifyBtn').disabled = true; msg(m, 'Verifying…', 'info');
+      var r = await call('POST', '/api/auth/fallback/verify-otp', { phone: d.phone, email: d.email, code: code, role: 'serviceman', firstName: d.firstName, lastName: d.lastName, mode: 'signup' });
+      if (!(r.ok && r.data && r.data.success)) {
+        $('verifyBtn').disabled = false;
+        msg(m, r.status === 0 ? 'Could not reach UniteFix. Check your connection and try again.' : (r.data && r.data.message) || 'That code did not work. Try again.', 'error');
+        return;
+      }
+      var existing = !!r.data.alreadyRegistered;
+      var role = r.data.user && r.data.user.role;
+      var warn = [];
+      // Save what the app would otherwise ask for again — only for a new technician account.
+      if (!existing && role === 'serviceman' && r.data.accessToken) {
+        if (picked.size) {
+          var s = await call('PATCH', '/api/partner/profile/expertise', { services: Array.from(picked) }, r.data.accessToken);
+          if (!s.ok) warn.push('your trades');
+        }
+        var p = await call('PATCH', '/api/client/profile', { homeAddress: d.address, pinCode: d.pincode, savedAddresses: [{ label: 'Home', address: d.address, pinCode: d.pincode, lat: 0, long: 0 }] }, r.data.accessToken);
+        if (!p.ok) warn.push('your address');
+      }
+      $('donePhone').textContent = '+91 ' + d.phone;
+      if (existing) {
+        $('doneTitle').textContent = role === 'serviceman' ? 'You already have an account' : 'This number is already registered';
+        $('doneLead').textContent = role === 'serviceman'
+          ? 'Your email is confirmed. Sign in to the app with this number to continue where you left off.'
+          : 'This number is registered as a customer account. To work as a technician, use a different number, or contact UniteFix support.';
+      } else {
+        $('doneLead').textContent = 'Welcome, ' + d.firstName + '. Your account is created' + (warn.length ? '' : ' with your trades and address') + '.';
+      }
+      if (warn.length) { $('saveWarn').hidden = false; $('saveWarn').textContent = 'We could not save ' + warn.join(' and ') + ' just now — the app will ask for them when you sign in.'; }
+      clearInterval(timer);
+      step(3);
+    });
+  })();
   </script>
 </body>
 </html>
