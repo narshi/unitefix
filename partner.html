@@ -94,7 +94,7 @@
         <li><b>Upload your documents</b> (ID, address and business proof) and accept the partner agreement.</li>
         <li><b>UniteFix reviews</b> your application, usually within 48 hours. You are told by email and in the Hub.</li>
       </ol>
-      <a class="btn" id="hubLink" href="https://unitefix-backend.onrender.com/" target="_blank" rel="noopener">Open the Partner Hub</a>
+      <a class="btn" id="hubLink" href="https://app.unitefix.com/" target="_blank" rel="noopener">Open the Partner Hub</a>
       <p class="hint center">Keep your reference: <b id="doneCode"></b></p>
     </section>
 
@@ -105,7 +105,7 @@
   (function () {
     // UniteFix backend: GET /api/hub/verticals, POST /api/hub/apply (creates the
     // application and the owner's Partner Hub sign-in; documents follow in the Hub).
-    var API = 'https://unitefix-backend.onrender.com';
+    var API = 'https://app.unitefix.com';
     var $ = function (id) { return document.getElementById(id); };
     var form = $('applyForm'), m = $('msg');
 
